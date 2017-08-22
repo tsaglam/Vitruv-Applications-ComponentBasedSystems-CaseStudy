@@ -1,0 +1,101 @@
+
+import edu.kit.kastel.scbs.confidentiality.ConfidentialitySpecification
+import edu.kit.kastel.scbs.confidentiality.ConfidentialityPackage
+
+import org.emftext.language.java.modifiers.ModifiersFactory
+import tools.vitruv.applications.pcmjava.confidentiality2annotations.Confidentiality2AnnotationsUtil
+
+import "http://www.emftext.org/java" as java
+import "http://edu.kit.kastel.scbs.confidentiality" as conf
+
+reactions: Confidentiality2Annotations 
+in reaction to changes in Confidentiality
+execute actions in Java
+
+// ###################################################
+// ###### CONFIDENTIALITY REPOSITORY REACTIONS #######
+
+reaction CreatedConfidentialitySpecification {
+	after element conf::ConfidentialitySpecification created and inserted as root
+	call {
+		val specification = newValue
+		createJavaPackage(specification, null, "ConfidentialityRepository", "specification");
+		System.out.println("ConfidentialityRepository created and inserted as root.");
+		// Also create and add correspondences to java classes contained in package
+		createConfidentialitySpecificationClasses(specification);
+		System.out.println("ConfidentialityRepository classes created and inserted in ConfidentialityRepository.");
+	}
+}
+
+routine createConfidentialitySpecificationClasses(conf::ConfidentialitySpecification specification)	 { 
+	match {
+		val confSpecificationPackage = retrieve java::Package corresponding to specification
+	} 
+	action { 
+		call {
+			createJavaAnnotation(specification, confSpecificationPackage, "InformationFlow", "InformationFlow");
+			// TODO fixed content of annotation
+			createJavaEnum(specification, confSpecificationPackage, "DataSets", "DataSets");
+			createJavaEnum(specification, confSpecificationPackage, "ParametersAndDataPairs", "ParametersAndDataPairs");
+			createJavaEnum(specification, confSpecificationPackage, "DataSetMapEntries", "DataSetMapEntries");
+			createJavaEnum(specification, confSpecificationPackage, "DataSetMaps", "DataSetMaps");
+			// TODO fixed content of enums
+		}
+	}
+}
+
+// source: tools.vitruv.applications.pcmjava.pojotransformations.pcm2java
+routine createJavaPackage(EObject sourceElementMappedToPackage, java::Package parentPackage, String packageName, String newTag)	 { 
+	match {
+		require absence of java::Package corresponding to sourceElementMappedToPackage tagged with newTag
+	} 
+	action { 
+		val javaPackage = create java::Package and initialize {
+			if (parentPackage !== null) {
+				javaPackage.namespaces += parentPackage.namespaces;
+				javaPackage.namespaces += parentPackage.name; 
+			}
+			javaPackage.name = packageName;
+			persistProjectRelative(sourceElementMappedToPackage, javaPackage, Confidentiality2AnnotationsUtil.buildJavaFilePath(javaPackage));
+		}
+		add correspondence between javaPackage and sourceElementMappedToPackage tagged with newTag
+	}
+}
+
+// modified from: tools.vitruv.applications.pcmjava.pojotransformations.pcm2java
+routine createJavaAnnotation(conf::ConfidentialitySpecification specification, java::Package containingPackage, String className, String newTag) {
+	action { 
+		val javaAnnotation = create java::Annotation and initialize {
+			javaAnnotation.name = className;
+			javaAnnotation.addModifier(ModifiersFactory.eINSTANCE.createPublic());
+		}
+		add correspondence between javaAnnotation and specification tagged with newTag
+		call createCompilationUnit(specification, javaAnnotation, containingPackage, newTag)
+	}
+}
+
+// modified from: tools.vitruv.applications.pcmjava.pojotransformations.pcm2java
+routine createJavaEnum(conf::ConfidentialitySpecification specification, java::Package containingPackage, String className, String newTag) {
+	action { 
+		val javaEnumeration = create java::Enumeration and initialize {
+			javaEnumeration.name = className;
+			javaEnumeration.addModifier(ModifiersFactory.eINSTANCE.createPublic());
+		}
+		add correspondence between javaEnumeration and specification tagged with newTag
+		call createCompilationUnit(specification, javaEnumeration, containingPackage, newTag)
+	}
+}
+
+// modified from: tools.vitruv.applications.pcmjava.pojotransformations.pcm2java
+routine createCompilationUnit(conf::ConfidentialitySpecification specification, java::ConcreteClassifier classifier, java::Package containingPackage, String newTag) {
+	action { 
+		val compilationUnit = create java::CompilationUnit and initialize {
+			compilationUnit.namespaces += containingPackage.namespaces;
+			compilationUnit.namespaces += containingPackage.name;
+			compilationUnit.name = classifier.name + ".java";
+			compilationUnit.classifiers.add(classifier);
+			persistProjectRelative(specification, compilationUnit, Confidentiality2AnnotationsUtil.buildJavaFilePath(compilationUnit));
+		}
+		add correspondence between compilationUnit and specification tagged with newTag
+	}
+}

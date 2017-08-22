@@ -1,0 +1,40 @@
+
+import edu.kit.kastel.scbs.confidentiality.ConfidentialityPackage
+import org.emftext.language.java.annotations.AnnotationInstance
+
+import "http://www.emftext.org/java" as java
+import "http://palladiosimulator.org/PalladioComponentModel/5.2" as pcm
+import "http://edu.kit.kastel.scbs.confidentiality" as conf
+import "http://edu.kit.kastel.scbs/pcmconfidentialityprofile" as confProfile
+import "http://www.modelversioning.org/emfprofile/application/1.1" as emfprofileApp
+
+reactions: ConfidentialityApplications2Annotations 
+in reaction to changes in PCM
+execute actions in Java
+
+reaction CreatedInformationFlowStereotype {
+	after element emfprofileApp::StereotypeApplication created and inserted in emfprofileApp::ProfileApplication[stereotypeApplications]
+	call {
+		val stereotypeApplication = newValue
+		val profile = affectedEObject
+		createInformationFlowStereotype(stereotypeApplication, profile);
+	}
+}
+
+routine createInformationFlowStereotype(emfprofileApp::StereotypeApplication stereotypeApplication, emfprofileApp::ProfileApplication profile) {
+	match {
+		val method = retrieve java::Package corresponding to stereotypeApplication.appliedTo
+	}
+	action {
+		// TODO
+		val x = create java::Annotation and initialize {
+			System.out.println("StereotypeApplicationn created and inserted in ProfileApplication")
+			val annotations = method.annotations
+			 if (annotations !== null) {
+	            for (AnnotationInstance annotation : annotations) {
+	                System.out.println("StereotypeApplicatoin created and inserted in ProfileApplication - annotation: " + annotation.namespacesAsString)
+	            }
+           }
+		}
+	}
+}
