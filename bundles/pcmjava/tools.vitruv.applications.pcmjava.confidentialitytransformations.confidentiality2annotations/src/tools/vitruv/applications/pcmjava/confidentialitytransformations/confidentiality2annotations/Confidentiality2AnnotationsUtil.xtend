@@ -1,4 +1,4 @@
-package tools.vitruv.applications.pcmjava.confidentiality2annotations
+package tools.vitruv.applications.pcmjava.confidentialitytransformations.confidentiality2annotations
 
 import org.emftext.language.java.containers.CompilationUnit
 

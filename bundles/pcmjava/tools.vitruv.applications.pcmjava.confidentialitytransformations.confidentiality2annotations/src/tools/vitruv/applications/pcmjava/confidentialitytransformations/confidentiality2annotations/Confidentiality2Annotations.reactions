@@ -3,7 +3,7 @@ import edu.kit.kastel.scbs.confidentiality.ConfidentialitySpecification
 import edu.kit.kastel.scbs.confidentiality.ConfidentialityPackage
 
 import org.emftext.language.java.modifiers.ModifiersFactory
-import tools.vitruv.applications.pcmjava.confidentiality2annotations.Confidentiality2AnnotationsUtil
+import tools.vitruv.applications.pcmjava.confidentialitytransformations.confidentiality2annotations.Confidentiality2AnnotationsUtil
 
 import "http://www.emftext.org/java" as java
 import "http://edu.kit.kastel.scbs.confidentiality" as conf

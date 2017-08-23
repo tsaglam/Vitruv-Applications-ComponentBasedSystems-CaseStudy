@@ -4,8 +4,7 @@ Bundle-Name: Confidentiality2Annotations
 Bundle-SymbolicName: tools.vitruv.applications.pcmjava.confidentialitytransformations.confidentiality2annotations
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: SDQ
-Export-Package: mir.reactions,
- tools.vitruv.applications.pcmjava.confidentialitytransformations.confidentiality2annotations
+Export-Package: tools.vitruv.applications.pcmjava.confidentialitytransformations.confidentiality2annotations
 Require-Bundle: org.apache.log4j,
   com.google.guava,
   org.eclipse.emf.ecore,
