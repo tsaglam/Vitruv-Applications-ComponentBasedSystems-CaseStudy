@@ -1,4 +1,3 @@
-
 import edu.kit.kastel.scbs.confidentiality.ConfidentialityPackage
 import org.emftext.language.java.annotations.AnnotationInstance
 
@@ -9,7 +8,7 @@ import "http://edu.kit.kastel.scbs/pcmconfidentialityprofile" as confProfile
 import "http://www.modelversioning.org/emfprofile/application/1.1" as emfprofileApp
 
 reactions: ConfidentialityApplications2Annotations 
-in reaction to changes in PCM
+in reaction to changes in Confidentiality
 execute actions in Java
 
 reaction CreatedInformationFlowStereotype {
