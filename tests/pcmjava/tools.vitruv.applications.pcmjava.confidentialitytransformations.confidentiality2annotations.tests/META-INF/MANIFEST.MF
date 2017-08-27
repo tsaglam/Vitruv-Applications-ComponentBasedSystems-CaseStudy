@@ -21,5 +21,6 @@ Require-Bundle: org.junit,
  tools.vitruv.applications.pcmjava.util,
  tools.vitruv.applications.pcmjava.tests.util,
  tools.vitruv.applications.pcmjava.confidentialitytransformations.confidentiality2annotations,
- tools.vitruv.domains.confidentiality
+ tools.vitruv.domains.confidentiality,
+ edu.kit.kastel.scbs.confidentialitymm
 Export-Package: tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations

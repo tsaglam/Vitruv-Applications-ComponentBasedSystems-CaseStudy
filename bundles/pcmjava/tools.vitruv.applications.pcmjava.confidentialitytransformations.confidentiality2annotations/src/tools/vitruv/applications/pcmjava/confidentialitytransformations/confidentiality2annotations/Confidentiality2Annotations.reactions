@@ -1,4 +1,3 @@
-
 import edu.kit.kastel.scbs.confidentiality.ConfidentialitySpecification
 import edu.kit.kastel.scbs.confidentiality.ConfidentialityPackage
 
@@ -19,7 +18,7 @@ reaction CreatedConfidentialitySpecification {
 	after element conf::ConfidentialitySpecification created and inserted as root
 	call {
 		val specification = newValue
-		createJavaPackage(specification, null, "ConfidentialityRepository", "specification");
+		createJavaPackage(specification, null, "confidentialityRepository", "specification");
 		System.out.println("ConfidentialityRepository created and inserted as root.");
 		// Also create and add correspondences to java classes contained in package
 		createConfidentialitySpecificationClasses(specification);
