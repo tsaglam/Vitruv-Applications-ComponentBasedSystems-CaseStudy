@@ -1,5 +1,10 @@
-import edu.kit.kastel.scbs.confidentiality.ConfidentialityPackage
 import org.emftext.language.java.annotations.AnnotationInstance
+import edu.kit.kastel.scbs.confidentiality.repository.ParametersAndDataPair
+import edu.kit.kastel.scbs.pcm2java4KeY.util.StereotypeUtil
+import org.palladiosimulator.pcm.repository.OperationSignature
+import org.emftext.language.java.annotations.AnnotationsFactory
+import tools.vitruv.applications.pcmjava.confidentialitytransformations.confidentiality2annotations.Confidentiality2AnnotationsUtil
+import org.emftext.language.java.annotations.AnnotationParameterList
 
 import "http://www.emftext.org/java" as java
 import "http://palladiosimulator.org/PalladioComponentModel/5.2" as pcm
@@ -11,29 +16,229 @@ reactions: ConfidentialityApplications2Annotations
 in reaction to changes in Confidentiality
 execute actions in Java
 
-reaction CreatedInformationFlowStereotype {
-	after element emfprofileApp::StereotypeApplication created and inserted in emfprofileApp::ProfileApplication[stereotypeApplications]
+// ###################################################
+// ##### INFORMATION FLOW TO ANNOTATION INSTANCE #####
+
+reaction CreatedInformationFlowAnnotation {
+	after element confProfile::InformationFlow created and inserted in emfprofileApp::ProfileApplication[stereotypeApplications]
 	call {
-		val stereotypeApplication = newValue
-		val profile = affectedEObject
-		createInformationFlowStereotype(stereotypeApplication, profile);
+		val confInformationFlow = newValue
+		// confInformationFlow.appliedTo -> repository.interaces__repository.signatures__operationInterface.id
+		createAnnotationInstance(confInformationFlow, confInformationFlow.appliedTo);
 	}
 }
 
-routine createInformationFlowStereotype(emfprofileApp::StereotypeApplication stereotypeApplication, emfprofileApp::ProfileApplication profile) {
+routine createAnnotationInstance(confProfile::InformationFlow confInformationFlow, pcm::OperationSignature pcmSignature) {
+	action {
+		val javaAnnotationInstance = create java::AnnotationInstance and initialize {
+			javaAnnotationInstance.setAnnotation(Confidentiality2AnnotationsUtil.INFORMATION_FLOW_ANNOTATION)
+			addAnnotationInstanceToMethod(pcmSignature, javaAnnotationInstance)
+			setParametersAndDataPairsOfAnnotationInstance(confInformationFlow, javaAnnotationInstance)
+		}
+		add correspondence between confInformationFlow and javaAnnotationInstance
+	}
+}
+
+routine addAnnotationInstanceToMethod(pcm::OperationSignature pcmSignature, java::AnnotationInstance javaAnnotationInstance) {
 	match {
-		val method = retrieve java::Package corresponding to stereotypeApplication.appliedTo
+		check pcmSignature !== null // ignore this routine otherwise
+		val javaMethod = retrieve java::Method corresponding to pcmSignature
 	}
 	action {
-		// TODO
-		val x = create java::Annotation and initialize {
-			System.out.println("StereotypeApplicationn created and inserted in ProfileApplication")
-			val annotations = method.annotations
-			 if (annotations !== null) {
-	            for (AnnotationInstance annotation : annotations) {
-	                System.out.println("StereotypeApplicatoin created and inserted in ProfileApplication - annotation: " + annotation.namespacesAsString)
-	            }
-           }
+		update javaMethod {
+			// only add annotation instance to signature/method
+			javaMethod.annotationInstances.add(javaAnnotationInstance);			
+		}
+	}
+}
+
+routine setParametersAndDataPairsOfAnnotationInstance(pcm::OperationSignature pcmSignature, java::AnnotationInstance javaAnnotationInstance) {
+	match {
+		check pcmSignature !== null // ignore this routine otherwise
+		check StereotypeUtil.getParametersAndDataPairs(pcmSignature).length > 0
+		val javaMethod = retrieve java::Method corresponding to pcmSignature
+	}
+	action {
+		update javaAnnotationInstance {
+			val javaAnnotationParameterList = AnnotationsFactory.eINSTANCE.createAnnotationParameterList
+			// add all parameters and data pairs from signature to annotation instance if present
+			val setting = Confidentiality2AnnotationsUtil.createAndInitializeAnnotationAttributeSetting(
+				javaAnnotationParameterList, StereotypeUtil.getParametersAndDataPairs(pcmSignature)
+			)
+			javaAnnotationParameterList.settings.add(setting)
+			javaAnnotationInstance.parameter = javaAnnotationParameterList		
+		}
+	}
+}
+
+reaction ReplacedInformationFlowStereotype {
+	after element confProfile::InformationFlow replaced at emfprofileApp::ProfileApplication[stereotypeApplications]
+	call {
+		replaceAnnotationInstance(oldValue, newValue);
+	}
+}
+
+routine replaceAnnotationInstance(confProfile::InformationFlow oldInformationFlow, confProfile::InformationFlow newInformationFlow) {
+	match {
+		val oldAnnotationInstance = retrieve java::AnnotationInstance corresponding to oldInformationFlow
+	}
+	action {
+		delete oldAnnotationInstance
+		val newAnnotationInstance = create java::AnnotationInstance and initialize {
+			newAnnotationInstance.setAnnotation(Confidentiality2AnnotationsUtil.INFORMATION_FLOW_ANNOTATION)
+			addAnnotationInstanceToMethod(pcmSignature, newAnnotationInstance)
+			setParametersAndDataPairsOfAnnotationInstance(confInformationFlow, newAnnotationInstance)
+		}
+		add correspondence between newInformationFlow and newAnnotationInstance
+	}
+}
+
+reaction DeletedInformationFlowStereotype {
+	after element confProfile::InformationFlow removed from emfprofileApp::ProfileApplication[stereotypeApplications]
+	call {
+		deleteAnnotationInstance(oldValue);
+	}
+}
+
+routine deleteAnnotationInstance(confProfile::InformationFlow confInformationFlow) {
+	match {
+		val javaAnnotationInstance = retrieve java::AnnotationInstance corresponding to confInformationFlow
+	}
+	action {
+		delete javaAnnotationInstance
+	}
+}
+
+// ###################################################
+// ############ PARAMETERS AND DATA PAIR #############
+
+reaction InsertedParametersAndDataPairToStereoType {
+	after element conf::ParametersAndDataPair inserted in confProfile::InformationFlow[parametersAndDataPairs]
+	call { 
+		val ParametersAndDataPair parametersAndDataPair = newValue
+		// TODO not accessible ???
+		// TODO val confInformationFlow = affectedEObject
+		// TODO insertParametersAndDataPairMemberValue(parametersAndDataPair, confInformationFlow);
+	}
+}
+
+routine insertParametersAndDataPairMemberValue(conf::ParametersAndDataPair parametersAndDataPair, confProfile::InformationFlow confInformationFlow) {
+	match {
+		val javaEnumConstant = retrieve java::EnumConstant corresponding to parametersAndDataPair
+		val javaAnnotationInstance = retrieve java::AnnotationInstance corresponding to confInformationFlow
+		val pcmSignature = retrieve pcm::OperationSignature corresponding to confInformationFlow.appliedTo
+		check pcmSignature !== null
+	}
+	action {
+		update javaAnnotationInstance {
+			val parameterList = javaAnnotationInstance.parameter as AnnotationParameterList
+			Confidentiality2AnnotationsUtil.addValueToAnnotationAttributeSetting(parameterList.settings.head, parametersAndDataPair)
+		}
+	}
+}
+
+//reaction ReplacedParametersAndDataPairToStereoType {
+//	after element conf::ParametersAndDataPair replaced at confProfile::InformationFlow[parametersAndDataPairs]
+//	call { 
+//		// TODO
+//	}
+//}
+
+reaction DeletedParametersAndDataPairFromStereoType {
+	after element conf::ParametersAndDataPair removed from confProfile::InformationFlow[parametersAndDataPairs]
+	call { 
+		val ParametersAndDataPair parametersAndDataPair = oldValue
+		// TODO not accessible ???
+		// TODO val confInformationFlow = affectedEObject
+		// TODO deleteParametersAndDataPairMemberValue(parametersAndDataPair, confInformationFlow);
+	}
+}
+
+routine deleteParametersAndDataPairMemberValue(conf::ParametersAndDataPair oldParametersAndDataPair, confProfile::InformationFlow confInformationFlow) {
+	match {
+		val javaEnumConstant = retrieve java::EnumConstant corresponding to oldParametersAndDataPair
+		val javaAnnotationInstance = retrieve java::AnnotationInstance corresponding to confInformationFlow
+		check pcmSignature !== null
+		check StereotypeUtil.getParametersAndDataPairs(pcmSignature).length > 0
+		val javaMethod = retrieve java::Method corresponding to pcmSignature
+	}
+	action {
+		update javaAnnotationInstance {
+			// TODO remove member value
+		}
+	}
+}
+
+// ###################################################
+// ############# STEREO TYPE APPLICATION #############
+
+reaction AppliedInformationFlowAnnotationToSignature {
+	after element inserted in confProfile::InformationFlow[appliedTo]
+	call { 
+		val OperationSignature pcmSignature = newValue as OperationSignature
+		// TODO not accessible ???
+		// TODO val confInformationFlow = affectedEObject
+		// addAnnotationInstanceToMethod(confInformationFlow, pcmSignature);
+	}
+}
+
+routine applyInformationFlowAnnotationToSignature(confProfile::InformationFlow confInformationFlow, pcm::OperationSignature pcmSignature) {
+	match {
+		val javaAnnotationInstance = retrieve java::AnnotationInstance corresponding to confInformationFlow
+	}
+	action {
+		execute {
+			addAnnotationInstanceToMethod(pcmSignature, javaAnnotationInstance)
+		}
+	}
+}
+
+reaction ReplacedInformationFlowAnnotationApplication {
+	// TODO
+	after element replaced at confProfile::InformationFlow[appliedTo]
+	call { 
+		val OperationSignature oldSignature = oldValue as OperationSignature
+		val OperationSignature newSignature = newValue as OperationSignature
+		// TODO not accessible ???
+		// TODO val confInformationFlow = affectedEObject
+		// moveAnnotationInstance(confInformationFlow, signature);
+	}
+}
+
+routine moveAnnotationInstanceApplication(confProfile::InformationFlow confInformationFlow, pcm::OperationSignature newSignature, pcm::OperationSignature oldSignature) {
+	match {
+		val javaAnnotationInstance = retrieve java::AnnotationInstance corresponding to confInformationFlow
+		val newMethod = retrieve java::Method corresponding to newSignature
+		val oldMethod = retrieve java::Method corresponding to oldSignature
+	}
+	action {
+		update oldMethod {
+			oldMethod.annotationInstances.remove(javaAnnotationInstance);
+		}
+		update newMethod {
+			newMethod.annotationInstances.add(javaAnnotationInstance);
+		}
+	}
+}
+
+reaction DeletedInformationFlowAnnotationApplication {
+	after element removed from confProfile::InformationFlow[appliedTo]
+	call { 
+		val OperationSignature pcmSignature = oldValue as OperationSignature
+		// TODO not accessible ???
+		// TODO val confInformationFlow = affectedEObject
+		// deleteAnnotationInstance(confInformationFlow, pcmSignature);
+	}
+}
+
+routine deleteAnnotationInstanceApplication(confProfile::InformationFlow confInformationFlow, pcm::OperationSignature pcmSignature) {
+	match {
+		val javaAnnotationInstance = retrieve java::AnnotationInstance corresponding to confInformationFlow
+		val javaMethod = retrieve java::Method corresponding to pcmSignature
+	}
+	action {
+		update javaMethod {
+			javaMethod.annotationInstances.remove(javaAnnotationInstance);		
 		}
 	}
 }

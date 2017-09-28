@@ -1,8 +1,12 @@
-import edu.kit.kastel.scbs.confidentiality.ConfidentialitySpecification
-import edu.kit.kastel.scbs.confidentiality.ConfidentialityPackage
-
 import org.emftext.language.java.modifiers.ModifiersFactory
 import tools.vitruv.applications.pcmjava.confidentialitytransformations.confidentiality2annotations.Confidentiality2AnnotationsUtil
+import edu.kit.kastel.scbs.confidentiality.data.DataIdentifying
+import edu.kit.kastel.scbs.confidentiality.repository.ParametersAndDataPair
+import tools.vitruv.applications.pcmjava.confidentialitytransformations.confidentiality2annotations.Confidentiality2AnnotationsContentCreationUtil
+import org.emftext.language.java.arrays.ArrayInstantiationByValuesTyped
+import org.emftext.language.java.references.StringReference
+import org.emftext.language.java.arrays.ArrayInitializationValue
+import org.eclipse.emf.common.util.EList
 
 import "http://www.emftext.org/java" as java
 import "http://edu.kit.kastel.scbs.confidentiality" as conf
@@ -12,6 +16,333 @@ in reaction to changes in Confidentiality
 execute actions in Java
 
 // ###################################################
+// ############### DATA SET REACTIONS ################
+
+reaction CreatedDataSet {
+	after element conf::DataSet created and inserted in conf::ConfidentialitySpecification[dataIdentifier]
+	call {
+		val dataSet = newValue
+		val confidentialitySpecification = affectedEObject
+		createDataSetAndInitialize(dataSet, confidentialitySpecification)
+	}
+}
+
+routine createDataSetAndInitialize(conf::DataSet createdDataSet, conf::ConfidentialitySpecification confidentialitySpecification) {
+	match {
+		val dataSetsType = retrieve java::Enumeration corresponding to confidentialitySpecification tagged with "DataSets"
+	}
+	action {
+		val enumConstant = create java::EnumConstant and initialize {
+			dataSetsType.constants.add(enumConstant)
+			Confidentiality2AnnotationsUtil.setDataSetEnumConstantContent(enumConstant, createdDataSet)
+		}
+		add correspondence between createdDataSet and enumConstant
+	}
+}
+
+reaction ReplacedDataSet {
+	after element conf::DataSet replaced at conf::ConfidentialitySpecification[dataIdentifier]
+	call {
+		val newDataSet = newValue
+		val oldDataSet = oldValue
+		val confidentialitySpecification = affectedEObject
+		replaceDataSet(newDataSet, oldDataSet, confidentialitySpecification)
+	}
+}
+
+routine replaceDataSet(conf::DataSet newDataSet, conf::DataSet oldDataSet, conf::ConfidentialitySpecification confidentialitySpecification) {
+	match {
+		val dataSetsType = retrieve java::Enumeration corresponding to confidentialitySpecification tagged with "DataSets"
+		val enumConstant = retrieve java::EnumConstant corresponding to oldDataSet
+	}
+	action {
+		update enumConstant {
+			Confidentiality2AnnotationsUtil.setDataSetEnumConstantContent(enumConstant, newDataSet)
+		}
+		remove correspondence between oldDataSet and enumConstant
+		add correspondence between newDataSet and enumConstant
+	}
+}
+
+reaction DeletedDataSet {
+	after element conf::DataSet removed from conf::ConfidentialitySpecification[dataIdentifier]
+	call {
+		val deletedDataSet = oldValue
+		val confidentialitySpecification = affectedEObject
+		deleteDataSet(deletedDataSet, confidentialitySpecification)
+	}
+}
+
+routine deleteDataSet(conf::DataSet deletedDataSet, conf::ConfidentialitySpecification confidentialitySpecification) {
+	match {
+		val dataSetsType = retrieve java::Enumeration corresponding to confidentialitySpecification tagged with "DataSets"
+		val enumConstant = retrieve java::EnumConstant corresponding to deletedDataSet
+	}
+	action {
+		update dataSetsType {
+			dataSetsType.constants.remove(enumConstant)
+		}
+		delete enumConstant
+	}
+}
+
+// ################## VALUE CHANGES ##################
+
+reaction ChangedDataSetName {
+	after attribute replaced at conf::DataSet[name]
+	call {
+		val dataSet = affectedEObject;
+		changeDataSetName(dataSet);
+	}
+}
+
+routine changeDataSetName(conf::DataSet dataSet) {
+    match {
+        val enumConstant = retrieve java::EnumConstant corresponding to dataSet
+    }
+    action {
+        update enumConstant {
+            enumConstant.name = Confidentiality2AnnotationsUtil.createEnumConstantName(dataSet.name);
+            Confidentiality2AnnotationsUtil.changeDataSetEnumConstantNameArgument(enumConstant, dataSet);
+        }
+    }
+}
+
+reaction ChangedDataSetId {
+	after attribute replaced at conf::DataSet[id]
+	call {
+		//val id = newValue
+		val dataSet = affectedEObject
+		changeDataSetId(dataSet)
+	}
+}
+
+routine changeDataSetId(conf::DataSet dataSet) {
+    match {
+        val enumConstant = retrieve java::EnumConstant corresponding to dataSet
+    }
+    action {
+        update enumConstant {
+            Confidentiality2AnnotationsUtil.changeDataSetEnumConstantIdArgument(enumConstant, dataSet);
+        }
+    }
+}
+
+// ###################################################
+// ######## PARAMETER AND DATA PAIRS REACTIONS #######
+
+reaction CreatedParametersAndDataPair {
+	after element conf::ParametersAndDataPair created and inserted in conf::ConfidentialitySpecification[parametersAndDataPairs]
+	call {
+		val parametersAndDataPair = newValue
+		val confidentialitySpecification = affectedEObject
+		createParametersAndDataPairAndInitialize(parametersAndDataPair, confidentialitySpecification);
+	}
+}
+
+routine createParametersAndDataPairAndInitialize(conf::ParametersAndDataPair pair, conf::ConfidentialitySpecification confidentialitySpecification) {
+	match {
+		val parametersAndDataPairType = retrieve java::Enumeration corresponding to confidentialitySpecification tagged with "ParametersAndDataPairs"
+	}
+	action {
+		val enumConstant = create java::EnumConstant and initialize {
+			parametersAndDataPairType.constants.add(enumConstant)
+			Confidentiality2AnnotationsUtil.setParameterAndDataPairEnumConstantContent(enumConstant, pair);
+		}
+		add correspondence between pair and enumConstant
+	}
+}
+
+reaction ReplacedParametersAndDataPair {
+	after element conf::ParametersAndDataPair replaced at conf::ConfidentialitySpecification[parametersAndDataPairs]
+	call {
+		val newParametersAndDataPair = newValue
+		val oldParametersAndDataPair = oldValue
+		val confidentialitySpecification = affectedEObject
+		replaceParametersAndDataPair(newParametersAndDataPair, oldParametersAndDataPair, confidentialitySpecification)
+	}
+}
+
+routine replaceParametersAndDataPair(conf::ParametersAndDataPair newParametersAndDataPair, conf::ParametersAndDataPair oldParametersAndDataPair, conf::ConfidentialitySpecification confidentialitySpecification) {
+	match {
+		val parametersAndDataPairsType = retrieve java::Enumeration corresponding to confidentialitySpecification tagged with "ParametersAndDataPairs"
+		val enumConstant = retrieve java::EnumConstant corresponding to oldParametersAndDataPair
+	}
+	action {
+		update enumConstant {
+			Confidentiality2AnnotationsUtil.setParameterAndDataPairEnumConstantContent(enumConstant, newParametersAndDataPair)
+		}
+		remove correspondence between oldParametersAndDataPair and enumConstant
+		add correspondence between newParametersAndDataPair and enumConstant
+	}
+}
+
+reaction DeletedParametersAndDataPair {
+	after element conf::ParametersAndDataPair removed from conf::ConfidentialitySpecification[parametersAndDataPairs]
+	call {
+		val deletedParametersAndDataPair = oldValue
+		val confidentialitySpecification = affectedEObject
+		deleteParametersAndDataPair(deletedParametersAndDataPair, confidentialitySpecification)
+	}
+}
+
+routine deleteParametersAndDataPair(conf::ParametersAndDataPair deletedParametersAndDataPair, conf::ConfidentialitySpecification confidentialitySpecification) {
+	match {
+		val parametersAndDataPairsType = retrieve java::Enumeration corresponding to confidentialitySpecification tagged with "ParametersAndDataPairs"
+		val enumConstant = retrieve java::EnumConstant corresponding to deletedParametersAndDataPair
+	}
+	action {
+		update parametersAndDataPairsType {
+			parametersAndDataPairsType.constants.remove(enumConstant)
+		}
+		delete enumConstant
+	}
+}
+
+// ################## VALUE CHANGES ##################
+
+reaction ChangedParametersAndDataPairName {
+	after attribute replaced at conf::ParametersAndDataPair[name]
+	call {
+		val parametersAndDataPair = affectedEObject;
+		changeParametersAndDataPairName(parametersAndDataPair);
+	}
+}
+
+routine changeParametersAndDataPairName(conf::ParametersAndDataPair parametersAndDataPair) {
+    match {
+        val enumConstant = retrieve java::EnumConstant corresponding to parametersAndDataPair
+    }
+    action {
+        update enumConstant {
+            enumConstant.name = Confidentiality2AnnotationsUtil.createEnumConstantName(parametersAndDataPair.name);
+        }
+    }
+}
+
+reaction ReplacedParametersAndDataPairDataTarget {
+	after element replaced at conf::ParametersAndDataPair[dataTargets]
+	call {
+		val DataIdentifying newDataTarget = newValue; // reference to existing data set
+		val DataIdentifying oldDataTarget = oldValue;
+		val ParametersAndDataPair parametersAndDataPair = affectedEObject;
+		deleteParametersAndDataPairDataTarget(parametersAndDataPair, oldDataTarget)
+  		insertParametersAndDataPairDataTarget(parametersAndDataPair, newDataTarget)
+	}
+}
+
+reaction InsertedParametersAndDataPairDataTarget {
+	after element inserted in conf::ParametersAndDataPair[dataTargets]
+	call {
+		val DataIdentifying dataTarget = newValue; // reference to existing data set
+		val ParametersAndDataPair parametersAndDataPair = affectedEObject;
+		insertParametersAndDataPairDataTarget(parametersAndDataPair, dataTarget);
+	}
+}
+
+routine insertParametersAndDataPairDataTarget(conf::ParametersAndDataPair parametersAndDataPair, conf::DataIdentifying dataTarget) {
+    match {
+        val pairEnumConstant = retrieve java::EnumConstant corresponding to parametersAndDataPair
+        val dataSetEnumConstant = retrieve java::EnumConstant corresponding to dataTarget
+    }
+    action {
+        update pairEnumConstant {
+            Confidentiality2AnnotationsUtil.insertEnumConstantDataTarget(pairEnumConstant, dataSetEnumConstant);
+        }
+    }
+}
+
+reaction DeletedParametersAndDataPairDataTarget {
+	after element removed from conf::ParametersAndDataPair[dataTargets]
+	call {
+		val DataIdentifying dataTarget = oldValue;
+		val ParametersAndDataPair parametersAndDataPair = affectedEObject;
+		deleteParametersAndDataPairDataTarget(parametersAndDataPair, dataTarget);
+	}
+}
+
+routine deleteParametersAndDataPairDataTarget(conf::ParametersAndDataPair parametersAndDataPair, conf::DataIdentifying dataTarget) {
+    match {
+        val pairEnumConstant = retrieve java::EnumConstant corresponding to parametersAndDataPair
+        val dataSetEnumConstant = retrieve java::EnumConstant corresponding to dataTarget
+    }
+    action {
+        update pairEnumConstant {
+            Confidentiality2AnnotationsUtil.removeEnumConstantDataTarget(pairEnumConstant, dataSetEnumConstant);
+        }
+    }
+}
+
+// ################ PARAMETER SOURCES ################
+
+reaction CreatedParametersAndDataPairParameterSource {
+	after attribute insert in conf::ParametersAndDataPair[parameterSources]
+	call {
+		val parameterSource = newValue;
+		val parametersAndDataPair = affectedEObject;
+		createParametersAndDataPairParameterSource(parametersAndDataPair, parameterSource);
+	}
+}
+
+routine createParametersAndDataPairParameterSource(conf::ParametersAndDataPair parametersAndDataPair, String parameterSource) {
+    match {
+        val enumConstant = retrieve java::EnumConstant corresponding to parametersAndDataPair
+    }
+    action {
+        val stringLiteral = create java::StringReference and initialize {
+    			stringLiteral.value = parameterSource;
+        }
+        update enumConstant {
+				var ArrayInstantiationByValuesTyped stringArrayArgument
+				stringArrayArgument = enumConstant.arguments.get(Confidentiality2AnnotationsUtil.PAIR_ARGUMENT_PARAMETER_SOURCES) as ArrayInstantiationByValuesTyped;
+				stringArrayArgument.arrayInitializer.initialValues.add(stringLiteral)
+        }
+    }
+}
+
+reaction ReplacedParametersAndDataPairParameterSource {
+	after attribute replaced at conf::ParametersAndDataPair[parameterSources]
+	call {
+		val newParameterSource = newValue;
+		val oldParameterSource = oldValue;
+		val parametersAndDataPair = affectedEObject;
+		deleteParametersAndDataPairParameterSource(parametersAndDataPair, oldParameterSource)
+		createParametersAndDataPairParameterSource(parametersAndDataPair, newParameterSource)
+	}
+}
+
+reaction DeletedParametersAndDataPairParameterSource {
+	after attribute remove from conf::ParametersAndDataPair[parameterSources]
+	call {
+		val oldParameterSource = oldValue;
+		val parametersAndDataPair = affectedEObject;
+		deleteParametersAndDataPairParameterSource(parametersAndDataPair, oldParameterSource);
+	}
+}
+
+routine deleteParametersAndDataPairParameterSource(conf::ParametersAndDataPair parametersAndDataPair, String oldParameterSource) {
+    match {
+        val enumConstant = retrieve java::EnumConstant corresponding to parametersAndDataPair
+    }
+    action {
+        update enumConstant {
+				var ArrayInstantiationByValuesTyped stringArrayArgument
+				stringArrayArgument = enumConstant.arguments.get(Confidentiality2AnnotationsUtil.PAIR_ARGUMENT_PARAMETER_SOURCES) as ArrayInstantiationByValuesTyped;
+				val EList<ArrayInitializationValue> values = stringArrayArgument.arrayInitializer.initialValues
+				var StringReference toRemove
+				for (ArrayInitializationValue value : values) {
+					val StringReference stringLiteral = value as StringReference
+					if (toRemove.value.equals(oldParameterSource)) {
+						toRemove = stringLiteral
+					}
+				}
+				values.remove(toRemove)
+        }
+    }
+}
+
+
+// ###################################################
 // ###### CONFIDENTIALITY REPOSITORY REACTIONS #######
 
 reaction CreatedConfidentialitySpecification {
@@ -19,10 +350,8 @@ reaction CreatedConfidentialitySpecification {
 	call {
 		val specification = newValue
 		createJavaPackage(specification, null, "confidentialityRepository", "specification");
-		System.out.println("ConfidentialityRepository created and inserted as root.");
 		// Also create and add correspondences to java classes contained in package
 		createConfidentialitySpecificationClasses(specification);
-		System.out.println("ConfidentialityRepository classes created and inserted in ConfidentialityRepository.");
 	}
 }
 
@@ -33,12 +362,14 @@ routine createConfidentialitySpecificationClasses(conf::ConfidentialitySpecifica
 	action { 
 		call {
 			createJavaAnnotation(specification, confSpecificationPackage, "InformationFlow", "InformationFlow");
-			// TODO fixed content of annotation
+			setInformationFlowAnnotationContent(specification);
 			createJavaEnum(specification, confSpecificationPackage, "DataSets", "DataSets");
+			setDataSetsEnumerationContent(specification);
 			createJavaEnum(specification, confSpecificationPackage, "ParametersAndDataPairs", "ParametersAndDataPairs");
+			setParametersAndDataPairsEnumerationContent(specification);
+			// place holder:
 			createJavaEnum(specification, confSpecificationPackage, "DataSetMapEntries", "DataSetMapEntries");
 			createJavaEnum(specification, confSpecificationPackage, "DataSetMaps", "DataSetMaps");
-			// TODO fixed content of enums
 		}
 	}
 }
@@ -87,7 +418,7 @@ routine createJavaEnum(conf::ConfidentialitySpecification specification, java::P
 
 // modified from: tools.vitruv.applications.pcmjava.pojotransformations.pcm2java
 routine createCompilationUnit(conf::ConfidentialitySpecification specification, java::ConcreteClassifier classifier, java::Package containingPackage, String newTag) {
-	action { 
+	action {
 		val compilationUnit = create java::CompilationUnit and initialize {
 			compilationUnit.namespaces += containingPackage.namespaces;
 			compilationUnit.namespaces += containingPackage.name;
@@ -96,5 +427,38 @@ routine createCompilationUnit(conf::ConfidentialitySpecification specification, 
 			persistProjectRelative(specification, compilationUnit, Confidentiality2AnnotationsUtil.buildJavaFilePath(compilationUnit));
 		}
 		add correspondence between compilationUnit and specification tagged with newTag
+	}
+}
+
+routine setInformationFlowAnnotationContent(conf::ConfidentialitySpecification specification)	 { 
+	match {
+		val informationFlowAnnotation = retrieve java::Annotation corresponding to specification tagged with "InformationFlow"
+	} 
+	action { 
+		call {
+			Confidentiality2AnnotationsContentCreationUtil.setInformationFlowAnnotation(informationFlowAnnotation);
+		}
+	}
+}
+
+routine setDataSetsEnumerationContent(conf::ConfidentialitySpecification specification)	 { 
+	match {
+		val dataSetsEnumeration = retrieve java::Enumeration corresponding to specification tagged with "DataSets"
+	} 
+	action { 
+		call {
+			Confidentiality2AnnotationsContentCreationUtil.setDataSetEnumeration(dataSetsEnumeration);
+		}
+	}
+}
+
+routine setParametersAndDataPairsEnumerationContent(conf::ConfidentialitySpecification specification)	 { 
+	match {
+		val parametersAndDataPairsEnumeration = retrieve java::Enumeration corresponding to specification tagged with "ParametersAndDataPairs"
+	} 
+	action { 
+		call {
+			Confidentiality2AnnotationsContentCreationUtil.setParametersAndDataPairEnumeration(parametersAndDataPairsEnumeration);
+		}
 	}
 }

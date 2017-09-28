@@ -25,5 +25,6 @@ Require-Bundle: org.apache.log4j,
   tools.vitruv.domains.pcm,
   tools.vitruv.domains.confidentiality,
   edu.kit.kastel.scbs.pcmconfidentialityprofile,
+  edu.kit.kastel.scbs.pcm2java4KeY,
   org.modelversioning.emfprofile
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
