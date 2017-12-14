@@ -3,13 +3,21 @@ package tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.c
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EObject;
 import org.emftext.language.java.classifiers.Annotation;
 import org.emftext.language.java.classifiers.Enumeration;
 import org.emftext.language.java.containers.Package;
+import org.emftext.language.java.expressions.Expression;
+import org.emftext.language.java.members.EnumConstant;
+import org.junit.Assert;
 
 import edu.kit.kastel.scbs.confidentiality.ConfidentialitySpecification;
+import edu.kit.kastel.scbs.confidentiality.data.DataSet;
+import edu.kit.kastel.scbs.confidentiality.repository.ParametersAndDataPair;
 import tools.vitruv.framework.correspondence.CorrespondenceModel;
 import tools.vitruv.framework.correspondence.CorrespondenceModelUtil;
 
@@ -24,6 +32,11 @@ public final class Confidentiality2AnnotationsAssertions {
     static {
         CONFIDENTIALITY_REPOSITORY_ENUMERATIONS.add("DataSets");
         CONFIDENTIALITY_REPOSITORY_ENUMERATIONS.add("ParametersAndDataPairs");
+        // TODO only creation not yet content
+        CONFIDENTIALITY_REPOSITORY_ENUMERATIONS.add("SpecificationParameters");
+        CONFIDENTIALITY_REPOSITORY_ENUMERATIONS.add("ParameterizedDataSetMapEntries");
+        CONFIDENTIALITY_REPOSITORY_ENUMERATIONS.add("DataSetMaps");
+        CONFIDENTIALITY_REPOSITORY_ENUMERATIONS.add("DataSetMapEntries");
     }
 
     private final CorrespondenceModel model;
@@ -99,5 +112,49 @@ public final class Confidentiality2AnnotationsAssertions {
             foundAnnotation |= annotation.getName().equals(CONFIDENTIALITY_REPOSITORY_ANNOTATION);
         }
         assertTrue("No corresponding java annotation for root found", foundAnnotation);
+    }
+
+    //// DATA SETS ////
+
+    public void assertDataSetCorrespondence(final DataSet dataSet) {
+        final Set<EnumConstant> corresponding;
+        corresponding = CorrespondenceModelUtil.getCorrespondingEObjectsByType(model, dataSet, EnumConstant.class);
+        assertTrue("Not exactly one correspondance for data set " + dataSet.getName(), corresponding.size() == 1);
+        checkDataSet(dataSet, new LinkedList<>(corresponding).get(0));
+    }
+
+    private void checkDataSet(final DataSet dataSet, final EnumConstant correspondingEnumConstant) {
+        boolean equalNames = dataSet.getName().equals(correspondingEnumConstant.getName());
+        // TODO check more values
+        assertTrue("Corresponding data sets have different names: " + dataSet.getName() + "<>"
+                + correspondingEnumConstant.getName(), equalNames);
+    }
+
+    //// PARAMETERS AND DATA PAIRS ////
+
+    public void assertParametersAndDataPairCorrespondence(final ParametersAndDataPair parametersAndDataPair) {
+        final Set<EnumConstant> corresponding;
+        corresponding = CorrespondenceModelUtil.getCorrespondingEObjectsByType(model, parametersAndDataPair,
+                EnumConstant.class);
+        assertTrue("Not exactly one correspondance for parameter and data pair " + parametersAndDataPair.getName(),
+                corresponding.size() == 1);
+        checkParametersAndDataPair(parametersAndDataPair, new LinkedList<>(corresponding).get(0));
+    }
+
+    private void checkParametersAndDataPair(final ParametersAndDataPair parametersAndDataPair,
+            final EnumConstant correspondingEnumConstant) {
+        boolean equalNames = parametersAndDataPair.getName().equals(correspondingEnumConstant.getName());
+        List<Expression> arguments = correspondingEnumConstant.getArguments();
+        // TODO check more values
+        assertTrue("Corresponding parameters and data pairs have different names: " + parametersAndDataPair.getName()
+                + "<>" + correspondingEnumConstant.getName(), equalNames);
+    }
+
+    //// GENERAL ////
+
+    public void assertEmptyCorrespondence(final EObject eObject) throws Throwable {
+        boolean empty = CorrespondenceModelUtil.getCorrespondingEObjects(model, eObject).isEmpty();
+        Assert.assertTrue("Correspondences of '" + eObject.toString() + "' are not empty.", empty);
+
     }
 }

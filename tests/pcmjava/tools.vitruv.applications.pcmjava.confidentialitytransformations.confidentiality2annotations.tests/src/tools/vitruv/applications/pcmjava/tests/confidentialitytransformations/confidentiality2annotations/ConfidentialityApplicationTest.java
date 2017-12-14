@@ -1,10 +1,18 @@
 package tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
 import org.junit.Assert;
 
 import edu.kit.kastel.scbs.confidentiality.ConfidentialitySpecification;
@@ -20,6 +28,7 @@ import tools.vitruv.framework.domains.VitruvDomain;
 import tools.vitruv.framework.tests.VitruviusApplicationTest;
 import tools.vitruv.framework.tests.VitruviusTest;
 import tools.vitruv.framework.tests.VitruviusUnmonitoredApplicationTest;
+import tools.vitruv.framework.tests.util.TestUtil;
 
 /**
  * Basic test class for all Confidentiality Vitruvius application tests.
@@ -58,8 +67,11 @@ import tools.vitruv.framework.tests.VitruviusUnmonitoredApplicationTest;
  */
 public class ConfidentialityApplicationTest extends VitruviusApplicationTest {
 
-    // Choose and arbitrary name for the confidentiality model
-    private static String MODEL_NAME = "model";
+    // Choose an arbitrary name for the confidentiality model
+    public final static String MODEL_NAME = "model";
+
+    // Choose an arbitrary name for the confidentiality model folder
+    public final static String MODEL_FOLDER_NAME = MODEL_NAME;
 
     private Confidentiality2AnnotationsCorrespondenceHelper correspondenceHelper;
 
@@ -74,7 +86,7 @@ public class ConfidentialityApplicationTest extends VitruviusApplicationTest {
         assertions = new Confidentiality2AnnotationsAssertions(getCorrespondenceModel());
 
         ConfidentialitySpecification specification = ConfidentialitySpecificationElementsCreator.createSpecification();
-        String path = getProjectModelPath(MODEL_NAME);
+        String path = getConfidentialityModelRelativePath();
         try {
             // creates corresponding (java model) root according to reactions
             createAndSynchronizeModel(path, specification);
@@ -115,18 +127,52 @@ public class ConfidentialityApplicationTest extends VitruviusApplicationTest {
     // ##################### ACCESS ######################
 
     protected ConfidentialitySpecification getRootElement() {
-        return (ConfidentialitySpecification) getFirstRootElement(getProjectModelPath(MODEL_NAME));
+        return (ConfidentialitySpecification) getFirstRootElement(getConfidentialityModelRelativePath());
     }
 
-    private String getProjectModelPath(String modelName) {
-        return "model/" + modelName + "." + ConfidentialityNamespace.FILE_EXTENSION;
+    protected String getConfidentialityModelRelativePath() {
+        return new File(MODEL_FOLDER_NAME, MODEL_NAME + "." + ConfidentialityNamespace.FILE_EXTENSION).getPath();
+    }
+
+    protected File getCurrentTestProjectConfidentialityModel() {
+        return new File(getCurrentTestProjectModelFolder(), MODEL_NAME + "." + ConfidentialityNamespace.FILE_EXTENSION);
+    }
+
+    protected File getCurrentTestProjectModelFolder() {
+        return new File(getCurrentTestProjectFolder(), MODEL_FOLDER_NAME);
+    }
+
+    protected File getCurrentTestProjectSrcFolder() {
+        return new File(getCurrentTestProjectFolder(), TestUtil.SOURCE_FOLDER);
+    }
+
+    protected File getJavaFile(File parent, String child) {
+        return new File(parent, child + ".java");
     }
 
     protected Confidentiality2AnnotationsCorrespondenceHelper getCorrespondenceHelper() {
         return correspondenceHelper;
     }
 
-    protected Confidentiality2AnnotationsAssertions getAssertions() {
+    protected Confidentiality2AnnotationsAssertions getAssertionsHelper() {
         return assertions;
+    }
+
+    protected IJavaProject getCurrentTestProject() {
+        File file = getCurrentTestProjectFolder();
+        IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+        IProject project = root.getProject(file.getName());
+        IJavaProject javaProject;
+        try {
+            project.create(null);
+            project.open(null);
+            IProjectDescription description = project.getDescription();
+            description.setNatureIds(new String[] { JavaCore.NATURE_ID });
+            project.setDescription(description, null);
+            javaProject = JavaCore.create(project);
+        } catch (CoreException e) {
+            javaProject = null;
+        }
+        return javaProject;
     }
 }
