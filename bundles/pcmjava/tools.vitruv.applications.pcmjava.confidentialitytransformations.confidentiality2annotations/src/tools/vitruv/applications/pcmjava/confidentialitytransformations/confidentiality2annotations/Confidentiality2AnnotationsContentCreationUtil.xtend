@@ -2,6 +2,7 @@ package tools.vitruv.applications.pcmjava.confidentialitytransformations.confide
 
 import tools.vitruv.applications.pcmjava.confidentialitytransformations.confidentiality2annotations.Confidentiality2AnnotationsUtil
 import org.emftext.language.java.annotations.AnnotationsFactory
+import org.emftext.language.java.modifiers.AnnotationInstanceOrModifier
 import org.emftext.language.java.literals.LiteralsFactory
 import org.emftext.language.java.classifiers.Enumeration
 import org.emftext.language.java.members.Field
@@ -25,8 +26,8 @@ import org.emftext.language.java.members.MemberContainer
 import org.emftext.language.java.arrays.ArraysFactory
 import org.emftext.language.java.expressions.Expression
 import org.emftext.language.java.members.EnumConstant
-import org.emftext.language.java.annotations.AnnotationParameterList
 import org.emftext.language.java.members.InterfaceMethod
+import org.emftext.language.java.arrays.ArrayInitializationValue
 
 class Confidentiality2AnnotationsContentCreationUtil {
 
@@ -39,23 +40,25 @@ class Confidentiality2AnnotationsContentCreationUtil {
 		informationFlowAnnotation.addImport("java.lang.annotation.Retention");
 		informationFlowAnnotation.addImport("java.lang.annotation.RetentionPolicy");
 		informationFlowAnnotation.addImport("java.lang.annotation.Target");
-		informationFlowAnnotation.makePublic();
+		//informationFlowAnnotation.makePublic()
 
-		val EList<AnnotationInstance> annotationInstances = informationFlowAnnotation.annotationInstances;
+		// workaround because of unsupported annotation instance insertion
+		// note: the order of modifier and annotation instances do not matter
+		val EList<AnnotationInstanceOrModifier> modifier = informationFlowAnnotation.getAnnotationsAndModifiers;
 
 		val retention = createInformationFlowAnnotationInstance(Confidentiality2AnnotationsUtil.RETENTION_ANNOTATION)
-		setInformationFlowAnnotationInstanceParameters(retention, Confidentiality2AnnotationsUtil.RETENTION_POLICY_ENUMERATION -> "SOURCE")
-		annotationInstances.add(retention)
+		setInformationFlowAnnotationInstanceParameter(retention, Confidentiality2AnnotationsUtil.RETENTION_POLICY_ENUMERATION -> "SOURCE")
+		modifier.add(retention)
 
 		val target = createInformationFlowAnnotationInstance(Confidentiality2AnnotationsUtil.TARGET_ANNOTATION)
 		val elementTypeDotMethod = Confidentiality2AnnotationsUtil.ELEMENT_TYPE_ENUMERATION -> "METHOD"
 		val elementTypeDotType = Confidentiality2AnnotationsUtil.ELEMENT_TYPE_ENUMERATION -> "TYPE"
-		setInformationFlowAnnotationInstanceParameters(target, elementTypeDotMethod, elementTypeDotType)
-		annotationInstances.add(target)
+		setInformationFlowAnnotationInstanceParameterArrayInstantiationByValuesUntyped(target, elementTypeDotMethod, elementTypeDotType)
+		modifier.add(target)
 
-		// add "ParametersAndDataPairs parametersAndDataPairs();"
+		// add "ParametersAndDataPairs[] parametersAndDataPairs();"
 		val method = getParametersAndDataPairsInterfaceMethod()
-		informationFlowAnnotation.methods.add(method)
+		informationFlowAnnotation.members.add(method)
 	}
 	
 	public def static InterfaceMethod getParametersAndDataPairsInterfaceMethod() {
@@ -65,6 +68,7 @@ class Confidentiality2AnnotationsContentCreationUtil {
 		method.name = "parametersAndDataPairs"
 		val enumeration = Confidentiality2AnnotationsUtil.PARAMETERS_AND_DATA_PAIRS_ENUMERATION
 		method.typeReference = Confidentiality2AnnotationsUtil.createNamespaceClassifierReference(enumeration)
+		method.arrayDimensionsBefore.add(ArraysFactory.eINSTANCE.createArrayDimension)
 		return method
 	}
 	
@@ -90,31 +94,31 @@ class Confidentiality2AnnotationsContentCreationUtil {
 		instance.annotation = annotation
 		return instance
 	}
+	
+	private static def void setInformationFlowAnnotationInstanceParameterArrayInstantiationByValuesUntyped(AnnotationInstance instance,
+			Pair<Enumeration, String> reference2Name1, Pair<Enumeration, String> reference2Name2) {
+		val parameter = AnnotationsFactory.eINSTANCE.createSingleAnnotationParameter
+		parameter.value = createArrayInstantiationByValuesUntyped(reference2Name1, reference2Name2)
+		instance.parameter = parameter
+	}
+	
+	private static def Expression createArrayInstantiationByValuesUntyped(Pair<Enumeration, String> reference2Name1,
+			Pair<Enumeration, String> reference2Name2) {
+		//// example: { ElementType.METHOD, ElementType.TYPE }
+		val instantiation = ArraysFactory.eINSTANCE.createArrayInstantiationByValuesUntyped
+		val initializer = ArraysFactory.eINSTANCE.createArrayInitializer
+		val EList<ArrayInitializationValue> arrayArguments = initializer.initialValues
+		arrayArguments.add(createEnumerationReferenceDotEnumConstant(reference2Name1.key, reference2Name1.value))
+		arrayArguments.add(createEnumerationReferenceDotEnumConstant(reference2Name2.key, reference2Name2.value))
+		instantiation.arrayInitializer = initializer
+		return instantiation;
+	}
 
-	private def static void setInformationFlowAnnotationInstanceParameters(AnnotationInstance instance,
+	private def static void setInformationFlowAnnotationInstanceParameter(AnnotationInstance instance,
 		Pair<Enumeration, String> reference2Name) {
 		val parameter = AnnotationsFactory.eINSTANCE.createSingleAnnotationParameter
 		parameter.value = createEnumerationReferenceDotEnumConstant(reference2Name.key, reference2Name.value)
 		instance.parameter = parameter
-	}
-
-	private def static void setInformationFlowAnnotationInstanceParameters(AnnotationInstance instance,
-		Pair<Enumeration, String> reference2Name1, Pair<Enumeration, String> reference2Name2) {
-		val parameterList = AnnotationsFactory.eINSTANCE.createAnnotationParameterList
-		addNewSettingWithNewAttributeToParameterSettingsList(parameterList, reference2Name1.key, reference2Name1.value)
-		addNewSettingWithNewAttributeToParameterSettingsList(parameterList, reference2Name2.key, reference2Name2.value)
-		instance.parameter = parameterList
-	}
-	
-	private def static void addNewSettingWithNewAttributeToParameterSettingsList(AnnotationParameterList parameterList,
-		Enumeration enumerationReference, String name) {		
-		val setting = AnnotationsFactory.eINSTANCE.createAnnotationAttributeSetting
-		val attribute = AnnotationsFactory.eINSTANCE.createAnnotationAttribute
-		val enumeration = enumerationReference
-		attribute.typeReference = Confidentiality2AnnotationsUtil.createNamespaceClassifierReference(enumeration)
-		attribute.name = name
-		setting.attribute = attribute
-		parameterList.settings.add(setting)
 	}
 	
 // ###################################################

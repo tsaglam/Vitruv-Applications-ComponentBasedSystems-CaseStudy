@@ -364,7 +364,8 @@ routine createConfidentialitySpecificationClasses(conf::ConfidentialitySpecifica
 	action { 
 		call {
 			createJavaAnnotation(specification, confSpecificationPackage, "InformationFlow", "InformationFlow");
-			setInformationFlowAnnotationContent(specification);
+			// TODO not working because of correspondence bug:
+			// setInformationFlowAnnotationContent(specification);
 			createJavaEnum(specification, confSpecificationPackage, "DataSets", "DataSets");
 			setDataSetsEnumerationContent(specification);
 			createJavaEnum(specification, confSpecificationPackage, "ParametersAndDataPairs", "ParametersAndDataPairs");
@@ -405,6 +406,10 @@ routine createJavaAnnotation(conf::ConfidentialitySpecification specification, j
 		}
 		add correspondence between javaAnnotation and specification tagged with newTag
 		call createCompilationUnit(specification, javaAnnotation, containingPackage, newTag)
+		// TODO workaround for the correspondence bug (possible since there is only a single annotation)
+		execute {
+			Confidentiality2AnnotationsContentCreationUtil.setInformationFlowAnnotation(javaAnnotation);
+		}
 	}
 }
 
@@ -434,16 +439,17 @@ routine createCompilationUnit(conf::ConfidentialitySpecification specification, 
 	}
 }
 
-routine setInformationFlowAnnotationContent(conf::ConfidentialitySpecification specification)	 { 
-	match {
-		val informationFlowAnnotation = retrieve java::Annotation corresponding to specification tagged with "InformationFlow"
-	} 
-	action { 
-		call {
-			Confidentiality2AnnotationsContentCreationUtil.setInformationFlowAnnotation(informationFlowAnnotation);
-		}
-	}
-}
+// TODO not working because of correspondence bug
+//routine setInformationFlowAnnotationContent(conf::ConfidentialitySpecification specification)	 { 
+//	match {
+//		val informationFlowAnnotation = retrieve java::Annotation corresponding to specification tagged with "InformationFlow"
+//	} 
+//	action { 
+//		call {
+//			Confidentiality2AnnotationsContentCreationUtil.setInformationFlowAnnotation(informationFlowAnnotation);
+//		}
+//	}
+//}
 
 routine setDataSetsEnumerationContent(conf::ConfidentialitySpecification specification)	 { 
 	match {
