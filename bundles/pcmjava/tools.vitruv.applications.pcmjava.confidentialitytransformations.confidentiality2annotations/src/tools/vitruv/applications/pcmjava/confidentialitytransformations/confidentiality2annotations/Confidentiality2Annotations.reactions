@@ -33,8 +33,10 @@ routine createDataSetAndInitialize(conf::DataSet createdDataSet, conf::Confident
 	}
 	action {
 		val enumConstant = create java::EnumConstant and initialize {
-			dataSetsType.constants.add(enumConstant)
 			Confidentiality2AnnotationsUtil.setDataSetEnumConstantContent(enumConstant, createdDataSet)
+		}
+		update dataSetsType {
+			dataSetsType.constants.add(enumConstant)
 		}
 		add correspondence between createdDataSet and enumConstant
 	}
@@ -367,9 +369,11 @@ routine createConfidentialitySpecificationClasses(conf::ConfidentialitySpecifica
 			setDataSetsEnumerationContent(specification);
 			createJavaEnum(specification, confSpecificationPackage, "ParametersAndDataPairs", "ParametersAndDataPairs");
 			setParametersAndDataPairsEnumerationContent(specification);
-			// place holder:
+			// TODO only creation not yet content
 			createJavaEnum(specification, confSpecificationPackage, "DataSetMapEntries", "DataSetMapEntries");
 			createJavaEnum(specification, confSpecificationPackage, "DataSetMaps", "DataSetMaps");
+			createJavaEnum(specification, confSpecificationPackage, "SpecificationParameters", "SpecificationParameters");
+			createJavaEnum(specification, confSpecificationPackage, "ParameterizedDataSetMapEntries", "ParameterizedDataSetMapEntries");
 		}
 	}
 }

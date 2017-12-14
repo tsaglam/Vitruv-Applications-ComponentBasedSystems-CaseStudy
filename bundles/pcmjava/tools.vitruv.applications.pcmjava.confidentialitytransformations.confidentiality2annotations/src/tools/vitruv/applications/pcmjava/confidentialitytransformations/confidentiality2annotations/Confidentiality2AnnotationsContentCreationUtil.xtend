@@ -142,7 +142,7 @@ class Confidentiality2AnnotationsContentCreationUtil {
 		for (field : container.fields) {
 			addParameterAndAssignmentToConstructor(constructor, field)
 		}
-		container.constructors.add(constructor);
+		container.members.add(constructor);
 	}
 
 	private def static void addNewPublicConstantArrayToMemberContainerByName(MemberContainer container, ConcreteClassifier classifier,
@@ -150,14 +150,14 @@ class Confidentiality2AnnotationsContentCreationUtil {
 		val typeReference = Confidentiality2AnnotationsUtil.createNamespaceClassifierReference(classifier)
 		val Field field = createPublicConstant(typeReference, name)
 		field.arrayDimensionsBefore.add(ArraysFactory.eINSTANCE.createArrayDimension)
-		container.fields.add(field)
+		container.members.add(field)
 	}
 
 	private def static void addNewPublicConstantToMemberContainerByName(MemberContainer container, ConcreteClassifier classifier,
 		String name) {
 		val typeReference = Confidentiality2AnnotationsUtil.createNamespaceClassifierReference(classifier)
 		val Field field = createPublicConstant(typeReference, name)
-		container.fields.add(field)
+		container.members.add(field)
 	}
 
 	private def static void addParameterAndAssignmentToConstructor(Constructor constructor, Field field) {
