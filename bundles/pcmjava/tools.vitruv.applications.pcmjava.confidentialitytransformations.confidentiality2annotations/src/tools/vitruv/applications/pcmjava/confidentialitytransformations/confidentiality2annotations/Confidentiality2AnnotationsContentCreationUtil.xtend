@@ -122,23 +122,25 @@ class Confidentiality2AnnotationsContentCreationUtil {
 
 	public def static setDataSetEnumeration(Enumeration dataSetEnumeration) {
 		// package already set in compilation unit
-		dataSetEnumeration.makePublic();
+		dataSetEnumeration.makePublic()
 		addNewPublicConstantToMemberContainerByName(dataSetEnumeration, Confidentiality2AnnotationsUtil.STRING_CLASS, "id")
 		addNewPublicConstantToMemberContainerByName(dataSetEnumeration, Confidentiality2AnnotationsUtil.STRING_CLASS, "name")
-		addAllFieldsToNewConstructorToContainer(dataSetEnumeration)
+		addAllFieldsToNewConstructorToContainer(dataSetEnumeration, Confidentiality2AnnotationsUtil.DATA_SETS_ENUMERATION.name)
 	}
 
 	public def static void setParametersAndDataPairEnumeration(Enumeration pairEnumeration) {
 		// package already set in compilation unit
-		pairEnumeration.makePublic();
+		pairEnumeration.makePublic()
 		addNewPublicConstantArrayToMemberContainerByName(pairEnumeration, Confidentiality2AnnotationsUtil.STRING_CLASS, "parameterSources")
 		addNewPublicConstantArrayToMemberContainerByName(pairEnumeration, Confidentiality2AnnotationsUtil.DATA_SETS_ENUMERATION, "dataSets")
 		addNewPublicConstantArrayToMemberContainerByName(pairEnumeration, Confidentiality2AnnotationsUtil.DATA_SET_MAP_ENTRIES_ENUMERATION, "dataSetMapEntries")
-		addAllFieldsToNewConstructorToContainer(pairEnumeration)
+		addAllFieldsToNewConstructorToContainer(pairEnumeration, Confidentiality2AnnotationsUtil.PARAMETERS_AND_DATA_PAIRS_ENUMERATION.name)
 	}
 
-	private def static void addAllFieldsToNewConstructorToContainer(MemberContainer container) {
+	private def static void addAllFieldsToNewConstructorToContainer(MemberContainer container, String name) {
 		val Constructor constructor = MembersFactory.eINSTANCE.createConstructor
+		constructor.makePrivate
+		constructor.name = name
 		for (field : container.fields) {
 			addParameterAndAssignmentToConstructor(constructor, field)
 		}
@@ -162,7 +164,12 @@ class Confidentiality2AnnotationsContentCreationUtil {
 
 	private def static void addParameterAndAssignmentToConstructor(Constructor constructor, Field field) {
 		val Parameter param = ParametersFactory.eINSTANCE.createOrdinaryParameter;
+		param.typeReference = EcoreUtil.copy(field.typeReference)
 		param.name = field.name;
+		// assert field.arrayDimensionsBefore.size <= 1;
+		if(!field.arrayDimensionsBefore.empty) {
+			param.arrayDimensionsBefore.add(ArraysFactory.eINSTANCE.createArrayDimension)
+		}
 		constructor.parameters.add(param)
 		val assignment = createAssignmentFromParameterToField(field, param);
 		constructor.statements.add(assignment)

@@ -42,11 +42,11 @@ class Confidentiality2AnnotationsUtil {
 	
 	public static final val RETENTION_POLICY_ENUMERATION = Confidentiality2AnnotationsUtil.getEnumerationByName("RetentionPolicy")
 	
-	public static final val DATA_SETS_ENUMERATION = Confidentiality2AnnotationsUtil.getEnumerationByName("ElementType")
+	public static final val DATA_SETS_ENUMERATION = Confidentiality2AnnotationsUtil.getEnumerationByName("DataSets")
 	
-	public static final val DATA_SET_MAP_ENTRIES_ENUMERATION = Confidentiality2AnnotationsUtil.getEnumerationByName("ElementType")
+	public static final val DATA_SET_MAP_ENTRIES_ENUMERATION = Confidentiality2AnnotationsUtil.getEnumerationByName("DataSetMapEntries")
 	
-	public static final val PARAMETERS_AND_DATA_PAIRS_ENUMERATION = Confidentiality2AnnotationsUtil.getEnumerationByName("ElementType")
+	public static final val PARAMETERS_AND_DATA_PAIRS_ENUMERATION = Confidentiality2AnnotationsUtil.getEnumerationByName("ParametersAndDataPairs")
 
 	public static val DATASET_ARGUMENT_ID = 0;
 	
