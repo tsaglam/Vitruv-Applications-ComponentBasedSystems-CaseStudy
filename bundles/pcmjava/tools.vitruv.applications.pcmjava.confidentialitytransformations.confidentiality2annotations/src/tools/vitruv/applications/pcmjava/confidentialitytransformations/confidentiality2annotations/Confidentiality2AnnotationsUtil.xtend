@@ -27,6 +27,7 @@ import org.emftext.language.java.annotations.AnnotationAttributeSetting
 import org.emftext.language.java.annotations.AnnotationParameterList
 import org.emftext.language.java.arrays.ArrayInstantiationByValuesUntyped
 import java.util.List
+import org.emftext.language.java.arrays.ArrayInitializer
 
 class Confidentiality2AnnotationsUtil {
 	
@@ -130,32 +131,30 @@ class Confidentiality2AnnotationsUtil {
 	
 	private static def Expression createPairStringArrayArgument(EList<String> parameterSources) {
 		//// example: new String[] {"call"}
-		// new
-		val instantiation = ArraysFactory.eINSTANCE.createArrayInstantiationByValuesTyped;
-
-		// String
-		instantiation.typeReference = createNamespaceClassifierReference(STRING_CLASS)
-
+		// new String[]
+		val instantiation = createArrayInstantiationByValuesTyped(STRING_CLASS)
 		// {"call", ...}
-		val initializer = ArraysFactory.eINSTANCE.createArrayInitializer
+		val initializer = createIntializerForArrayInstantiation(instantiation)
 		val EList<ArrayInitializationValue> arrayArguments = initializer.initialValues;
 		for (parameterSource : parameterSources) {
 			arrayArguments.add(toStringReference(parameterSource));
 		}
-		instantiation.arrayInitializer = initializer
 		return instantiation;
 	}
 	
 	private static def Expression createPairDataSetsArrayArgument(List<DataSet> dataSets) {
 		//// example: new DataSets[] {DataSet.NAME}
-		// new
-		val instantiation = ArraysFactory.eINSTANCE.createArrayInstantiationByValuesTyped;
-
-		// DataSets
-		instantiation.typeReference = createNamespaceClassifierReference(DATA_SETS_ENUMERATION)
-		
+		// new DataSets[]
+		val instantiation = createArrayInstantiationByValuesTyped(DATA_SETS_ENUMERATION)
 		// {DataSet.NAME, ...}
-		val initializer = ArraysFactory.eINSTANCE.createArrayInitializer
+		val initializer = createIntializerForArrayInstantiation(instantiation)
+		if(!dataSets.empty) {
+			addExistingDataSets(initializer, dataSets)
+		}
+		return instantiation;
+	}
+	
+	private static def void addExistingDataSets(ArrayInitializer initializer, List<DataSet> dataSets) {
 		val EList<ArrayInitializationValue> arrayArguments = initializer.initialValues;
 		for (dataSet : dataSets) {
 			val enumeration = PARAMETERS_AND_DATA_PAIRS_ENUMERATION
@@ -163,8 +162,22 @@ class Confidentiality2AnnotationsUtil {
 			val dataSetExpression = Confidentiality2AnnotationsContentCreationUtil.createEnumerationReferenceDotEnumConstant(enumeration, value)
 			arrayArguments.add(dataSetExpression);
 		}
+	}
+	
+	private static def ArrayInstantiationByValuesTyped createArrayInstantiationByValuesTyped(ConcreteClassifier classifier) {
+		// new
+		val instantiation = ArraysFactory.eINSTANCE.createArrayInstantiationByValuesTyped;
+		// Classifier
+		instantiation.typeReference = createNamespaceClassifierReference(classifier)
+		// []
+		instantiation.arrayDimensionsBefore.add(ArraysFactory.eINSTANCE.createArrayDimension)
+		return instantiation
+	}
+	
+	private static def ArrayInitializer createIntializerForArrayInstantiation(ArrayInstantiationByValuesTyped instantiation) {
+		val initializer = ArraysFactory.eINSTANCE.createArrayInitializer
 		instantiation.arrayInitializer = initializer
-		return instantiation;
+		return initializer
 	}
 	
 // ###################################################
