@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.ConfidentialityApplicationTest;
+import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.Confidentiality2AnnotationsAssertions;
 import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.Confidentiality2AnnotationsContent;
 
 public class ConfidentialitySpecificationTest extends ConfidentialityApplicationTest {
@@ -112,5 +113,28 @@ public class ConfidentialitySpecificationTest extends ConfidentialityApplication
     @Test
     public void testInitialPackageCorrespondence() throws Throwable {
         getAssertionsHelper().assertRootPackage(getRootElement());
+    }
+
+    @Test
+    public void testInitialDataSetsEnumerationContent() throws Throwable {
+        File enumeration = getJavaFile(confidentialityRepository, Confidentiality2AnnotationsContent.DATA_SETS);
+        assertTrue("Created (java) file content is not equal to desired content.",
+                Confidentiality2AnnotationsAssertions.checkDataSetsContent(enumeration));
+    }
+
+    @Test
+    public void testInitialPuDPairsEnumerationContent() throws Throwable {
+        File enumeration = getJavaFile(confidentialityRepository,
+                Confidentiality2AnnotationsContent.PARAMETERS_AND_DATA_PAIRS);
+        assertTrue("Created (java) file content is not equal to desired content.",
+                Confidentiality2AnnotationsAssertions.checkPuDPairsContent(enumeration));
+    }
+
+    @Test
+    public void testInitialInformationFlowAnnotationContent() throws Throwable {
+        File annotation = getJavaFile(confidentialityRepository,
+                Confidentiality2AnnotationsContent.INFORMATION_FLOW_ANNOTATION);
+        assertTrue("Created (java) file content is not equal to desired content.",
+                Confidentiality2AnnotationsAssertions.checkRootAnnotationContent(annotation));
     }
 }

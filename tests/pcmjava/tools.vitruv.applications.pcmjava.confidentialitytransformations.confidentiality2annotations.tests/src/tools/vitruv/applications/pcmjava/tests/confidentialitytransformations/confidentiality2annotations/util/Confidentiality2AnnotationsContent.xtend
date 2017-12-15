@@ -2,26 +2,30 @@ package tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.c
 
 final class Confidentiality2AnnotationsContent {
 
-    public final static String CONFIDENTIALITY_REPOSITORY_PACKAGE = "confidentialityRepository";
+    public static final String CONFIDENTIALITY_REPOSITORY_PACKAGE = "confidentialityRepository";
 
-    public final static String INFORMATION_FLOW_ANNOTATION = "InformationFlow";
+    public static final String INFORMATION_FLOW_ANNOTATION = "InformationFlow";
     
-    public final static String DATA_SETS = "DataSets";
+    public static final String DATA_SETS = "DataSets";
     
-    public final static String PARAMETERS_AND_DATA_PAIRS = "ParametersAndDataPairs";
+    public static final String PARAMETERS_AND_DATA_PAIRS = "ParametersAndDataPairs";
     
  	public final static String SPECIFICATION_PARAMETERS = "SpecificationParameters";
      
  	public final static String PARAMETERIZED_DATA_SET_MAP_ENTRIES = "ParameterizedDataSetMapEntries";
       
-  	public final static String DATA_SET_MAPS = "DataSetMaps";
+    public static final String DATA_SET_MAPS = "DataSetMaps";
        
-    public final static String DATA_SET_MAP_ENTRIES = "DataSetMapEntries";
+    public static final String DATA_SET_MAP_ENTRIES = "DataSetMapEntries";
+    
+    public static final String SEPARATOR = "((\\s)*(\\n)*(;)*)*";
+    
+    public static final String WHITESPACE_SEPARATOR = "((\\s)*(\\n)*)*";
 
     public static final String DATA_SETS_CONTENT = '''
     package «CONFIDENTIALITY_REPOSITORY_PACKAGE»;
     
-    public enum «DATA_SETS» {
+    public enum «DATA_SETS» {;
     	
         public final String id;
         public final String name;
@@ -32,11 +36,11 @@ final class Confidentiality2AnnotationsContent {
         }
     }
     '''
-    
+
     public static final String PARAMETERS_AND_DATA_PAIRS_CONTENT = '''
     package «CONFIDENTIALITY_REPOSITORY_PACKAGE»;
     
-    public enum «PARAMETERS_AND_DATA_PAIRS» {
+    public enum «PARAMETERS_AND_DATA_PAIRS» {;
     	
         public final String[] parameterSources;
         public final DataSets[] dataSets;
@@ -64,9 +68,10 @@ final class Confidentiality2AnnotationsContent {
 	import java.lang.annotation.RetentionPolicy;
 	import java.lang.annotation.Target;
 	
+	public
 	@Retention(RetentionPolicy.SOURCE)
 	@Target({ElementType.METHOD, ElementType.TYPE})
-	public @interface «INFORMATION_FLOW_ANNOTATION» {
+	@interface «INFORMATION_FLOW_ANNOTATION» {
 	    «PARAMETERS_AND_DATA_PAIRS»[] «PARAMETERS_AND_DATA_PAIRS.toFirstLower»();
 	}
     '''

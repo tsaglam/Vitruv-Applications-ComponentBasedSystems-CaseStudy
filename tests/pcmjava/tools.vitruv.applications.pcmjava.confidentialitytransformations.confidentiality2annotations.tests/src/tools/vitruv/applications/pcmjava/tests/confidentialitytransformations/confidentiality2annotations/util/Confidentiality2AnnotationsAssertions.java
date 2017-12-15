@@ -2,6 +2,9 @@ package tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.c
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -114,6 +117,11 @@ public final class Confidentiality2AnnotationsAssertions {
         assertTrue("No corresponding java annotation for root found", foundAnnotation);
     }
 
+    public static boolean checkRootAnnotationContent(final File enumeration) throws IOException {
+        return checkContentIgnoreWhitespaceAndLb(enumeration,
+                Confidentiality2AnnotationsContent.INFORMATION_FLOW_ANNOTATION_CONTENT);
+    }
+
     //// DATA SETS ////
 
     public void assertDataSetCorrespondence(final DataSet dataSet) {
@@ -128,6 +136,10 @@ public final class Confidentiality2AnnotationsAssertions {
         // TODO check more values
         assertTrue("Corresponding data sets have different names: " + dataSet.getName() + "<>"
                 + correspondingEnumConstant.getName(), equalNames);
+    }
+
+    public static boolean checkDataSetsContent(final File enumeration) throws IOException {
+        return checkContentIgnoreWhitespaceAndLb(enumeration, Confidentiality2AnnotationsContent.DATA_SETS_CONTENT);
     }
 
     //// PARAMETERS AND DATA PAIRS ////
@@ -150,11 +162,28 @@ public final class Confidentiality2AnnotationsAssertions {
                 + "<>" + correspondingEnumConstant.getName(), equalNames);
     }
 
+    public static boolean checkPuDPairsContent(final File enumeration) throws IOException {
+        return checkContentIgnoreWhitespaceAndLb(enumeration,
+                Confidentiality2AnnotationsContent.PARAMETERS_AND_DATA_PAIRS_CONTENT);
+    }
+
     //// GENERAL ////
 
     public void assertEmptyCorrespondence(final EObject eObject) throws Throwable {
         boolean empty = CorrespondenceModelUtil.getCorrespondingEObjects(model, eObject).isEmpty();
         Assert.assertTrue("Correspondences of '" + eObject.toString() + "' are not empty.", empty);
+    }
 
+    public static boolean checkContentIgnoreWhitespaceAndLb(final File file, String toCompare)
+            throws IOException {
+        List<String> lines = Files.readAllLines(file.toPath());
+        StringBuilder sb = new StringBuilder();
+        for (String line : lines) {
+            // remove whitespace and line breaks
+            String toAdd = line.replaceAll("((\\s)*(\\n)*)*", "");
+            sb.append(toAdd);
+        }
+        return sb.toString()
+                .equals(toCompare.replaceAll("((\\s)*(\\n)*)*", ""));
     }
 }
