@@ -138,6 +138,7 @@ class Confidentiality2AnnotationsContentCreationUtil {
 		addNewPublicConstantArrayToMemberContainerByName(pairEnumeration, Confidentiality2AnnotationsUtil.STRING_CLASS, "parameterSources")
 		addNewPublicConstantArrayToMemberContainerByName(pairEnumeration, Confidentiality2AnnotationsUtil.DATA_SETS_ENUMERATION, "dataSets")
 		addNewPublicConstantArrayToMemberContainerByName(pairEnumeration, Confidentiality2AnnotationsUtil.DATA_SET_MAP_ENTRIES_ENUMERATION, "dataSetMapEntries")
+		addNewPublicConstantArrayToMemberContainerByName(pairEnumeration, Confidentiality2AnnotationsUtil.PARAMETETERIZED_DATA_SET_MAP_ENTRIES_ENUMERATION, "parameterizedDataSetMapEntries")
 		addAllFieldsToNewConstructorToContainer(pairEnumeration, Confidentiality2AnnotationsUtil.PARAMETERS_AND_DATA_PAIRS_ENUMERATION.name)
 	}
 

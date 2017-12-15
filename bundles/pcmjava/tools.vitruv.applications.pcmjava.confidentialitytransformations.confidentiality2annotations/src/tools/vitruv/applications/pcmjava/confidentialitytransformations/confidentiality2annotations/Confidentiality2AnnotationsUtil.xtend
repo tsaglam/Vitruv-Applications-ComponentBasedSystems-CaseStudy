@@ -46,6 +46,8 @@ class Confidentiality2AnnotationsUtil {
 	
 	public static final val DATA_SET_MAP_ENTRIES_ENUMERATION = Confidentiality2AnnotationsUtil.getEnumerationByName("DataSetMapEntries")
 	
+	public static final val PARAMETETERIZED_DATA_SET_MAP_ENTRIES_ENUMERATION = Confidentiality2AnnotationsUtil.getEnumerationByName("ParameterizedDataSetMapEntries")
+	
 	public static final val PARAMETERS_AND_DATA_PAIRS_ENUMERATION = Confidentiality2AnnotationsUtil.getEnumerationByName("ParametersAndDataPairs")
 
 	public static val DATASET_ARGUMENT_ID = 0;
