@@ -17,6 +17,9 @@ import org.junit.Assert
 import edu.kit.kastel.scbs.confidentiality.data.DataSet
 import edu.kit.kastel.scbs.confidentiality.repository.ParametersAndDataPair
 import java.util.Collection
+import org.emftext.language.java.references.StringReference
+
+//import org.eclipse.jdt.core.dom.Expression
 
 public final class ConfAssertions {
 	
@@ -78,11 +81,16 @@ public final class ConfAssertions {
 	
 	//// DATA SETS ////
 	
-	static def void checkDataSet(DataSet dataSet, EnumConstant correspondingEnumConstant) {
+	static def void assertEqualDataSets(DataSet dataSet, EnumConstant correspondingEnumConstant) {
+        val List<Expression> arguments = correspondingEnumConstant.arguments
+        val enumConstantName = correspondingEnumConstant.getName
+        val id = (arguments.get(0) as StringReference).value
+        val name = (arguments.get(1) as StringReference).value
 		// compare name with enum constant name
-		var boolean equalNames = dataSet.getName().equals(correspondingEnumConstant.getName().toLowerCase()) 
-		// TODO check more values
-		assertTrue('''Corresponding data sets have different names: «dataSet.getName()»<>«correspondingEnumConstant.getName()»''', equalNames) 
+		Assert.assertEquals('''DataSet.name != EnumConstant.name''', dataSet.getName, enumConstantName.toLowerCase) 
+		// compare name with arguments name
+		Assert.assertEquals('''DataSet.name != EnumConstant.arguments.name''', dataSet.getName, name)
+		Assert.assertEquals('''DataSet.id != EnumConstant.arguments.id''', dataSet.getId, id)
 	}
 	
 	static def boolean checkDataSetsContent(File enumeration) throws IOException {
