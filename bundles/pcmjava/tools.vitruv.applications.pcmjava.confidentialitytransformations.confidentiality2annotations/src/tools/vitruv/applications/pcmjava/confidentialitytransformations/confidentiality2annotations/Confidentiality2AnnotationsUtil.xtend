@@ -28,6 +28,7 @@ import org.emftext.language.java.annotations.AnnotationParameterList
 import org.emftext.language.java.arrays.ArrayInstantiationByValuesUntyped
 import java.util.List
 import org.emftext.language.java.arrays.ArrayInitializer
+import java.util.Optional
 
 class Confidentiality2AnnotationsUtil {
 	
@@ -60,7 +61,7 @@ class Confidentiality2AnnotationsUtil {
 	public static val PAIR_ARGUMENT_DATA_SETS = 1;
 
 	public static def String createEnumConstantName(String name) {
-		return name.toUpperCase;
+		Optional.ofNullable(name).orElse("")
 	}
 	
 // ###################################################
