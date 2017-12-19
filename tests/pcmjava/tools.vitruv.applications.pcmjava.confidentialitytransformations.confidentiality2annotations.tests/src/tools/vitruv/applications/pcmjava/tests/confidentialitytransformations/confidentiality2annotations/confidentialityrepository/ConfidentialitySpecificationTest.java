@@ -3,15 +3,18 @@ package tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.c
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.Set;
 
 import org.eclipse.jdt.core.IJavaProject;
+import org.emftext.language.java.classifiers.Enumeration;
+import org.emftext.language.java.containers.Package;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.ConfidentialityApplicationTest;
-import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.Confidentiality2AnnotationsAssertions;
-import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.Confidentiality2AnnotationsContent;
+import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.ConfAssertions;
+import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.ConfContent;
 
 public class ConfidentialitySpecificationTest extends ConfidentialityApplicationTest {
 
@@ -20,7 +23,7 @@ public class ConfidentialitySpecificationTest extends ConfidentialityApplication
     @Before
     public void before() {
         confidentialityRepository = new File(getCurrentTestProjectSrcFolder(),
-                Confidentiality2AnnotationsContent.CONFIDENTIALITY_REPOSITORY_PACKAGE);
+                ConfContent.CONFIDENTIALITY_REPOSITORY_PACKAGE);
     }
 
     @After
@@ -45,96 +48,91 @@ public class ConfidentialitySpecificationTest extends ConfidentialityApplication
 
     @Test
     public void testInitialDataSetsEnumerationCreation() throws Throwable {
-        File enumeration = getJavaFile(confidentialityRepository, Confidentiality2AnnotationsContent.DATA_SETS);
-        assertTrue(enumeration.getName() + " does not exist.", enumeration.exists());
-        assertTrue(enumeration.getName() + " is not a (java) file.", enumeration.isFile());
+        File enumeration = getJavaFile(confidentialityRepository, ConfContent.DATA_SETS);
+        ConfAssertions.assertFileExists(enumeration);
     }
 
     @Test
     public void testInitialPuDPairsEnumerationCreation() throws Throwable {
         File enumeration = getJavaFile(confidentialityRepository,
-                Confidentiality2AnnotationsContent.PARAMETERS_AND_DATA_PAIRS);
-        assertTrue(enumeration.getName() + " does not exist.", enumeration.exists());
-        assertTrue(enumeration.getName() + " is not a (java) file.", enumeration.isFile());
+                ConfContent.PARAMETERS_AND_DATA_PAIRS);
+        ConfAssertions.assertFileExists(enumeration);
     }
 
     @Test
     public void testInitialDataSetMapEntriesEnumerationCreation() throws Throwable {
         File enumeration = getJavaFile(confidentialityRepository,
-                Confidentiality2AnnotationsContent.DATA_SET_MAP_ENTRIES);
-        assertTrue(enumeration.getName() + " does not exist.", enumeration.exists());
-        assertTrue(enumeration.getName() + " is not a (java) file.", enumeration.isFile());
+                ConfContent.DATA_SET_MAP_ENTRIES);
+        ConfAssertions.assertFileExists(enumeration);
     }
 
     @Test
     public void testInitialDataSetMapsEnumerationCreation() throws Throwable {
-        File enumeration = getJavaFile(confidentialityRepository, Confidentiality2AnnotationsContent.DATA_SET_MAPS);
-        assertTrue(enumeration.getName() + " does not exist.", enumeration.exists());
-        assertTrue(enumeration.getName() + " is not a (java) file.", enumeration.isFile());
+        File enumeration = getJavaFile(confidentialityRepository, ConfContent.DATA_SET_MAPS);
+        ConfAssertions.assertFileExists(enumeration);
     }
 
     @Test
     public void testInitialParameterizedDataSetMapEntriesEnumerationCreation() throws Throwable {
         File enumeration = getJavaFile(confidentialityRepository,
-                Confidentiality2AnnotationsContent.PARAMETERIZED_DATA_SET_MAP_ENTRIES);
-        assertTrue(enumeration.getName() + " does not exist.", enumeration.exists());
-        assertTrue(enumeration.getName() + " is not a (java) file.", enumeration.isFile());
+                ConfContent.PARAMETERIZED_DATA_SET_MAP_ENTRIES);
+        ConfAssertions.assertFileExists(enumeration);
     }
 
     @Test
     public void testInitialSpecificationParametersEnumerationCreation() throws Throwable {
         File enumeration = getJavaFile(confidentialityRepository,
-                Confidentiality2AnnotationsContent.SPECIFICATION_PARAMETERS);
-        assertTrue(enumeration.getName() + " does not exist.", enumeration.exists());
-        assertTrue(enumeration.getName() + " is not a (java) file.", enumeration.isFile());
+                ConfContent.SPECIFICATION_PARAMETERS);
+        ConfAssertions.assertFileExists(enumeration);
     }
 
     @Test
     public void testInitialInformationFlowAnnotationCreation() throws Throwable {
         File annotation = getJavaFile(confidentialityRepository,
-                Confidentiality2AnnotationsContent.INFORMATION_FLOW_ANNOTATION);
-        assertTrue(annotation.getName() + " does not exist.", annotation.exists());
-        assertTrue(annotation.getName() + " is not a (java) file.", annotation.isFile());
+                ConfContent.INFORMATION_FLOW_ANNOTATION);
+        ConfAssertions.assertFileExists(annotation);
     }
 
     @Test
     public void testInitialAnnotationCorrespondence() throws Throwable {
         // TODO correspondence not working - but also not necessary (does not get modified later)
         // @see creation and content tests
-        // getAssertionsHelper().assertRootPackage(getRootElement());
+        // ConfAssertions#assertRootAnnotationExists
         assertTrue(true);
     }
 
     @Test
     public void testInitialEnumerationCorrespondences() throws Throwable {
-        getAssertionsHelper().assertRootEnumerations(getRootElement());
+        Set<Enumeration> corresponding = correspondences().getCorrespondingEnumerations(getRootElement());
+        ConfAssertions.assertRootEnumerationsExist(corresponding);
     }
 
     @Test
     public void testInitialPackageCorrespondence() throws Throwable {
-        getAssertionsHelper().assertRootPackage(getRootElement());
+        Set<Package> corresponding = correspondences().getCorrespondingPackages(getRootElement());
+        ConfAssertions.assertConfidentialityPackageExists(corresponding);
     }
 
     @Test
     public void testInitialDataSetsEnumerationContent() throws Throwable {
-        File enumeration = getJavaFile(confidentialityRepository, Confidentiality2AnnotationsContent.DATA_SETS);
+        File enumeration = getJavaFile(confidentialityRepository, ConfContent.DATA_SETS);
         assertTrue("Created (java) file content is not equal to desired content.",
-                Confidentiality2AnnotationsAssertions.checkDataSetsContent(enumeration));
+                ConfAssertions.checkDataSetsContent(enumeration));
     }
 
     @Test
     public void testInitialPuDPairsEnumerationContent() throws Throwable {
         File enumeration = getJavaFile(confidentialityRepository,
-                Confidentiality2AnnotationsContent.PARAMETERS_AND_DATA_PAIRS);
+                ConfContent.PARAMETERS_AND_DATA_PAIRS);
         assertTrue("Created (java) file content is not equal to desired content.",
-                Confidentiality2AnnotationsAssertions.checkPuDPairsContent(enumeration));
+                ConfAssertions.checkPuDPairsContent(enumeration));
     }
 
     @Test
     public void testInitialInformationFlowAnnotationContent() throws Throwable {
         File annotation = getJavaFile(confidentialityRepository,
-                Confidentiality2AnnotationsContent.INFORMATION_FLOW_ANNOTATION);
+                ConfContent.INFORMATION_FLOW_ANNOTATION);
         assertTrue("Created (java) file content is not equal to desired content.",
-                Confidentiality2AnnotationsAssertions.checkRootAnnotationContent(annotation));
+                ConfAssertions.checkRootAnnotationContent(annotation));
     }
 }

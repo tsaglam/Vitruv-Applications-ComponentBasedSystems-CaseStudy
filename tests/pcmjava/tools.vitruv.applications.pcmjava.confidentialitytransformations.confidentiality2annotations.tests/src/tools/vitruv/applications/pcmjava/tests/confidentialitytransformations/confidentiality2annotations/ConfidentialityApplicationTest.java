@@ -6,20 +6,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaCore;
 import org.junit.Assert;
 
 import edu.kit.kastel.scbs.confidentiality.ConfidentialitySpecification;
 import tools.vitruv.applications.pcmjava.confidentialitytransformations.confidentiality2annotations.Confidentiality2AnnotationsChangePropagationSpecification;
-import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.Confidentiality2AnnotationsAssertions;
-import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.Confidentiality2AnnotationsCorrespondenceHelper;
-import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.ConfidentialitySpecificationElementsCreator;
+import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.ConfCorrespondences;
+import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.ConfElementsCreator;
+import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.ConfJavaModelUtil;
 import tools.vitruv.domains.confidentiality.ConfidentialityDomainProvider;
 import tools.vitruv.domains.confidentiality.ConfidentialityNamespace;
 import tools.vitruv.domains.java.JavaDomainProvider;
@@ -63,7 +57,7 @@ import tools.vitruv.framework.tests.util.TestUtil;
  * @see tools.vitruv.framework.tests.util.TestUtil
  * 
  * @author Nils Wilka
- * @version 1.0, 26.08.2017
+ * @version 1.1, 16.12.2017
  */
 public class ConfidentialityApplicationTest extends VitruviusApplicationTest {
 
@@ -73,25 +67,26 @@ public class ConfidentialityApplicationTest extends VitruviusApplicationTest {
     // Choose an arbitrary name for the confidentiality model folder
     public final static String MODEL_FOLDER_NAME = MODEL_NAME;
 
-    private Confidentiality2AnnotationsCorrespondenceHelper correspondenceHelper;
+    // choose to keep the files for manual checks
+    public final static boolean CLEAN_UP = false;
 
-    private Confidentiality2AnnotationsAssertions assertions;
+    private ConfCorrespondences correspondences;
 
     // ###################################################
     // ###################### SETUP ######################
 
     @Override
     protected void setup() {
-        correspondenceHelper = new Confidentiality2AnnotationsCorrespondenceHelper(getCorrespondenceModel());
-        assertions = new Confidentiality2AnnotationsAssertions(getCorrespondenceModel());
+        correspondences = new ConfCorrespondences(getCorrespondenceModel());
+        javaProject = null;
 
-        ConfidentialitySpecification specification = ConfidentialitySpecificationElementsCreator.createSpecification();
+        ConfidentialitySpecification specification = ConfElementsCreator.createSpecification();
         String path = getConfidentialityModelRelativePath();
         try {
             // creates corresponding (java model) root according to reactions
             createAndSynchronizeModel(path, specification);
         } catch (IOException e) {
-            Assert.fail("Model changes could not be saved for some reason");
+            Assert.fail("Model changes could not be saved for some reason.");
         }
     }
 
@@ -100,8 +95,13 @@ public class ConfidentialityApplicationTest extends VitruviusApplicationTest {
 
     @Override
     protected void cleanup() {
-        // TODO Auto-generated method stub
-
+        if (CLEAN_UP) {
+            try {
+                deleteAndSynchronizeModel(getConfidentialityModelRelativePath());
+            } catch (IOException e) {
+                // do nothing.
+            }
+        }
     }
 
     // ###################################################
@@ -150,28 +150,15 @@ public class ConfidentialityApplicationTest extends VitruviusApplicationTest {
         return new File(parent, child + ".java");
     }
 
-    protected Confidentiality2AnnotationsCorrespondenceHelper getCorrespondenceHelper() {
-        return correspondenceHelper;
+    protected ConfCorrespondences correspondences() {
+        return correspondences;
     }
 
-    protected Confidentiality2AnnotationsAssertions getAssertionsHelper() {
-        return assertions;
-    }
+    private IJavaProject javaProject;
 
     protected IJavaProject getCurrentTestProject() {
-        File file = getCurrentTestProjectFolder();
-        IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-        IProject project = root.getProject(file.getName());
-        IJavaProject javaProject;
-        try {
-            project.create(null);
-            project.open(null);
-            IProjectDescription description = project.getDescription();
-            description.setNatureIds(new String[] { JavaCore.NATURE_ID });
-            project.setDescription(description, null);
-            javaProject = JavaCore.create(project);
-        } catch (CoreException e) {
-            javaProject = null;
+        if (javaProject == null) {
+            javaProject = ConfJavaModelUtil.createJavaProjectByPath(getCurrentTestProjectFolder().getName());
         }
         return javaProject;
     }
