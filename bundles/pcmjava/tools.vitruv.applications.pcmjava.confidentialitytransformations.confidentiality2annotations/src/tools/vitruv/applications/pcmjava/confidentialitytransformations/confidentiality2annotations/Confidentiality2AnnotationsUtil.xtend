@@ -25,10 +25,14 @@ import org.emftext.language.java.types.TypesFactory
 import org.emftext.language.java.annotations.AnnotationsFactory
 import org.emftext.language.java.annotations.AnnotationAttributeSetting
 import org.emftext.language.java.annotations.AnnotationParameterList
-import org.emftext.language.java.arrays.ArrayInstantiationByValuesUntyped
 import java.util.List
 import org.emftext.language.java.arrays.ArrayInitializer
 import java.util.Optional
+import org.modelversioning.emfprofileapplication.StereotypeApplication
+import org.eclipse.emf.ecore.EObject
+import org.palladiosimulator.pcm.repository.OperationSignature
+
+import static extension edu.kit.ipd.sdq.commons.util.org.palladiosimulator.mdsdprofiles.api.StereotypeAPIUtil.*
 
 class Confidentiality2AnnotationsUtil {
 	
@@ -61,7 +65,7 @@ class Confidentiality2AnnotationsUtil {
 	public static val PAIR_ARGUMENT_DATA_SETS = 1;
 
 	public static def String createEnumConstantName(String name) {
-		Optional.ofNullable(name).orElse("")
+		Optional.ofNullable(name).orElse("").toUpperCase
 	}
 	
 // ###################################################
@@ -184,15 +188,27 @@ class Confidentiality2AnnotationsUtil {
 // ###################################################
 // ############### ANNOTATION ADDITIONS ##############
 
-	public def static void addValueToAnnotationAttributeSetting(
-			AnnotationAttributeSetting setting,
-			ParametersAndDataPair parametersAndDataPair) {
-		val ArrayInstantiationByValuesUntyped arrayInstantiation = setting.value as ArrayInstantiationByValuesUntyped
-		val EList<ArrayInitializationValue> arrayArguments = arrayInstantiation.arrayInitializer.initialValues
-		arrayArguments.add(createParametersAndDataPairExpression(parametersAndDataPair))
+	public static def isInformationFlow(StereotypeApplication stereotypeApplication) {
+		stereotypeApplication.stereotype.name.equals("InformationFlow")
 	}
 
-	public def static AnnotationAttributeSetting createAndInitializeAnnotationAttributeSetting(
+	public static def isOperationSignature(EObject eObject) {
+		eObject instanceof OperationSignature 
+	}
+	
+	public static def Iterable<ParametersAndDataPair> getParametersAndDataPairs(OperationSignature operationSignature) {
+		operationSignature.getTaggedValues("InformationFlow", "parametersAndDataPairs", ParametersAndDataPair)
+	}
+
+//	public static def void addValueToAnnotationAttributeSetting(
+//			AnnotationAttributeSetting setting,
+//			ParametersAndDataPair parametersAndDataPair) {
+//		val ArrayInstantiationByValuesUntyped arrayInstantiation = setting.value as ArrayInstantiationByValuesUntyped
+//		val EList<ArrayInitializationValue> arrayArguments = arrayInstantiation.arrayInitializer.initialValues
+//		arrayArguments.add(createParametersAndDataPairExpression(parametersAndDataPair))
+//	}
+
+	public static def AnnotationAttributeSetting createAndInitializeAnnotationAttributeSetting(
 			AnnotationParameterList parameterList,
 			Iterable<ParametersAndDataPair> parametersAndDataPairs) {		
 		val setting = AnnotationsFactory.eINSTANCE.createAnnotationAttributeSetting
@@ -220,7 +236,8 @@ class Confidentiality2AnnotationsUtil {
 	
 	private static def Expression createParametersAndDataPairExpression(ParametersAndDataPair pair) {
 		val enumeration = PARAMETERS_AND_DATA_PAIRS_ENUMERATION
-		val pairExpression = Confidentiality2AnnotationsContentCreationUtil.createEnumerationReferenceDotEnumConstant(enumeration, pair.name)
+		val name = createEnumConstantName(pair.name)
+		val pairExpression = Confidentiality2AnnotationsContentCreationUtil.createEnumerationReferenceDotEnumConstant(enumeration, name)
 		return pairExpression
 	}
 
@@ -248,12 +265,12 @@ class Confidentiality2AnnotationsUtil {
 		return stringLiteral
 	}
 	
-	public def static StringReference getStringReference() {
+	public static def StringReference getStringReference() {
 		return ReferencesFactory.eINSTANCE.createStringReference()
 	}
 	
 	// source: Pcm2JavaHelper
-	public def static NamespaceClassifierReference createNamespaceClassifierReference(
+	public static def NamespaceClassifierReference createNamespaceClassifierReference(
 		ConcreteClassifier concreteClassifier) {
 		val namespaceClassifierReference = TypesFactory.eINSTANCE.createNamespaceClassifierReference
 		val classifierRef = TypesFactory.eINSTANCE.createClassifierReference
@@ -262,19 +279,19 @@ class Confidentiality2AnnotationsUtil {
 		return namespaceClassifierReference
 	}
 	
-	public def static Class getClassByName(String name) {
+	public static def Class getClassByName(String name) {
 		val Class clazz = ClassifiersFactory.eINSTANCE.createClass
 		clazz.setName(name)
 		return clazz
 	}
 	
-	public def static Enumeration getEnumerationByName(String name) {
+	public static def Enumeration getEnumerationByName(String name) {
 		val Enumeration enumeration = ClassifiersFactory.eINSTANCE.createEnumeration
 		enumeration.setName(name)
 		return enumeration
 	}
 	
-	public def static Annotation getAnnotationByName(String name) {
+	public static def Annotation getAnnotationByName(String name) {
 		val Annotation annotation = ClassifiersFactory.eINSTANCE.createAnnotation
 		annotation.setName(name)
 		return annotation
