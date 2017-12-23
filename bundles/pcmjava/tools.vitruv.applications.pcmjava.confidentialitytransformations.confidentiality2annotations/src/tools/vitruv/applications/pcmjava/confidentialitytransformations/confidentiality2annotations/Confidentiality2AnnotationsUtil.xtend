@@ -5,6 +5,7 @@ import edu.kit.kastel.scbs.confidentiality.data.DataSet
 import edu.kit.kastel.scbs.confidentiality.repository.ParametersAndDataPair
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.util.EcoreUtil
+import org.eclipse.emf.ecore.EObject
 import org.emftext.language.java.arrays.ArrayInitializationValue
 import org.emftext.language.java.arrays.ArrayInstantiationByValuesTyped
 import org.emftext.language.java.arrays.ArraysFactory
@@ -25,12 +26,14 @@ import org.emftext.language.java.types.TypesFactory
 import org.emftext.language.java.annotations.AnnotationsFactory
 import org.emftext.language.java.annotations.AnnotationAttributeSetting
 import org.emftext.language.java.annotations.AnnotationParameterList
-import java.util.List
 import org.emftext.language.java.arrays.ArrayInitializer
-import java.util.Optional
+import org.emftext.language.java.expressions.UnaryExpression
+import org.emftext.language.java.references.IdentifierReference
 import org.modelversioning.emfprofileapplication.StereotypeApplication
-import org.eclipse.emf.ecore.EObject
 import org.palladiosimulator.pcm.repository.OperationSignature
+import java.util.List
+import java.util.Optional
+import java.util.function.Function
 
 import static extension edu.kit.ipd.sdq.commons.util.org.palladiosimulator.mdsdprofiles.api.StereotypeAPIUtil.*
 
@@ -104,30 +107,29 @@ class Confidentiality2AnnotationsUtil {
 		enumConstant.arguments.add(LiteralsFactory.eINSTANCE.createNullLiteral);
 	}
 	
-	public static def void insertEnumConstantDataTarget(EnumConstant pair, EnumConstant dataSet) {
-		var ArrayInstantiationByValuesTyped dataSetsArrayArgument
-		dataSetsArrayArgument = pair.arguments.get(PAIR_ARGUMENT_DATA_SETS) as ArrayInstantiationByValuesTyped;
-		val EList<ArrayInitializationValue> arrayArguments = dataSetsArrayArgument.arrayInitializer.initialValues;
-		val enumeration = PARAMETERS_AND_DATA_PAIRS_ENUMERATION
-		val value = dataSet.name
-		val dataSetExpression = Confidentiality2AnnotationsContentCreationUtil.createEnumerationReferenceDotEnumConstant(enumeration, value)
-		arrayArguments.add(dataSetExpression);
-	}
-	
-	public static def void removeEnumConstantDataTarget(EnumConstant pair, EnumConstant dataSet) {
-		var ArrayInstantiationByValuesTyped dataSetsArrayArgument
-		dataSetsArrayArgument = pair.arguments.get(PAIR_ARGUMENT_DATA_SETS) as ArrayInstantiationByValuesTyped;
-		val EList<ArrayInitializationValue> dataSetArray = dataSetsArrayArgument.arrayInitializer.initialValues;
-		val enumeration = PARAMETERS_AND_DATA_PAIRS_ENUMERATION
-		val value = dataSet.name
-		val dataSetExpression = Confidentiality2AnnotationsContentCreationUtil.createEnumerationReferenceDotEnumConstant(enumeration, value)
-		var ArrayInitializationValue toRemove
-		for (dataSetArrayValue : dataSetArray) {
-			if(dataSetArrayValue.toString.equals(dataSetExpression)) {
-				toRemove = dataSetArrayValue
+	public static def <T> Integer removeFirst(List<T> list, Function<? super T, Boolean> func) {
+		var index = 0
+		var continue = true
+		for (var i = 0; continue && i < list.length; i++) {
+			if(func.apply(list.get(i))) {
+				index = i
+				continue = false
 			}
 		}
-		dataSetArray.remove(toRemove);
+		list.remove(index as int)
+		return index
+	}
+	
+	// for data set target expressions
+	public static def String toString(Expression expression) {
+		val reference = (expression as UnaryExpression).child as IdentifierReference
+		val classifier = reference.target
+		val enumConstant = (reference.next as IdentifierReference).target
+		'''«classifier.name».«enumConstant.name»'''
+	}
+	
+	public static def String toString(EnumConstant enumConstant) {
+		'''«DATA_SETS_ENUMERATION.name».«enumConstant.name»'''
 	}
 	
 	private static def List<DataSet> dataIdentifyingToDataSet(EList<DataIdentifying> dataIds) {
