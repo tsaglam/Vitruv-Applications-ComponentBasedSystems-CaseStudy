@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.Set;
 
-import org.eclipse.jdt.core.IJavaProject;
 import org.emftext.language.java.classifiers.Enumeration;
 import org.emftext.language.java.containers.Package;
 import org.junit.After;
@@ -29,13 +28,6 @@ public class ConfidentialitySpecificationTest extends ConfidentialityApplication
     @After
     public void after() {
         confidentialityRepository = null;
-    }
-
-    @Test
-    public void testConfidentialityApplicationTest() throws Throwable {
-        IJavaProject project = getCurrentTestProject();
-        assertTrue("Project is not null", project != null);
-        assertTrue("Project does not exist", project.exists());
     }
 
     @Test

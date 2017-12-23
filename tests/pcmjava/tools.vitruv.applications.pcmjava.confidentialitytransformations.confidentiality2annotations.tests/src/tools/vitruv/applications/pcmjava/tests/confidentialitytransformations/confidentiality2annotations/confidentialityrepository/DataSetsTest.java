@@ -1,11 +1,7 @@
 package tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.confidentialityrepository;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
-import org.emftext.language.java.members.EnumConstant;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +12,6 @@ import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.co
 import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.ConfElementsCreator;
 
 public class DataSetsTest extends ConfidentialityApplicationTest {
-
-    private final static String DATASET_RENAME = "rename";
 
     @Before
     public void before() {
@@ -62,7 +56,7 @@ public class DataSetsTest extends ConfidentialityApplicationTest {
     @Test
     public void testRenameDataSet() throws Throwable {
         DataSet dataSet = addDataSet();
-        dataSet.setName(DATASET_RENAME);
+        dataSet.setName(ConfElementsCreator.RENAME);
         saveAndSynchronizeChanges(getRootElement());
         checkDataSet(dataSet);
     }
@@ -112,7 +106,7 @@ public class DataSetsTest extends ConfidentialityApplicationTest {
         DataSet dataSet = addDataSet();
         dataSet.setId(ConfElementsCreator.getId());
         saveAndSynchronizeChanges(getRootElement());
-        dataSet.setName(DATASET_RENAME);
+        dataSet.setName(ConfElementsCreator.RENAME);
         saveAndSynchronizeChanges(getRootElement());
         checkDataSet(dataSet);
     }
@@ -149,8 +143,8 @@ public class DataSetsTest extends ConfidentialityApplicationTest {
         final int amountToRemove = 3;
         final int amountToAddLater = 4;
         // create
-        List<DataSet> toRemove = addDataSets(amountToRemove);
         List<DataSet> dataSets = addDataSets(amount);
+        List<DataSet> toRemove = addDataSets(amountToRemove);
         // delete
         for (final DataSet dataSet : toRemove) {
             getRootElement().getDataIdentifier().remove(dataSet);
@@ -169,68 +163,9 @@ public class DataSetsTest extends ConfidentialityApplicationTest {
     public void testRenameOneOfMultipleDataSets() throws Throwable {
         List<DataSet> dataSets = addDataSets(3);
         DataSet toRename = addDataSet();
-        toRename.setName(DATASET_RENAME);
+        toRename.setName(ConfElementsCreator.RENAME);
         saveAndSynchronizeChanges(getRootElement());
         checkDataSets(dataSets);
         checkDataSet(toRename);
-    }
-
-    private DataSet addDataSet() throws IOException {
-        DataSet dataSet = ConfElementsCreator.createDataSet();
-        addSaveAndSynchronize(dataSet);
-        return dataSet;
-    }
-
-    private DataSet addDataSetWithName(String name) throws IOException {
-        DataSet dataSet = ConfElementsCreator.createDataSet();
-        dataSet.setName(name);
-        addSaveAndSynchronize(dataSet);
-        return dataSet;
-    }
-
-    private DataSet addDataSetWithId(String id) throws IOException {
-        DataSet dataSet = ConfElementsCreator.createDataSet();
-        dataSet.setId(id);
-        addSaveAndSynchronize(dataSet);
-        return dataSet;
-    }
-
-    private void addSaveAndSynchronize(DataSet dataSet) throws IOException {
-        getRootElement().getDataIdentifier().add(dataSet);
-        saveAndSynchronizeChanges(getRootElement());
-    }
-
-    private List<DataSet> addDataSets() throws IOException {
-        return addDataSets(Optional.empty());
-    }
-
-    private List<DataSet> addDataSets(int amount) throws IOException {
-        return addDataSets(Optional.of(amount));
-    }
-
-    private List<DataSet> addDataSets(Optional<Integer> amount) throws IOException {
-        List<DataSet> dataSets;
-        if (amount.isPresent()) {
-            dataSets = ConfElementsCreator.createDataSets(amount.get());
-        } else {
-            dataSets = ConfElementsCreator.createDataSets(3);
-        }
-        for (DataSet dataSet : dataSets) {
-            getRootElement().getDataIdentifier().add(dataSet);
-            saveAndSynchronizeChanges(getRootElement());
-        }
-        return dataSets;
-    }
-
-    private void checkDataSet(DataSet dataSet) {
-        final Set<EnumConstant> corresponding = correspondences().getCorrespondingEnumConstants(dataSet);
-        EnumConstant enumConstant = ConfAssertions.getSingleObject(corresponding);
-        ConfAssertions.assertEqualDataSets(dataSet, enumConstant);
-    }
-
-    private void checkDataSets(Iterable<DataSet> dataSets) {
-        for (DataSet dataSet : dataSets) {
-            checkDataSet(dataSet);
-        }
     }
 }

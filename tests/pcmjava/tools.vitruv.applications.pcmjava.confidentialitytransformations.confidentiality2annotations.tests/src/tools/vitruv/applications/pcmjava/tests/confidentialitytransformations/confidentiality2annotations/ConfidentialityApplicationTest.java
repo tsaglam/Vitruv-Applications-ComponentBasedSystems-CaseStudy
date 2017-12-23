@@ -5,24 +5,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
-import org.eclipse.jdt.core.IJavaProject;
+import org.emftext.language.java.members.EnumConstant;
 import org.junit.Assert;
 
 import edu.kit.kastel.scbs.confidentiality.ConfidentialitySpecification;
+import edu.kit.kastel.scbs.confidentiality.data.DataSet;
+import edu.kit.kastel.scbs.confidentiality.repository.ParametersAndDataPair;
 import tools.vitruv.applications.pcmjava.confidentialitytransformations.confidentiality2annotations.Confidentiality2AnnotationsChangePropagationSpecification;
+import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.ConfAssertions;
 import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.ConfCorrespondences;
 import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.ConfElementsCreator;
-import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.ConfJavaModelUtil;
 import tools.vitruv.domains.confidentiality.ConfidentialityDomainProvider;
 import tools.vitruv.domains.confidentiality.ConfidentialityNamespace;
 import tools.vitruv.domains.java.JavaDomainProvider;
+import tools.vitruv.domains.java.JavaNamespace;
 import tools.vitruv.framework.change.processing.ChangePropagationSpecification;
 import tools.vitruv.framework.domains.VitruvDomain;
-import tools.vitruv.framework.tests.VitruviusApplicationTest;
-import tools.vitruv.framework.tests.VitruviusTest;
-import tools.vitruv.framework.tests.VitruviusUnmonitoredApplicationTest;
-import tools.vitruv.framework.tests.util.TestUtil;
+import tools.vitruv.testutils.VitruviusApplicationTest;
+import tools.vitruv.testutils.VitruviusTest;
+import tools.vitruv.testutils.VitruviusUnmonitoredApplicationTest;
+import tools.vitruv.testutils.util.TestUtil;
 
 /**
  * Basic test class for all Confidentiality Vitruvius application tests.
@@ -78,8 +83,6 @@ public class ConfidentialityApplicationTest extends VitruviusApplicationTest {
     @Override
     protected void setup() {
         correspondences = new ConfCorrespondences(getCorrespondenceModel());
-        javaProject = null;
-
         ConfidentialitySpecification specification = ConfElementsCreator.createSpecification();
         String path = getConfidentialityModelRelativePath();
         try {
@@ -130,12 +133,20 @@ public class ConfidentialityApplicationTest extends VitruviusApplicationTest {
         return (ConfidentialitySpecification) getFirstRootElement(getConfidentialityModelRelativePath());
     }
 
+    protected String getConfidentialityModelAbsolutePath() {
+        return getCurrentTestProjectConfidentialityModel().getAbsolutePath();
+    }
+
     protected String getConfidentialityModelRelativePath() {
-        return new File(MODEL_FOLDER_NAME, MODEL_NAME + "." + ConfidentialityNamespace.FILE_EXTENSION).getPath();
+        return new File(MODEL_FOLDER_NAME, getConfidentialityModelFileName()).getPath();
     }
 
     protected File getCurrentTestProjectConfidentialityModel() {
-        return new File(getCurrentTestProjectModelFolder(), MODEL_NAME + "." + ConfidentialityNamespace.FILE_EXTENSION);
+        return new File(getCurrentTestProjectModelFolder(), getConfidentialityModelFileName());
+    }
+
+    protected String getConfidentialityModelFileName() {
+        return MODEL_NAME + "." + ConfidentialityNamespace.FILE_EXTENSION;
     }
 
     protected File getCurrentTestProjectModelFolder() {
@@ -147,19 +158,113 @@ public class ConfidentialityApplicationTest extends VitruviusApplicationTest {
     }
 
     protected File getJavaFile(File parent, String child) {
-        return new File(parent, child + ".java");
+        return new File(parent, child + "." + JavaNamespace.FILE_EXTENSION);
     }
 
     protected ConfCorrespondences correspondences() {
         return correspondences;
     }
 
-    private IJavaProject javaProject;
+    protected DataSet addDataSet() throws IOException {
+        DataSet dataSet = ConfElementsCreator.createDataSet();
+        addSaveAndSynchronize(dataSet);
+        return dataSet;
+    }
 
-    protected IJavaProject getCurrentTestProject() {
-        if (javaProject == null) {
-            javaProject = ConfJavaModelUtil.createJavaProjectByPath(getCurrentTestProjectFolder().getName());
+    protected DataSet addDataSetWithName(String name) throws IOException {
+        DataSet dataSet = ConfElementsCreator.createDataSet();
+        dataSet.setName(name);
+        addSaveAndSynchronize(dataSet);
+        return dataSet;
+    }
+
+    protected DataSet addDataSetWithId(String id) throws IOException {
+        DataSet dataSet = ConfElementsCreator.createDataSet();
+        dataSet.setId(id);
+        addSaveAndSynchronize(dataSet);
+        return dataSet;
+    }
+
+    protected void addSaveAndSynchronize(DataSet dataSet) throws IOException {
+        getRootElement().getDataIdentifier().add(dataSet);
+        saveAndSynchronizeChanges(getRootElement());
+    }
+
+    protected List<DataSet> addDataSets(int amount) throws IOException {
+        return addDataSets(Optional.of(amount));
+    }
+
+    protected List<DataSet> addDataSets(Optional<Integer> amount) throws IOException {
+        List<DataSet> dataSets;
+        if (amount.isPresent()) {
+            dataSets = ConfElementsCreator.createDataSets(amount.get());
+        } else {
+            dataSets = ConfElementsCreator.createDataSets(3);
         }
-        return javaProject;
+        for (DataSet dataSet : dataSets) {
+            getRootElement().getDataIdentifier().add(dataSet);
+            saveAndSynchronizeChanges(getRootElement());
+        }
+        return dataSets;
+    }
+
+    protected void checkDataSet(DataSet dataSet) {
+        final Set<EnumConstant> corresponding = correspondences().getCorrespondingEnumConstants(dataSet);
+        EnumConstant enumConstant = ConfAssertions.getSingleObject(corresponding);
+        ConfAssertions.assertEqualDataSets(dataSet, enumConstant);
+    }
+
+    protected void checkDataSets(Iterable<DataSet> dataSets) {
+        for (DataSet dataSet : dataSets) {
+            checkDataSet(dataSet);
+        }
+    }
+
+    protected ParametersAndDataPair addPuDPair() throws IOException {
+        ParametersAndDataPair pudPair = ConfElementsCreator.createParametersAndDataPair();
+        addSaveAndSynchronize(pudPair);
+        return pudPair;
+    }
+
+    protected ParametersAndDataPair addPuDPairWithName(String name) throws IOException {
+        ParametersAndDataPair pudPair = ConfElementsCreator.createParametersAndDataPair();
+        pudPair.setName(name);
+        addSaveAndSynchronize(pudPair);
+        return pudPair;
+    }
+
+    protected void addSaveAndSynchronize(ParametersAndDataPair pudPair) throws IOException {
+        getRootElement().getParametersAndDataPairs().add(pudPair);
+        saveAndSynchronizeChanges(getRootElement());
+    }
+
+    protected List<ParametersAndDataPair> addPuDPairs(int amount) throws IOException {
+        return addPuDPairs(Optional.of(amount));
+    }
+
+    protected List<ParametersAndDataPair> addPuDPairs(Optional<Integer> amount) throws IOException {
+        List<ParametersAndDataPair> pudPairs;
+        if (amount.isPresent()) {
+            pudPairs = ConfElementsCreator.createParametersAndDataPairs(amount.get());
+        } else {
+            pudPairs = ConfElementsCreator.createParametersAndDataPairs(3);
+        }
+        for (ParametersAndDataPair pudPair : pudPairs) {
+            getRootElement().getParametersAndDataPairs().add(pudPair);
+            saveAndSynchronizeChanges(getRootElement());
+        }
+        return pudPairs;
+    }
+
+    protected void checkPuDPair(ParametersAndDataPair pudPair) {
+        final Set<EnumConstant> corresponding = correspondences().getCorrespondingEnumConstants(pudPair);
+        EnumConstant enumConstant = ConfAssertions.getSingleObject(corresponding);
+        ConfAssertions.assertEqualParametersAndDataPairs(pudPair, enumConstant);
+    }
+
+    protected void checkPuDPairs(Iterable<ParametersAndDataPair> pudPairs) {
+        for (ParametersAndDataPair pudPair : pudPairs) {
+            checkPuDPair(pudPair);
+        }
     }
 }
