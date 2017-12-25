@@ -13,49 +13,66 @@ import tools.vitruv.framework.change.echange.feature.attribute.ReplaceSingleValu
 
 @SuppressWarnings("all")
 class ChangedMultiplicityUpperReaction extends AbstractReactionRealization {
+  private ReplaceSingleValuedEAttribute<MultiplicityElement, Integer> replaceChange;
+  
+  private int currentlyMatchedChange;
+  
   public void executeReaction(final EChange change) {
-    ReplaceSingleValuedEAttribute<MultiplicityElement, Integer> typedChange = (ReplaceSingleValuedEAttribute<MultiplicityElement, Integer>)change;
-    MultiplicityElement affectedEObject = typedChange.getAffectedEObject();
-    EAttribute affectedFeature = typedChange.getAffectedFeature();
-    Integer oldValue = typedChange.getOldValue();
-    Integer newValue = typedChange.getNewValue();
+    if (!checkPrecondition(change)) {
+    	return;
+    }
+    org.eclipse.uml2.uml.MultiplicityElement affectedEObject = replaceChange.getAffectedEObject();
+    EAttribute affectedFeature = replaceChange.getAffectedFeature();
+    java.lang.Integer oldValue = replaceChange.getOldValue();
+    java.lang.Integer newValue = replaceChange.getNewValue();
+    				
+    getLogger().trace("Passed complete precondition check of Reaction " + this.getClass().getName());
+    				
     mir.routines.umlToPcm.RoutinesFacade routinesFacade = new mir.routines.umlToPcm.RoutinesFacade(this.executionState, this);
     mir.reactions.reactionsUmlToPcm.umlToPcm.ChangedMultiplicityUpperReaction.ActionUserExecution userExecution = new mir.reactions.reactionsUmlToPcm.umlToPcm.ChangedMultiplicityUpperReaction.ActionUserExecution(this.executionState, this);
-    userExecution.callRoutine1(affectedEObject, affectedFeature, oldValue, newValue, routinesFacade);
+    userExecution.callRoutine1(replaceChange, affectedEObject, affectedFeature, oldValue, newValue, routinesFacade);
+    
+    resetChanges();
   }
   
-  public static Class<? extends EChange> getExpectedChangeType() {
-    return ReplaceSingleValuedEAttribute.class;
-  }
-  
-  private boolean checkChangeProperties(final EChange change) {
-    ReplaceSingleValuedEAttribute<MultiplicityElement, Integer> relevantChange = (ReplaceSingleValuedEAttribute<MultiplicityElement, Integer>)change;
-    if (!(relevantChange.getAffectedEObject() instanceof MultiplicityElement)) {
-    	return false;
-    }
-    if (!relevantChange.getAffectedFeature().getName().equals("upper")) {
-    	return false;
-    }
-    if (relevantChange.isFromNonDefaultValue() && !(relevantChange.getOldValue() instanceof Integer)) {
-    	return false;
-    }
-    if (relevantChange.isToNonDefaultValue() && !(relevantChange.getNewValue() instanceof Integer)) {
-    	return false;
-    }
-    return true;
+  private void resetChanges() {
+    replaceChange = null;
+    currentlyMatchedChange = 0;
   }
   
   public boolean checkPrecondition(final EChange change) {
-    if (!(change instanceof ReplaceSingleValuedEAttribute)) {
-    	return false;
+    if (currentlyMatchedChange == 0) {
+    	if (!matchReplaceChange(change)) {
+    		resetChanges();
+    		return false;
+    	} else {
+    		currentlyMatchedChange++;
+    	}
     }
-    getLogger().debug("Passed change type check of reaction " + this.getClass().getName());
-    if (!checkChangeProperties(change)) {
-    	return false;
-    }
-    getLogger().debug("Passed change properties check of reaction " + this.getClass().getName());
-    getLogger().debug("Passed complete precondition check of reaction " + this.getClass().getName());
+    
     return true;
+  }
+  
+  private boolean matchReplaceChange(final EChange change) {
+    if (change instanceof ReplaceSingleValuedEAttribute<?, ?>) {
+    	ReplaceSingleValuedEAttribute<org.eclipse.uml2.uml.MultiplicityElement, java.lang.Integer> _localTypedChange = (ReplaceSingleValuedEAttribute<org.eclipse.uml2.uml.MultiplicityElement, java.lang.Integer>) change;
+    	if (!(_localTypedChange.getAffectedEObject() instanceof org.eclipse.uml2.uml.MultiplicityElement)) {
+    		return false;
+    	}
+    	if (!_localTypedChange.getAffectedFeature().getName().equals("upper")) {
+    		return false;
+    	}
+    	if (_localTypedChange.isFromNonDefaultValue() && !(_localTypedChange.getOldValue() instanceof java.lang.Integer)) {
+    		return false;
+    	}
+    	if (_localTypedChange.isToNonDefaultValue() && !(_localTypedChange.getNewValue() instanceof java.lang.Integer)) {
+    		return false;
+    	}
+    	this.replaceChange = (ReplaceSingleValuedEAttribute<org.eclipse.uml2.uml.MultiplicityElement, java.lang.Integer>) change;
+    	return true;
+    }
+    
+    return false;
   }
   
   private static class ActionUserExecution extends AbstractRepairRoutineRealization.UserExecution {
@@ -63,7 +80,7 @@ class ChangedMultiplicityUpperReaction extends AbstractReactionRealization {
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final MultiplicityElement affectedEObject, final EAttribute affectedFeature, final Integer oldValue, final Integer newValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final MultiplicityElement affectedEObject, final EAttribute affectedFeature, final Integer oldValue, final Integer newValue, @Extension final RoutinesFacade _routinesFacade) {
       _routinesFacade.updateMultiplicityType(affectedEObject);
     }
   }

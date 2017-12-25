@@ -6,7 +6,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Operation;
-import org.eclipse.uml2.uml.internal.impl.UMLFactoryImpl;
 import org.palladiosimulator.pcm.repository.OperationInterface;
 import org.palladiosimulator.pcm.repository.OperationSignature;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
@@ -34,8 +33,7 @@ public class CreateOperationInterfaceSignatureRoutine extends AbstractRepairRout
     }
     
     public void updateUmlOperationElement(final OperationSignature pcmSignature, final Interface umlInterface, final Operation umlOperation) {
-      String _entityName = pcmSignature.getEntityName();
-      umlOperation.setName(_entityName);
+      umlOperation.setName(pcmSignature.getEntityName());
     }
     
     public EObject getCorrepondenceSourceUmlInterface(final OperationSignature pcmSignature) {
@@ -61,20 +59,22 @@ public class CreateOperationInterfaceSignatureRoutine extends AbstractRepairRout
   
   private OperationSignature pcmSignature;
   
-  protected void executeRoutine() throws IOException {
+  protected boolean executeRoutine() throws IOException {
     getLogger().debug("Called routine CreateOperationInterfaceSignatureRoutine with input:");
-    getLogger().debug("   OperationSignature: " + this.pcmSignature);
+    getLogger().debug("   pcmSignature: " + this.pcmSignature);
     
-    Interface umlInterface = getCorrespondingElement(
+    org.eclipse.uml2.uml.Interface umlInterface = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceUmlInterface(pcmSignature), // correspondence source supplier
-    	Interface.class,
-    	(Interface _element) -> true, // correspondence precondition checker
-    	null);
+    	org.eclipse.uml2.uml.Interface.class,
+    	(org.eclipse.uml2.uml.Interface _element) -> true, // correspondence precondition checker
+    	null, 
+    	false // asserted
+    	);
     if (umlInterface == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(umlInterface);
-    Operation umlOperation = UMLFactoryImpl.eINSTANCE.createOperation();
+    org.eclipse.uml2.uml.Operation umlOperation = org.eclipse.uml2.uml.internal.impl.UMLFactoryImpl.eINSTANCE.createOperation();
     notifyObjectCreated(umlOperation);
     userExecution.updateUmlOperationElement(pcmSignature, umlInterface, umlOperation);
     
@@ -84,5 +84,7 @@ public class CreateOperationInterfaceSignatureRoutine extends AbstractRepairRout
     addCorrespondenceBetween(userExecution.getElement2(pcmSignature, umlInterface, umlOperation), userExecution.getElement3(pcmSignature, umlInterface, umlOperation), "");
     
     postprocessElements();
+    
+    return true;
   }
 }

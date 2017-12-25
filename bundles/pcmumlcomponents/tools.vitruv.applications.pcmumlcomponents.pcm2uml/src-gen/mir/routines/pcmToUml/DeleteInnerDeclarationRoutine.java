@@ -2,7 +2,6 @@ package mir.routines.pcmToUml;
 
 import java.io.IOException;
 import mir.routines.pcmToUml.RoutinesFacade;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Property;
@@ -33,8 +32,7 @@ public class DeleteInnerDeclarationRoutine extends AbstractRepairRoutineRealizat
     }
     
     public void callRoutine1(final CompositeDataType dataType, final InnerDeclaration innerDeclaration, final DataType compositeType, final Property umlProperty, @Extension final RoutinesFacade _routinesFacade) {
-      EList<Property> _ownedAttributes = compositeType.getOwnedAttributes();
-      _ownedAttributes.remove(umlProperty);
+      compositeType.getOwnedAttributes().remove(umlProperty);
     }
   }
   
@@ -49,31 +47,37 @@ public class DeleteInnerDeclarationRoutine extends AbstractRepairRoutineRealizat
   
   private InnerDeclaration innerDeclaration;
   
-  protected void executeRoutine() throws IOException {
+  protected boolean executeRoutine() throws IOException {
     getLogger().debug("Called routine DeleteInnerDeclarationRoutine with input:");
-    getLogger().debug("   CompositeDataType: " + this.dataType);
-    getLogger().debug("   InnerDeclaration: " + this.innerDeclaration);
+    getLogger().debug("   dataType: " + this.dataType);
+    getLogger().debug("   innerDeclaration: " + this.innerDeclaration);
     
-    DataType compositeType = getCorrespondingElement(
+    org.eclipse.uml2.uml.DataType compositeType = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceCompositeType(dataType, innerDeclaration), // correspondence source supplier
-    	DataType.class,
-    	(DataType _element) -> true, // correspondence precondition checker
-    	null);
+    	org.eclipse.uml2.uml.DataType.class,
+    	(org.eclipse.uml2.uml.DataType _element) -> true, // correspondence precondition checker
+    	null, 
+    	true // asserted
+    	);
     if (compositeType == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(compositeType);
-    Property umlProperty = getCorrespondingElement(
+    org.eclipse.uml2.uml.Property umlProperty = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceUmlProperty(dataType, innerDeclaration, compositeType), // correspondence source supplier
-    	Property.class,
-    	(Property _element) -> true, // correspondence precondition checker
-    	null);
+    	org.eclipse.uml2.uml.Property.class,
+    	(org.eclipse.uml2.uml.Property _element) -> true, // correspondence precondition checker
+    	null, 
+    	true // asserted
+    	);
     if (umlProperty == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(umlProperty);
     userExecution.callRoutine1(dataType, innerDeclaration, compositeType, umlProperty, actionsFacade);
     
     postprocessElements();
+    
+    return true;
   }
 }

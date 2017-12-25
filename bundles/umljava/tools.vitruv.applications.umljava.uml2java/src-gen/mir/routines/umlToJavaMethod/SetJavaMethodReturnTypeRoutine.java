@@ -1,13 +1,12 @@
 package mir.routines.umlToJavaMethod;
 
 import java.io.IOException;
+import java.util.Optional;
 import mir.routines.umlToJavaMethod.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Type;
-import org.emftext.language.java.containers.CompilationUnit;
 import org.emftext.language.java.members.Method;
-import org.emftext.language.java.types.TypeReference;
 import tools.vitruv.applications.umljava.uml2java.UmlToJavaHelper;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
 import tools.vitruv.extensions.dslsruntime.reactions.ReactionExecutionState;
@@ -24,15 +23,12 @@ public class SetJavaMethodReturnTypeRoutine extends AbstractRepairRoutineRealiza
       super(reactionExecutionState);
     }
     
-    public EObject getElement1(final Operation uOperation, final Method javaMethod, final org.emftext.language.java.classifiers.Class returnType) {
+    public EObject getElement1(final Operation uOperation, final Method javaMethod, final Optional<org.emftext.language.java.classifiers.Class> returnType) {
       return javaMethod;
     }
     
-    public void update0Element(final Operation uOperation, final Method javaMethod, final org.emftext.language.java.classifiers.Class returnType) {
-      Type _type = uOperation.getType();
-      CompilationUnit _containingCompilationUnit = javaMethod.getContainingCompilationUnit();
-      TypeReference _createTypeReferenceAndUpdateImport = UmlToJavaHelper.createTypeReferenceAndUpdateImport(_type, returnType, _containingCompilationUnit, this.userInteracting);
-      javaMethod.setTypeReference(_createTypeReferenceAndUpdateImport);
+    public void update0Element(final Operation uOperation, final Method javaMethod, final Optional<org.emftext.language.java.classifiers.Class> returnType) {
+      javaMethod.setTypeReference(UmlToJavaHelper.createTypeReferenceAndUpdateImport(uOperation.getType(), returnType, javaMethod.getContainingCompilationUnit(), this.userInteracting));
     }
     
     public EObject getCorrepondenceSourceJavaMethod(final Operation uOperation) {
@@ -54,28 +50,35 @@ public class SetJavaMethodReturnTypeRoutine extends AbstractRepairRoutineRealiza
   
   private Operation uOperation;
   
-  protected void executeRoutine() throws IOException {
+  protected boolean executeRoutine() throws IOException {
     getLogger().debug("Called routine SetJavaMethodReturnTypeRoutine with input:");
-    getLogger().debug("   Operation: " + this.uOperation);
+    getLogger().debug("   uOperation: " + this.uOperation);
     
-    Method javaMethod = getCorrespondingElement(
+    org.emftext.language.java.members.Method javaMethod = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceJavaMethod(uOperation), // correspondence source supplier
-    	Method.class,
-    	(Method _element) -> true, // correspondence precondition checker
-    	null);
+    	org.emftext.language.java.members.Method.class,
+    	(org.emftext.language.java.members.Method _element) -> true, // correspondence precondition checker
+    	null, 
+    	false // asserted
+    	);
     if (javaMethod == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(javaMethod);
-    org.emftext.language.java.classifiers.Class returnType = getCorrespondingElement(
-    	userExecution.getCorrepondenceSourceReturnType(uOperation, javaMethod), // correspondence source supplier
-    	org.emftext.language.java.classifiers.Class.class,
-    	(org.emftext.language.java.classifiers.Class _element) -> true, // correspondence precondition checker
-    	null);
-    registerObjectUnderModification(returnType);
+    	Optional<org.emftext.language.java.classifiers.Class> returnType = Optional.ofNullable(getCorrespondingElement(
+    		userExecution.getCorrepondenceSourceReturnType(uOperation, javaMethod), // correspondence source supplier
+    		org.emftext.language.java.classifiers.Class.class,
+    		(org.emftext.language.java.classifiers.Class _element) -> true, // correspondence precondition checker
+    		null, 
+    		false // asserted
+    		)
+    );
+    registerObjectUnderModification(returnType.isPresent() ? returnType.get() : null);
     // val updatedElement userExecution.getElement1(uOperation, javaMethod, returnType);
     userExecution.update0Element(uOperation, javaMethod, returnType);
     
     postprocessElements();
+    
+    return true;
   }
 }

@@ -15,55 +15,71 @@ import tools.vitruv.framework.change.echange.feature.reference.RemoveEReference;
 
 @SuppressWarnings("all")
 class DeletedElementReaction extends AbstractReactionRealization {
+  private RemoveEReference<Model, PackageableElement> removeChange;
+  
+  private int currentlyMatchedChange;
+  
   public void executeReaction(final EChange change) {
-    RemoveEReference<Model, PackageableElement> typedChange = (RemoveEReference<Model, PackageableElement>)change;
-    Model affectedEObject = typedChange.getAffectedEObject();
-    EReference affectedFeature = typedChange.getAffectedFeature();
-    PackageableElement oldValue = typedChange.getOldValue();
+    if (!checkPrecondition(change)) {
+    	return;
+    }
+    org.eclipse.uml2.uml.Model affectedEObject = removeChange.getAffectedEObject();
+    EReference affectedFeature = removeChange.getAffectedFeature();
+    org.eclipse.uml2.uml.PackageableElement oldValue = removeChange.getOldValue();
+    int index = removeChange.getIndex();
+    				
+    getLogger().trace("Passed change matching of Reaction " + this.getClass().getName());
+    if (!checkUserDefinedPrecondition(removeChange, affectedEObject, affectedFeature, oldValue, index)) {
+    	resetChanges();
+    	return;
+    }
+    getLogger().trace("Passed complete precondition check of Reaction " + this.getClass().getName());
+    				
     mir.routines.umlToPcm.RoutinesFacade routinesFacade = new mir.routines.umlToPcm.RoutinesFacade(this.executionState, this);
     mir.reactions.reactionsUmlToPcm.umlToPcm.DeletedElementReaction.ActionUserExecution userExecution = new mir.reactions.reactionsUmlToPcm.umlToPcm.DeletedElementReaction.ActionUserExecution(this.executionState, this);
-    userExecution.callRoutine1(affectedEObject, affectedFeature, oldValue, routinesFacade);
+    userExecution.callRoutine1(removeChange, affectedEObject, affectedFeature, oldValue, index, routinesFacade);
+    
+    resetChanges();
   }
   
-  public static Class<? extends EChange> getExpectedChangeType() {
-    return RemoveEReference.class;
+  private void resetChanges() {
+    removeChange = null;
+    currentlyMatchedChange = 0;
   }
   
-  private boolean checkChangeProperties(final EChange change) {
-    RemoveEReference<Model, PackageableElement> relevantChange = (RemoveEReference<Model, PackageableElement>)change;
-    if (!(relevantChange.getAffectedEObject() instanceof Model)) {
-    	return false;
+  private boolean matchRemoveChange(final EChange change) {
+    if (change instanceof RemoveEReference<?, ?>) {
+    	RemoveEReference<org.eclipse.uml2.uml.Model, org.eclipse.uml2.uml.PackageableElement> _localTypedChange = (RemoveEReference<org.eclipse.uml2.uml.Model, org.eclipse.uml2.uml.PackageableElement>) change;
+    	if (!(_localTypedChange.getAffectedEObject() instanceof org.eclipse.uml2.uml.Model)) {
+    		return false;
+    	}
+    	if (!_localTypedChange.getAffectedFeature().getName().equals("packagedElement")) {
+    		return false;
+    	}
+    	if (!(_localTypedChange.getOldValue() instanceof org.eclipse.uml2.uml.PackageableElement)) {
+    		return false;
+    	}
+    	this.removeChange = (RemoveEReference<org.eclipse.uml2.uml.Model, org.eclipse.uml2.uml.PackageableElement>) change;
+    	return true;
     }
-    if (!relevantChange.getAffectedFeature().getName().equals("packagedElement")) {
-    	return false;
-    }
-    if (!(relevantChange.getOldValue() instanceof PackageableElement)) {
-    	return false;
-    }
-    return true;
+    
+    return false;
   }
   
   public boolean checkPrecondition(final EChange change) {
-    if (!(change instanceof RemoveEReference)) {
-    	return false;
+    if (currentlyMatchedChange == 0) {
+    	if (!matchRemoveChange(change)) {
+    		resetChanges();
+    		return false;
+    	} else {
+    		currentlyMatchedChange++;
+    	}
     }
-    getLogger().debug("Passed change type check of reaction " + this.getClass().getName());
-    if (!checkChangeProperties(change)) {
-    	return false;
-    }
-    getLogger().debug("Passed change properties check of reaction " + this.getClass().getName());
-    RemoveEReference<Model, PackageableElement> typedChange = (RemoveEReference<Model, PackageableElement>)change;
-    Model affectedEObject = typedChange.getAffectedEObject();
-    EReference affectedFeature = typedChange.getAffectedFeature();
-    PackageableElement oldValue = typedChange.getOldValue();
-    if (!checkUserDefinedPrecondition(affectedEObject, affectedFeature, oldValue)) {
-    	return false;
-    }
-    getLogger().debug("Passed complete precondition check of reaction " + this.getClass().getName());
+    
     return true;
   }
   
-  private boolean checkUserDefinedPrecondition(final Model affectedEObject, final EReference affectedFeature, final PackageableElement oldValue) {
+  private boolean checkUserDefinedPrecondition(final RemoveEReference removeChange, final Model affectedEObject, final EReference affectedFeature, final PackageableElement oldValue, final int index) {
     return (!(oldValue instanceof DataType));
   }
   
@@ -72,7 +88,7 @@ class DeletedElementReaction extends AbstractReactionRealization {
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final Model affectedEObject, final EReference affectedFeature, final PackageableElement oldValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final RemoveEReference removeChange, final Model affectedEObject, final EReference affectedFeature, final PackageableElement oldValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
       _routinesFacade.deleteElement(oldValue);
     }
   }

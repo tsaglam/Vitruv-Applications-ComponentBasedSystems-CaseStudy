@@ -3,7 +3,6 @@ package mir.reactions.reactionsJavaToUml.javaToUmlClassifier;
 import mir.routines.javaToUmlClassifier.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.xbase.lib.Extension;
-import org.emftext.language.java.classifiers.Classifier;
 import org.emftext.language.java.classifiers.Interface;
 import org.emftext.language.java.types.TypeReference;
 import tools.vitruv.applications.umljava.util.java.JavaTypeUtil;
@@ -16,45 +15,63 @@ import tools.vitruv.framework.change.echange.feature.reference.InsertEReference;
 
 @SuppressWarnings("all")
 class JavaSuperInterfaceAddedReaction extends AbstractReactionRealization {
+  private InsertEReference<Interface, TypeReference> insertChange;
+  
+  private int currentlyMatchedChange;
+  
   public void executeReaction(final EChange change) {
-    InsertEReference<Interface, TypeReference> typedChange = (InsertEReference<Interface, TypeReference>)change;
-    Interface affectedEObject = typedChange.getAffectedEObject();
-    EReference affectedFeature = typedChange.getAffectedFeature();
-    TypeReference newValue = typedChange.getNewValue();
+    if (!checkPrecondition(change)) {
+    	return;
+    }
+    org.emftext.language.java.classifiers.Interface affectedEObject = insertChange.getAffectedEObject();
+    EReference affectedFeature = insertChange.getAffectedFeature();
+    org.emftext.language.java.types.TypeReference newValue = insertChange.getNewValue();
+    int index = insertChange.getIndex();
+    				
+    getLogger().trace("Passed complete precondition check of Reaction " + this.getClass().getName());
+    				
     mir.routines.javaToUmlClassifier.RoutinesFacade routinesFacade = new mir.routines.javaToUmlClassifier.RoutinesFacade(this.executionState, this);
     mir.reactions.reactionsJavaToUml.javaToUmlClassifier.JavaSuperInterfaceAddedReaction.ActionUserExecution userExecution = new mir.reactions.reactionsJavaToUml.javaToUmlClassifier.JavaSuperInterfaceAddedReaction.ActionUserExecution(this.executionState, this);
-    userExecution.callRoutine1(affectedEObject, affectedFeature, newValue, routinesFacade);
+    userExecution.callRoutine1(insertChange, affectedEObject, affectedFeature, newValue, index, routinesFacade);
+    
+    resetChanges();
   }
   
-  public static Class<? extends EChange> getExpectedChangeType() {
-    return InsertEReference.class;
-  }
-  
-  private boolean checkChangeProperties(final EChange change) {
-    InsertEReference<Interface, TypeReference> relevantChange = (InsertEReference<Interface, TypeReference>)change;
-    if (!(relevantChange.getAffectedEObject() instanceof Interface)) {
-    	return false;
-    }
-    if (!relevantChange.getAffectedFeature().getName().equals("extends")) {
-    	return false;
-    }
-    if (!(relevantChange.getNewValue() instanceof TypeReference)) {
-    	return false;
-    }
-    return true;
+  private void resetChanges() {
+    insertChange = null;
+    currentlyMatchedChange = 0;
   }
   
   public boolean checkPrecondition(final EChange change) {
-    if (!(change instanceof InsertEReference)) {
-    	return false;
+    if (currentlyMatchedChange == 0) {
+    	if (!matchInsertChange(change)) {
+    		resetChanges();
+    		return false;
+    	} else {
+    		currentlyMatchedChange++;
+    	}
     }
-    getLogger().debug("Passed change type check of reaction " + this.getClass().getName());
-    if (!checkChangeProperties(change)) {
-    	return false;
-    }
-    getLogger().debug("Passed change properties check of reaction " + this.getClass().getName());
-    getLogger().debug("Passed complete precondition check of reaction " + this.getClass().getName());
+    
     return true;
+  }
+  
+  private boolean matchInsertChange(final EChange change) {
+    if (change instanceof InsertEReference<?, ?>) {
+    	InsertEReference<org.emftext.language.java.classifiers.Interface, org.emftext.language.java.types.TypeReference> _localTypedChange = (InsertEReference<org.emftext.language.java.classifiers.Interface, org.emftext.language.java.types.TypeReference>) change;
+    	if (!(_localTypedChange.getAffectedEObject() instanceof org.emftext.language.java.classifiers.Interface)) {
+    		return false;
+    	}
+    	if (!_localTypedChange.getAffectedFeature().getName().equals("extends")) {
+    		return false;
+    	}
+    	if (!(_localTypedChange.getNewValue() instanceof org.emftext.language.java.types.TypeReference)) {
+    		return false;
+    	}
+    	this.insertChange = (InsertEReference<org.emftext.language.java.classifiers.Interface, org.emftext.language.java.types.TypeReference>) change;
+    	return true;
+    }
+    
+    return false;
   }
   
   private static class ActionUserExecution extends AbstractRepairRoutineRealization.UserExecution {
@@ -62,9 +79,8 @@ class JavaSuperInterfaceAddedReaction extends AbstractReactionRealization {
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final Interface affectedEObject, final EReference affectedFeature, final TypeReference newValue, @Extension final RoutinesFacade _routinesFacade) {
-      Classifier _classifierFromTypeReference = JavaTypeUtil.getClassifierFromTypeReference(newValue);
-      _routinesFacade.addUmlSuperinterfaces(affectedEObject, _classifierFromTypeReference);
+    public void callRoutine1(final InsertEReference insertChange, final Interface affectedEObject, final EReference affectedFeature, final TypeReference newValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+      _routinesFacade.addUmlSuperinterfaces(affectedEObject, JavaTypeUtil.getClassifierFromTypeReference(newValue));
     }
   }
 }

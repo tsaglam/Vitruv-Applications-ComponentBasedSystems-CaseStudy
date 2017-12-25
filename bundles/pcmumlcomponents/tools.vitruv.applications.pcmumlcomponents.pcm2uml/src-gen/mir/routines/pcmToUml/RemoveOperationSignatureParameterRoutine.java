@@ -37,21 +37,25 @@ public class RemoveOperationSignatureParameterRoutine extends AbstractRepairRout
   
   private Parameter pcmParameter;
   
-  protected void executeRoutine() throws IOException {
+  protected boolean executeRoutine() throws IOException {
     getLogger().debug("Called routine RemoveOperationSignatureParameterRoutine with input:");
-    getLogger().debug("   Parameter: " + this.pcmParameter);
+    getLogger().debug("   pcmParameter: " + this.pcmParameter);
     
     org.eclipse.uml2.uml.Parameter umlParameter = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceUmlParameter(pcmParameter), // correspondence source supplier
     	org.eclipse.uml2.uml.Parameter.class,
     	(org.eclipse.uml2.uml.Parameter _element) -> true, // correspondence precondition checker
-    	null);
+    	null, 
+    	true // asserted
+    	);
     if (umlParameter == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(umlParameter);
     deleteObject(userExecution.getElement1(pcmParameter, umlParameter));
     
     postprocessElements();
+    
+    return true;
   }
 }

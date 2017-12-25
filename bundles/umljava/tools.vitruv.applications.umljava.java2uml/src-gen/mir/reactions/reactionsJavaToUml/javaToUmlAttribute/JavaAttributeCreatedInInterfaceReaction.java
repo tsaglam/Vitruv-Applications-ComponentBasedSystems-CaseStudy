@@ -11,50 +11,94 @@ import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealiz
 import tools.vitruv.extensions.dslsruntime.reactions.ReactionExecutionState;
 import tools.vitruv.extensions.dslsruntime.reactions.structure.CallHierarchyHaving;
 import tools.vitruv.framework.change.echange.EChange;
-import tools.vitruv.framework.change.echange.compound.CreateAndInsertNonRoot;
+import tools.vitruv.framework.change.echange.eobject.CreateEObject;
 import tools.vitruv.framework.change.echange.feature.reference.InsertEReference;
 
 @SuppressWarnings("all")
 class JavaAttributeCreatedInInterfaceReaction extends AbstractReactionRealization {
+  private CreateEObject<Field> createChange;
+  
+  private InsertEReference<Interface, Field> insertChange;
+  
+  private int currentlyMatchedChange;
+  
   public void executeReaction(final EChange change) {
-    InsertEReference<Interface, Field> typedChange = ((CreateAndInsertNonRoot<Interface, Field>)change).getInsertChange();
-    Interface affectedEObject = typedChange.getAffectedEObject();
-    EReference affectedFeature = typedChange.getAffectedFeature();
-    Field newValue = typedChange.getNewValue();
+    if (!checkPrecondition(change)) {
+    	return;
+    }
+    org.emftext.language.java.classifiers.Interface affectedEObject = insertChange.getAffectedEObject();
+    EReference affectedFeature = insertChange.getAffectedFeature();
+    org.emftext.language.java.members.Field newValue = insertChange.getNewValue();
+    int index = insertChange.getIndex();
+    				
+    getLogger().trace("Passed complete precondition check of Reaction " + this.getClass().getName());
+    				
     mir.routines.javaToUmlAttribute.RoutinesFacade routinesFacade = new mir.routines.javaToUmlAttribute.RoutinesFacade(this.executionState, this);
     mir.reactions.reactionsJavaToUml.javaToUmlAttribute.JavaAttributeCreatedInInterfaceReaction.ActionUserExecution userExecution = new mir.reactions.reactionsJavaToUml.javaToUmlAttribute.JavaAttributeCreatedInInterfaceReaction.ActionUserExecution(this.executionState, this);
-    userExecution.callRoutine1(affectedEObject, affectedFeature, newValue, routinesFacade);
+    userExecution.callRoutine1(insertChange, affectedEObject, affectedFeature, newValue, index, routinesFacade);
+    
+    resetChanges();
   }
   
-  public static Class<? extends EChange> getExpectedChangeType() {
-    return CreateAndInsertNonRoot.class;
+  private void resetChanges() {
+    createChange = null;
+    insertChange = null;
+    currentlyMatchedChange = 0;
   }
   
-  private boolean checkChangeProperties(final EChange change) {
-    InsertEReference<Interface, Field> relevantChange = ((CreateAndInsertNonRoot<Interface, Field>)change).getInsertChange();
-    if (!(relevantChange.getAffectedEObject() instanceof Interface)) {
-    	return false;
+  private boolean matchCreateChange(final EChange change) {
+    if (change instanceof CreateEObject<?>) {
+    	CreateEObject<org.emftext.language.java.members.Field> _localTypedChange = (CreateEObject<org.emftext.language.java.members.Field>) change;
+    	if (!(_localTypedChange.getAffectedEObject() instanceof org.emftext.language.java.members.Field)) {
+    		return false;
+    	}
+    	this.createChange = (CreateEObject<org.emftext.language.java.members.Field>) change;
+    	return true;
     }
-    if (!relevantChange.getAffectedFeature().getName().equals("members")) {
-    	return false;
-    }
-    if (!(relevantChange.getNewValue() instanceof Field)) {
-    	return false;
-    }
-    return true;
+    
+    return false;
   }
   
   public boolean checkPrecondition(final EChange change) {
-    if (!(change instanceof CreateAndInsertNonRoot)) {
-    	return false;
+    if (currentlyMatchedChange == 0) {
+    	if (!matchCreateChange(change)) {
+    		resetChanges();
+    		return false;
+    	} else {
+    		currentlyMatchedChange++;
+    	}
+    	return false; // Only proceed on the last of the expected changes
     }
-    getLogger().debug("Passed change type check of reaction " + this.getClass().getName());
-    if (!checkChangeProperties(change)) {
-    	return false;
+    if (currentlyMatchedChange == 1) {
+    	if (!matchInsertChange(change)) {
+    		resetChanges();
+    		checkPrecondition(change); // Reexecute to potentially register this as first change
+    		return false;
+    	} else {
+    		currentlyMatchedChange++;
+    	}
     }
-    getLogger().debug("Passed change properties check of reaction " + this.getClass().getName());
-    getLogger().debug("Passed complete precondition check of reaction " + this.getClass().getName());
+    
     return true;
+  }
+  
+  private boolean matchInsertChange(final EChange change) {
+    if (change instanceof InsertEReference<?, ?>) {
+    	InsertEReference<org.emftext.language.java.classifiers.Interface, org.emftext.language.java.members.Field> _localTypedChange = (InsertEReference<org.emftext.language.java.classifiers.Interface, org.emftext.language.java.members.Field>) change;
+    	if (!(_localTypedChange.getAffectedEObject() instanceof org.emftext.language.java.classifiers.Interface)) {
+    		return false;
+    	}
+    	if (!_localTypedChange.getAffectedFeature().getName().equals("members")) {
+    		return false;
+    	}
+    	if (!(_localTypedChange.getNewValue() instanceof org.emftext.language.java.members.Field)) {
+    		return false;
+    	}
+    	this.insertChange = (InsertEReference<org.emftext.language.java.classifiers.Interface, org.emftext.language.java.members.Field>) change;
+    	return true;
+    }
+    
+    return false;
   }
   
   private static class ActionUserExecution extends AbstractRepairRoutineRealization.UserExecution {
@@ -62,9 +106,8 @@ class JavaAttributeCreatedInInterfaceReaction extends AbstractReactionRealizatio
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final Interface affectedEObject, final EReference affectedFeature, final Field newValue, @Extension final RoutinesFacade _routinesFacade) {
-      Class<? extends Interface> _class = affectedEObject.getClass();
-      String _simpleName = _class.getSimpleName();
+    public void callRoutine1(final InsertEReference insertChange, final Interface affectedEObject, final EReference affectedFeature, final Field newValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+      String _simpleName = affectedEObject.getClass().getSimpleName();
       String _plus = ("Adding fields to " + _simpleName);
       String _plus_1 = (_plus + " is not supported. Please remove ");
       String _plus_2 = (_plus_1 + newValue);

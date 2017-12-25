@@ -11,50 +11,94 @@ import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealiz
 import tools.vitruv.extensions.dslsruntime.reactions.ReactionExecutionState;
 import tools.vitruv.extensions.dslsruntime.reactions.structure.CallHierarchyHaving;
 import tools.vitruv.framework.change.echange.EChange;
-import tools.vitruv.framework.change.echange.compound.CreateAndInsertNonRoot;
+import tools.vitruv.framework.change.echange.eobject.CreateEObject;
 import tools.vitruv.framework.change.echange.feature.reference.InsertEReference;
 
 @SuppressWarnings("all")
 class UmlAttributeCreatedInInterfaceReaction extends AbstractReactionRealization {
+  private CreateEObject<Property> createChange;
+  
+  private InsertEReference<Interface, Property> insertChange;
+  
+  private int currentlyMatchedChange;
+  
   public void executeReaction(final EChange change) {
-    InsertEReference<Interface, Property> typedChange = ((CreateAndInsertNonRoot<Interface, Property>)change).getInsertChange();
-    Interface affectedEObject = typedChange.getAffectedEObject();
-    EReference affectedFeature = typedChange.getAffectedFeature();
-    Property newValue = typedChange.getNewValue();
+    if (!checkPrecondition(change)) {
+    	return;
+    }
+    org.eclipse.uml2.uml.Interface affectedEObject = insertChange.getAffectedEObject();
+    EReference affectedFeature = insertChange.getAffectedFeature();
+    org.eclipse.uml2.uml.Property newValue = insertChange.getNewValue();
+    int index = insertChange.getIndex();
+    				
+    getLogger().trace("Passed complete precondition check of Reaction " + this.getClass().getName());
+    				
     mir.routines.umlToJavaAttribute.RoutinesFacade routinesFacade = new mir.routines.umlToJavaAttribute.RoutinesFacade(this.executionState, this);
     mir.reactions.reactionsUmlToJava.umlToJavaAttribute.UmlAttributeCreatedInInterfaceReaction.ActionUserExecution userExecution = new mir.reactions.reactionsUmlToJava.umlToJavaAttribute.UmlAttributeCreatedInInterfaceReaction.ActionUserExecution(this.executionState, this);
-    userExecution.callRoutine1(affectedEObject, affectedFeature, newValue, routinesFacade);
+    userExecution.callRoutine1(insertChange, affectedEObject, affectedFeature, newValue, index, routinesFacade);
+    
+    resetChanges();
   }
   
-  public static Class<? extends EChange> getExpectedChangeType() {
-    return CreateAndInsertNonRoot.class;
+  private void resetChanges() {
+    createChange = null;
+    insertChange = null;
+    currentlyMatchedChange = 0;
   }
   
-  private boolean checkChangeProperties(final EChange change) {
-    InsertEReference<Interface, Property> relevantChange = ((CreateAndInsertNonRoot<Interface, Property>)change).getInsertChange();
-    if (!(relevantChange.getAffectedEObject() instanceof Interface)) {
-    	return false;
+  private boolean matchCreateChange(final EChange change) {
+    if (change instanceof CreateEObject<?>) {
+    	CreateEObject<org.eclipse.uml2.uml.Property> _localTypedChange = (CreateEObject<org.eclipse.uml2.uml.Property>) change;
+    	if (!(_localTypedChange.getAffectedEObject() instanceof org.eclipse.uml2.uml.Property)) {
+    		return false;
+    	}
+    	this.createChange = (CreateEObject<org.eclipse.uml2.uml.Property>) change;
+    	return true;
     }
-    if (!relevantChange.getAffectedFeature().getName().equals("ownedAttribute")) {
-    	return false;
-    }
-    if (!(relevantChange.getNewValue() instanceof Property)) {
-    	return false;
-    }
-    return true;
+    
+    return false;
   }
   
   public boolean checkPrecondition(final EChange change) {
-    if (!(change instanceof CreateAndInsertNonRoot)) {
-    	return false;
+    if (currentlyMatchedChange == 0) {
+    	if (!matchCreateChange(change)) {
+    		resetChanges();
+    		return false;
+    	} else {
+    		currentlyMatchedChange++;
+    	}
+    	return false; // Only proceed on the last of the expected changes
     }
-    getLogger().debug("Passed change type check of reaction " + this.getClass().getName());
-    if (!checkChangeProperties(change)) {
-    	return false;
+    if (currentlyMatchedChange == 1) {
+    	if (!matchInsertChange(change)) {
+    		resetChanges();
+    		checkPrecondition(change); // Reexecute to potentially register this as first change
+    		return false;
+    	} else {
+    		currentlyMatchedChange++;
+    	}
     }
-    getLogger().debug("Passed change properties check of reaction " + this.getClass().getName());
-    getLogger().debug("Passed complete precondition check of reaction " + this.getClass().getName());
+    
     return true;
+  }
+  
+  private boolean matchInsertChange(final EChange change) {
+    if (change instanceof InsertEReference<?, ?>) {
+    	InsertEReference<org.eclipse.uml2.uml.Interface, org.eclipse.uml2.uml.Property> _localTypedChange = (InsertEReference<org.eclipse.uml2.uml.Interface, org.eclipse.uml2.uml.Property>) change;
+    	if (!(_localTypedChange.getAffectedEObject() instanceof org.eclipse.uml2.uml.Interface)) {
+    		return false;
+    	}
+    	if (!_localTypedChange.getAffectedFeature().getName().equals("ownedAttribute")) {
+    		return false;
+    	}
+    	if (!(_localTypedChange.getNewValue() instanceof org.eclipse.uml2.uml.Property)) {
+    		return false;
+    	}
+    	this.insertChange = (InsertEReference<org.eclipse.uml2.uml.Interface, org.eclipse.uml2.uml.Property>) change;
+    	return true;
+    }
+    
+    return false;
   }
   
   private static class ActionUserExecution extends AbstractRepairRoutineRealization.UserExecution {
@@ -62,7 +106,7 @@ class UmlAttributeCreatedInInterfaceReaction extends AbstractReactionRealization
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final Interface affectedEObject, final EReference affectedFeature, final Property newValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final InsertEReference insertChange, final Interface affectedEObject, final EReference affectedFeature, final Property newValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
       UmlToJavaHelper.showMessage(this.userInteracting, ((("We do not support adding attributes to interfaces. Please delete " + newValue) + " from ") + affectedEObject));
     }
   }

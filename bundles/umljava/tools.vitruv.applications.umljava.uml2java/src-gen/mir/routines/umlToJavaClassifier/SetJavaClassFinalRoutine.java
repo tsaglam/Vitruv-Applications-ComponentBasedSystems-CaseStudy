@@ -28,8 +28,7 @@ public class SetJavaClassFinalRoutine extends AbstractRepairRoutineRealization {
     }
     
     public void update0Element(final org.eclipse.uml2.uml.Class umlClass, final org.emftext.language.java.classifiers.Class jClass) {
-      boolean _isFinalSpecialization = umlClass.isFinalSpecialization();
-      JavaModifierUtil.setFinal(jClass, _isFinalSpecialization);
+      JavaModifierUtil.setFinal(jClass, umlClass.isFinalSpecialization());
     }
   }
   
@@ -42,22 +41,26 @@ public class SetJavaClassFinalRoutine extends AbstractRepairRoutineRealization {
   
   private org.eclipse.uml2.uml.Class umlClass;
   
-  protected void executeRoutine() throws IOException {
+  protected boolean executeRoutine() throws IOException {
     getLogger().debug("Called routine SetJavaClassFinalRoutine with input:");
-    getLogger().debug("   Class: " + this.umlClass);
+    getLogger().debug("   umlClass: " + this.umlClass);
     
     org.emftext.language.java.classifiers.Class jClass = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceJClass(umlClass), // correspondence source supplier
     	org.emftext.language.java.classifiers.Class.class,
     	(org.emftext.language.java.classifiers.Class _element) -> true, // correspondence precondition checker
-    	null);
+    	null, 
+    	false // asserted
+    	);
     if (jClass == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(jClass);
     // val updatedElement userExecution.getElement1(umlClass, jClass);
     userExecution.update0Element(umlClass, jClass);
     
     postprocessElements();
+    
+    return true;
   }
 }

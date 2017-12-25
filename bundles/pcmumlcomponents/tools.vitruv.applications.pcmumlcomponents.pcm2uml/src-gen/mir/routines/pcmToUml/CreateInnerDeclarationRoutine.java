@@ -1,6 +1,7 @@
 package mir.routines.pcmToUml;
 
 import java.io.IOException;
+import java.util.Optional;
 import mir.routines.pcmToUml.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.DataType;
@@ -32,8 +33,15 @@ public class CreateInnerDeclarationRoutine extends AbstractRepairRoutineRealizat
       return _compositeDataType_InnerDeclaration;
     }
     
-    public void callRoutine1(final InnerDeclaration innerDeclaration, final DataType compositeType, final DataType umlType, @Extension final RoutinesFacade _routinesFacade) {
-      _routinesFacade.createUmlPropertyForDatatype(umlType, innerDeclaration, compositeType);
+    public void callRoutine1(final InnerDeclaration innerDeclaration, final DataType compositeType, final Optional<DataType> umlType, @Extension final RoutinesFacade _routinesFacade) {
+      DataType _xifexpression = null;
+      boolean _isPresent = umlType.isPresent();
+      if (_isPresent) {
+        _xifexpression = umlType.get();
+      } else {
+        _xifexpression = null;
+      }
+      _routinesFacade.createUmlPropertyForDatatype(_xifexpression, innerDeclaration, compositeType);
     }
   }
   
@@ -46,27 +54,34 @@ public class CreateInnerDeclarationRoutine extends AbstractRepairRoutineRealizat
   
   private InnerDeclaration innerDeclaration;
   
-  protected void executeRoutine() throws IOException {
+  protected boolean executeRoutine() throws IOException {
     getLogger().debug("Called routine CreateInnerDeclarationRoutine with input:");
-    getLogger().debug("   InnerDeclaration: " + this.innerDeclaration);
+    getLogger().debug("   innerDeclaration: " + this.innerDeclaration);
     
-    DataType compositeType = getCorrespondingElement(
+    org.eclipse.uml2.uml.DataType compositeType = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceCompositeType(innerDeclaration), // correspondence source supplier
-    	DataType.class,
-    	(DataType _element) -> true, // correspondence precondition checker
-    	null);
+    	org.eclipse.uml2.uml.DataType.class,
+    	(org.eclipse.uml2.uml.DataType _element) -> true, // correspondence precondition checker
+    	null, 
+    	false // asserted
+    	);
     if (compositeType == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(compositeType);
-    DataType umlType = getCorrespondingElement(
-    	userExecution.getCorrepondenceSourceUmlType(innerDeclaration, compositeType), // correspondence source supplier
-    	DataType.class,
-    	(DataType _element) -> true, // correspondence precondition checker
-    	null);
-    registerObjectUnderModification(umlType);
+    	Optional<org.eclipse.uml2.uml.DataType> umlType = Optional.ofNullable(getCorrespondingElement(
+    		userExecution.getCorrepondenceSourceUmlType(innerDeclaration, compositeType), // correspondence source supplier
+    		org.eclipse.uml2.uml.DataType.class,
+    		(org.eclipse.uml2.uml.DataType _element) -> true, // correspondence precondition checker
+    		null, 
+    		false // asserted
+    		)
+    );
+    registerObjectUnderModification(umlType.isPresent() ? umlType.get() : null);
     userExecution.callRoutine1(innerDeclaration, compositeType, umlType, actionsFacade);
     
     postprocessElements();
+    
+    return true;
   }
 }

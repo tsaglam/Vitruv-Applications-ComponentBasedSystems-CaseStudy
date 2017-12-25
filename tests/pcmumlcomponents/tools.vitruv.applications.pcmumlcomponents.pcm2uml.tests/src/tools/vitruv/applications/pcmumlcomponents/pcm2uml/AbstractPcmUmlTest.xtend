@@ -12,7 +12,7 @@ import org.palladiosimulator.pcm.repository.Repository
 import org.palladiosimulator.pcm.repository.RepositoryFactory
 import tools.vitruv.domains.pcm.PcmDomainProvider
 import tools.vitruv.domains.uml.UmlDomainProvider
-import tools.vitruv.framework.tests.VitruviusApplicationTest
+import tools.vitruv.testutils.VitruviusApplicationTest
 
 class AbstractPcmUmlTest extends VitruviusApplicationTest {
 	protected static val MODEL_FILE_EXTENSION = "repository";
@@ -26,10 +26,6 @@ class AbstractPcmUmlTest extends VitruviusApplicationTest {
 	protected val PARAMETER_NAME = "fooParameter"
 	protected val PARAMETER_NAME_2 = "barParameter"
 	protected val ATTRIBUTE_NAME = "fooAttribute"
-	
-	override protected unresolveChanges() {
-		return false;
-	}
 	
 	protected static var Repository primitiveTypesRepository = null
 	

@@ -38,21 +38,25 @@ public class DeleteJavaParameterRoutine extends AbstractRepairRoutineRealization
   
   private Parameter uParam;
   
-  protected void executeRoutine() throws IOException {
+  protected boolean executeRoutine() throws IOException {
     getLogger().debug("Called routine DeleteJavaParameterRoutine with input:");
-    getLogger().debug("   Parameter: " + this.uParam);
+    getLogger().debug("   uParam: " + this.uParam);
     
-    OrdinaryParameter jParam = getCorrespondingElement(
+    org.emftext.language.java.parameters.OrdinaryParameter jParam = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceJParam(uParam), // correspondence source supplier
-    	OrdinaryParameter.class,
-    	(OrdinaryParameter _element) -> true, // correspondence precondition checker
-    	null);
+    	org.emftext.language.java.parameters.OrdinaryParameter.class,
+    	(org.emftext.language.java.parameters.OrdinaryParameter _element) -> true, // correspondence precondition checker
+    	null, 
+    	false // asserted
+    	);
     if (jParam == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(jParam);
     deleteObject(userExecution.getElement1(uParam, jParam));
     
     postprocessElements();
+    
+    return true;
   }
 }

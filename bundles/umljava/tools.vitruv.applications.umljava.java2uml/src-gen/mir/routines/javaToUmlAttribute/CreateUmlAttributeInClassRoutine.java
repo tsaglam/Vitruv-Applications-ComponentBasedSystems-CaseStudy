@@ -5,7 +5,6 @@ import mir.routines.javaToUmlAttribute.RoutinesFacade;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Property;
-import org.eclipse.uml2.uml.internal.impl.UMLFactoryImpl;
 import org.emftext.language.java.members.Field;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
 import tools.vitruv.extensions.dslsruntime.reactions.ReactionExecutionState;
@@ -44,8 +43,7 @@ public class CreateUmlAttributeInClassRoutine extends AbstractRepairRoutineReali
     }
     
     public void updateUAttrElement(final org.emftext.language.java.classifiers.Class jClass, final Field jAttr, final org.eclipse.uml2.uml.Class uClass, final Property uAttr) {
-      String _name = jAttr.getName();
-      uAttr.setName(_name);
+      uAttr.setName(jAttr.getName());
     }
   }
   
@@ -60,21 +58,23 @@ public class CreateUmlAttributeInClassRoutine extends AbstractRepairRoutineReali
   
   private Field jAttr;
   
-  protected void executeRoutine() throws IOException {
+  protected boolean executeRoutine() throws IOException {
     getLogger().debug("Called routine CreateUmlAttributeInClassRoutine with input:");
-    getLogger().debug("   Class: " + this.jClass);
-    getLogger().debug("   Field: " + this.jAttr);
+    getLogger().debug("   jClass: " + this.jClass);
+    getLogger().debug("   jAttr: " + this.jAttr);
     
     org.eclipse.uml2.uml.Class uClass = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceUClass(jClass, jAttr), // correspondence source supplier
     	org.eclipse.uml2.uml.Class.class,
     	(org.eclipse.uml2.uml.Class _element) -> true, // correspondence precondition checker
-    	null);
+    	null, 
+    	false // asserted
+    	);
     if (uClass == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(uClass);
-    Property uAttr = UMLFactoryImpl.eINSTANCE.createProperty();
+    org.eclipse.uml2.uml.Property uAttr = org.eclipse.uml2.uml.internal.impl.UMLFactoryImpl.eINSTANCE.createProperty();
     notifyObjectCreated(uAttr);
     userExecution.updateUAttrElement(jClass, jAttr, uClass, uAttr);
     
@@ -84,5 +84,7 @@ public class CreateUmlAttributeInClassRoutine extends AbstractRepairRoutineReali
     userExecution.update0Element(jClass, jAttr, uClass, uAttr);
     
     postprocessElements();
+    
+    return true;
   }
 }

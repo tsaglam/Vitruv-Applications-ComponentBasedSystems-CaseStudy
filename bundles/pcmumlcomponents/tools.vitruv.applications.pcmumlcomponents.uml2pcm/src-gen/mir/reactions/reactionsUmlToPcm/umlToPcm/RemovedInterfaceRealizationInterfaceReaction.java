@@ -14,44 +14,62 @@ import tools.vitruv.framework.change.echange.feature.reference.RemoveEReference;
 
 @SuppressWarnings("all")
 class RemovedInterfaceRealizationInterfaceReaction extends AbstractReactionRealization {
+  private RemoveEReference<InterfaceRealization, Interface> removeChange;
+  
+  private int currentlyMatchedChange;
+  
   public void executeReaction(final EChange change) {
-    RemoveEReference<InterfaceRealization, Interface> typedChange = (RemoveEReference<InterfaceRealization, Interface>)change;
-    InterfaceRealization affectedEObject = typedChange.getAffectedEObject();
-    EReference affectedFeature = typedChange.getAffectedFeature();
-    Interface oldValue = typedChange.getOldValue();
+    if (!checkPrecondition(change)) {
+    	return;
+    }
+    org.eclipse.uml2.uml.InterfaceRealization affectedEObject = removeChange.getAffectedEObject();
+    EReference affectedFeature = removeChange.getAffectedFeature();
+    org.eclipse.uml2.uml.Interface oldValue = removeChange.getOldValue();
+    int index = removeChange.getIndex();
+    				
+    getLogger().trace("Passed complete precondition check of Reaction " + this.getClass().getName());
+    				
     mir.routines.umlToPcm.RoutinesFacade routinesFacade = new mir.routines.umlToPcm.RoutinesFacade(this.executionState, this);
     mir.reactions.reactionsUmlToPcm.umlToPcm.RemovedInterfaceRealizationInterfaceReaction.ActionUserExecution userExecution = new mir.reactions.reactionsUmlToPcm.umlToPcm.RemovedInterfaceRealizationInterfaceReaction.ActionUserExecution(this.executionState, this);
-    userExecution.callRoutine1(affectedEObject, affectedFeature, oldValue, routinesFacade);
+    userExecution.callRoutine1(removeChange, affectedEObject, affectedFeature, oldValue, index, routinesFacade);
+    
+    resetChanges();
   }
   
-  public static Class<? extends EChange> getExpectedChangeType() {
-    return RemoveEReference.class;
+  private void resetChanges() {
+    removeChange = null;
+    currentlyMatchedChange = 0;
   }
   
-  private boolean checkChangeProperties(final EChange change) {
-    RemoveEReference<InterfaceRealization, Interface> relevantChange = (RemoveEReference<InterfaceRealization, Interface>)change;
-    if (!(relevantChange.getAffectedEObject() instanceof InterfaceRealization)) {
-    	return false;
+  private boolean matchRemoveChange(final EChange change) {
+    if (change instanceof RemoveEReference<?, ?>) {
+    	RemoveEReference<org.eclipse.uml2.uml.InterfaceRealization, org.eclipse.uml2.uml.Interface> _localTypedChange = (RemoveEReference<org.eclipse.uml2.uml.InterfaceRealization, org.eclipse.uml2.uml.Interface>) change;
+    	if (!(_localTypedChange.getAffectedEObject() instanceof org.eclipse.uml2.uml.InterfaceRealization)) {
+    		return false;
+    	}
+    	if (!_localTypedChange.getAffectedFeature().getName().equals("supplier")) {
+    		return false;
+    	}
+    	if (!(_localTypedChange.getOldValue() instanceof org.eclipse.uml2.uml.Interface)) {
+    		return false;
+    	}
+    	this.removeChange = (RemoveEReference<org.eclipse.uml2.uml.InterfaceRealization, org.eclipse.uml2.uml.Interface>) change;
+    	return true;
     }
-    if (!relevantChange.getAffectedFeature().getName().equals("supplier")) {
-    	return false;
-    }
-    if (!(relevantChange.getOldValue() instanceof Interface)) {
-    	return false;
-    }
-    return true;
+    
+    return false;
   }
   
   public boolean checkPrecondition(final EChange change) {
-    if (!(change instanceof RemoveEReference)) {
-    	return false;
+    if (currentlyMatchedChange == 0) {
+    	if (!matchRemoveChange(change)) {
+    		resetChanges();
+    		return false;
+    	} else {
+    		currentlyMatchedChange++;
+    	}
     }
-    getLogger().debug("Passed change type check of reaction " + this.getClass().getName());
-    if (!checkChangeProperties(change)) {
-    	return false;
-    }
-    getLogger().debug("Passed change properties check of reaction " + this.getClass().getName());
-    getLogger().debug("Passed complete precondition check of reaction " + this.getClass().getName());
+    
     return true;
   }
   
@@ -60,7 +78,7 @@ class RemovedInterfaceRealizationInterfaceReaction extends AbstractReactionReali
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final InterfaceRealization affectedEObject, final EReference affectedFeature, final Interface oldValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final RemoveEReference removeChange, final InterfaceRealization affectedEObject, final EReference affectedFeature, final Interface oldValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
       _routinesFacade.changeProvidedInterface(affectedEObject, oldValue);
     }
   }

@@ -6,7 +6,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Generalization;
-import org.eclipse.uml2.uml.internal.impl.UMLFactoryImpl;
 import org.palladiosimulator.pcm.repository.CompositeDataType;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
 import tools.vitruv.extensions.dslsruntime.reactions.ReactionExecutionState;
@@ -57,30 +56,34 @@ public class AddCompositeDataTypeParentRoutine extends AbstractRepairRoutineReal
   
   private CompositeDataType parent;
   
-  protected void executeRoutine() throws IOException {
+  protected boolean executeRoutine() throws IOException {
     getLogger().debug("Called routine AddCompositeDataTypeParentRoutine with input:");
-    getLogger().debug("   CompositeDataType: " + this.dataType);
-    getLogger().debug("   CompositeDataType: " + this.parent);
+    getLogger().debug("   dataType: " + this.dataType);
+    getLogger().debug("   parent: " + this.parent);
     
-    DataType compositeType = getCorrespondingElement(
+    org.eclipse.uml2.uml.DataType compositeType = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceCompositeType(dataType, parent), // correspondence source supplier
-    	DataType.class,
-    	(DataType _element) -> true, // correspondence precondition checker
-    	null);
+    	org.eclipse.uml2.uml.DataType.class,
+    	(org.eclipse.uml2.uml.DataType _element) -> true, // correspondence precondition checker
+    	null, 
+    	false // asserted
+    	);
     if (compositeType == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(compositeType);
-    DataType parentType = getCorrespondingElement(
+    org.eclipse.uml2.uml.DataType parentType = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceParentType(dataType, parent, compositeType), // correspondence source supplier
-    	DataType.class,
-    	(DataType _element) -> true, // correspondence precondition checker
-    	null);
+    	org.eclipse.uml2.uml.DataType.class,
+    	(org.eclipse.uml2.uml.DataType _element) -> true, // correspondence precondition checker
+    	null, 
+    	false // asserted
+    	);
     if (parentType == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(parentType);
-    Generalization generalization = UMLFactoryImpl.eINSTANCE.createGeneralization();
+    org.eclipse.uml2.uml.Generalization generalization = org.eclipse.uml2.uml.internal.impl.UMLFactoryImpl.eINSTANCE.createGeneralization();
     notifyObjectCreated(generalization);
     userExecution.updateGeneralizationElement(dataType, parent, compositeType, parentType, generalization);
     
@@ -88,5 +91,7 @@ public class AddCompositeDataTypeParentRoutine extends AbstractRepairRoutineReal
     userExecution.update0Element(dataType, parent, compositeType, parentType, generalization);
     
     postprocessElements();
+    
+    return true;
   }
 }

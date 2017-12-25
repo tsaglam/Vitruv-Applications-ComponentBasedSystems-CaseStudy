@@ -15,6 +15,7 @@
 
 	<modules>
 		<module>umljava</module>
+		<module>umlclassumlcomponents</module>
 		<module>pcmumlcomponents</module>
 		<module>pcmjava</module>
 	</modules>

@@ -2,6 +2,7 @@ package mir.routines.umlToJavaMethod;
 
 import com.google.common.base.Objects;
 import java.io.IOException;
+import java.util.Optional;
 import mir.routines.umlToJavaMethod.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -10,10 +11,8 @@ import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.ParameterDirectionKind;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.xtext.xbase.lib.Extension;
-import org.emftext.language.java.containers.CompilationUnit;
 import org.emftext.language.java.members.Method;
 import org.emftext.language.java.parameters.OrdinaryParameter;
-import org.emftext.language.java.types.TypeReference;
 import org.emftext.language.java.types.TypesFactory;
 import tools.vitruv.applications.umljava.uml2java.UmlToJavaHelper;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
@@ -39,34 +38,30 @@ public class AdaptJavaParametertoDirectionChangeRoutine extends AbstractRepairRo
       return uOperation;
     }
     
-    public EObject getElement1(final Operation uOperation, final Parameter uParam, final ParameterDirectionKind oldDirection, final ParameterDirectionKind newDirection, final Method jMethod, final OrdinaryParameter jParam, final org.emftext.language.java.classifiers.Class customTypeClass) {
+    public EObject getElement1(final Operation uOperation, final Parameter uParam, final ParameterDirectionKind oldDirection, final ParameterDirectionKind newDirection, final Method jMethod, final Optional<OrdinaryParameter> jParam, final Optional<org.emftext.language.java.classifiers.Class> customTypeClass) {
       return jMethod;
     }
     
-    public void update0Element(final Operation uOperation, final Parameter uParam, final ParameterDirectionKind oldDirection, final ParameterDirectionKind newDirection, final Method jMethod, final OrdinaryParameter jParam, final org.emftext.language.java.classifiers.Class customTypeClass) {
+    public void update0Element(final Operation uOperation, final Parameter uParam, final ParameterDirectionKind oldDirection, final ParameterDirectionKind newDirection, final Method jMethod, final Optional<OrdinaryParameter> jParam, final Optional<org.emftext.language.java.classifiers.Class> customTypeClass) {
       boolean _equals = Objects.equal(newDirection, ParameterDirectionKind.RETURN_LITERAL);
       if (_equals) {
-        Type _type = uParam.getType();
-        CompilationUnit _containingCompilationUnit = jMethod.getContainingCompilationUnit();
-        TypeReference _createTypeReferenceAndUpdateImport = UmlToJavaHelper.createTypeReferenceAndUpdateImport(_type, customTypeClass, _containingCompilationUnit, this.userInteracting);
-        jMethod.setTypeReference(_createTypeReferenceAndUpdateImport);
+        jMethod.setTypeReference(UmlToJavaHelper.createTypeReferenceAndUpdateImport(uParam.getType(), customTypeClass, jMethod.getContainingCompilationUnit(), this.userInteracting));
       } else {
         boolean _equals_1 = Objects.equal(oldDirection, ParameterDirectionKind.RETURN_LITERAL);
         if (_equals_1) {
-          org.emftext.language.java.types.Void _createVoid = TypesFactory.eINSTANCE.createVoid();
-          jMethod.setTypeReference(_createVoid);
+          jMethod.setTypeReference(TypesFactory.eINSTANCE.createVoid());
         }
       }
     }
     
-    public EObject getCorrepondenceSourceCustomTypeClass(final Operation uOperation, final Parameter uParam, final ParameterDirectionKind oldDirection, final ParameterDirectionKind newDirection, final Method jMethod, final OrdinaryParameter jParam) {
+    public EObject getCorrepondenceSourceCustomTypeClass(final Operation uOperation, final Parameter uParam, final ParameterDirectionKind oldDirection, final ParameterDirectionKind newDirection, final Method jMethod, final Optional<OrdinaryParameter> jParam) {
       Type _type = uParam.getType();
       return _type;
     }
     
-    public void callRoutine1(final Operation uOperation, final Parameter uParam, final ParameterDirectionKind oldDirection, final ParameterDirectionKind newDirection, final Method jMethod, final OrdinaryParameter jParam, final org.emftext.language.java.classifiers.Class customTypeClass, @Extension final RoutinesFacade _routinesFacade) {
-      if ((Objects.equal(newDirection, ParameterDirectionKind.RETURN_LITERAL) && (jParam != null))) {
-        EcoreUtil.remove(jParam);
+    public void callRoutine1(final Operation uOperation, final Parameter uParam, final ParameterDirectionKind oldDirection, final ParameterDirectionKind newDirection, final Method jMethod, final Optional<OrdinaryParameter> jParam, final Optional<org.emftext.language.java.classifiers.Class> customTypeClass, @Extension final RoutinesFacade _routinesFacade) {
+      if ((Objects.equal(newDirection, ParameterDirectionKind.RETURN_LITERAL) && jParam.isPresent())) {
+        EcoreUtil.remove(jParam.get());
       } else {
         if ((Objects.equal(newDirection, ParameterDirectionKind.IN_LITERAL) && (jParam == null))) {
           _routinesFacade.createJavaParameter(uOperation, uParam);
@@ -90,39 +85,49 @@ public class AdaptJavaParametertoDirectionChangeRoutine extends AbstractRepairRo
   
   private ParameterDirectionKind newDirection;
   
-  protected void executeRoutine() throws IOException {
+  protected boolean executeRoutine() throws IOException {
     getLogger().debug("Called routine AdaptJavaParametertoDirectionChangeRoutine with input:");
-    getLogger().debug("   Operation: " + this.uOperation);
-    getLogger().debug("   Parameter: " + this.uParam);
-    getLogger().debug("   ParameterDirectionKind: " + this.oldDirection);
-    getLogger().debug("   ParameterDirectionKind: " + this.newDirection);
+    getLogger().debug("   uOperation: " + this.uOperation);
+    getLogger().debug("   uParam: " + this.uParam);
+    getLogger().debug("   oldDirection: " + this.oldDirection);
+    getLogger().debug("   newDirection: " + this.newDirection);
     
-    Method jMethod = getCorrespondingElement(
+    org.emftext.language.java.members.Method jMethod = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceJMethod(uOperation, uParam, oldDirection, newDirection), // correspondence source supplier
-    	Method.class,
-    	(Method _element) -> true, // correspondence precondition checker
-    	null);
+    	org.emftext.language.java.members.Method.class,
+    	(org.emftext.language.java.members.Method _element) -> true, // correspondence precondition checker
+    	null, 
+    	false // asserted
+    	);
     if (jMethod == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(jMethod);
-    OrdinaryParameter jParam = getCorrespondingElement(
-    	userExecution.getCorrepondenceSourceJParam(uOperation, uParam, oldDirection, newDirection, jMethod), // correspondence source supplier
-    	OrdinaryParameter.class,
-    	(OrdinaryParameter _element) -> true, // correspondence precondition checker
-    	null);
-    registerObjectUnderModification(jParam);
-    org.emftext.language.java.classifiers.Class customTypeClass = getCorrespondingElement(
-    	userExecution.getCorrepondenceSourceCustomTypeClass(uOperation, uParam, oldDirection, newDirection, jMethod, jParam), // correspondence source supplier
-    	org.emftext.language.java.classifiers.Class.class,
-    	(org.emftext.language.java.classifiers.Class _element) -> true, // correspondence precondition checker
-    	null);
-    registerObjectUnderModification(customTypeClass);
+    	Optional<org.emftext.language.java.parameters.OrdinaryParameter> jParam = Optional.ofNullable(getCorrespondingElement(
+    		userExecution.getCorrepondenceSourceJParam(uOperation, uParam, oldDirection, newDirection, jMethod), // correspondence source supplier
+    		org.emftext.language.java.parameters.OrdinaryParameter.class,
+    		(org.emftext.language.java.parameters.OrdinaryParameter _element) -> true, // correspondence precondition checker
+    		null, 
+    		false // asserted
+    		)
+    );
+    registerObjectUnderModification(jParam.isPresent() ? jParam.get() : null);
+    	Optional<org.emftext.language.java.classifiers.Class> customTypeClass = Optional.ofNullable(getCorrespondingElement(
+    		userExecution.getCorrepondenceSourceCustomTypeClass(uOperation, uParam, oldDirection, newDirection, jMethod, jParam), // correspondence source supplier
+    		org.emftext.language.java.classifiers.Class.class,
+    		(org.emftext.language.java.classifiers.Class _element) -> true, // correspondence precondition checker
+    		null, 
+    		false // asserted
+    		)
+    );
+    registerObjectUnderModification(customTypeClass.isPresent() ? customTypeClass.get() : null);
     // val updatedElement userExecution.getElement1(uOperation, uParam, oldDirection, newDirection, jMethod, jParam, customTypeClass);
     userExecution.update0Element(uOperation, uParam, oldDirection, newDirection, jMethod, jParam, customTypeClass);
     
     userExecution.callRoutine1(uOperation, uParam, oldDirection, newDirection, jMethod, jParam, customTypeClass, actionsFacade);
     
     postprocessElements();
+    
+    return true;
   }
 }

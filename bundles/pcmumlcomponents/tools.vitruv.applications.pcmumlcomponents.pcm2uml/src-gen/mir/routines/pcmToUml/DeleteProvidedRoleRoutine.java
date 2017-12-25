@@ -38,21 +38,25 @@ public class DeleteProvidedRoleRoutine extends AbstractRepairRoutineRealization 
   
   private ProvidedRole pcmProvidedRole;
   
-  protected void executeRoutine() throws IOException {
+  protected boolean executeRoutine() throws IOException {
     getLogger().debug("Called routine DeleteProvidedRoleRoutine with input:");
-    getLogger().debug("   ProvidedRole: " + this.pcmProvidedRole);
+    getLogger().debug("   pcmProvidedRole: " + this.pcmProvidedRole);
     
-    InterfaceRealization interfaceRealization = getCorrespondingElement(
+    org.eclipse.uml2.uml.InterfaceRealization interfaceRealization = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceInterfaceRealization(pcmProvidedRole), // correspondence source supplier
-    	InterfaceRealization.class,
-    	(InterfaceRealization _element) -> true, // correspondence precondition checker
-    	null);
+    	org.eclipse.uml2.uml.InterfaceRealization.class,
+    	(org.eclipse.uml2.uml.InterfaceRealization _element) -> true, // correspondence precondition checker
+    	null, 
+    	false // asserted
+    	);
     if (interfaceRealization == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(interfaceRealization);
     deleteObject(userExecution.getElement1(pcmProvidedRole, interfaceRealization));
     
     postprocessElements();
+    
+    return true;
   }
 }

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Vitruvius UML-Java Transformations Utils
 Bundle-SymbolicName: tools.vitruv.applications.umljava.util
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Require-Bundle: com.google.guava,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
@@ -18,13 +18,13 @@ Require-Bundle: com.google.guava,
  tools.vitruv.framework.correspondence,
  tools.vitruv.framework.userinteraction,
  tools.vitruv.extensions.dslsruntime.reactions,
- tools.vitruv.extensions.dslsruntime.mapping,
+ tools.vitruv.extensions.dslsruntime.mappings,
  tools.vitruv.domains.java.util,
  org.eclipse.uml2.uml,
  org.emftext.language.java,
  org.junit;bundle-version="4.12.0",
  tools.vitruv.domains.java.util.jamoppparser;bundle-version="0.2.0",
- tools.vitruv.framework.tests.util;bundle-version="0.2.0"
+ tools.vitruv.testutils;bundle-version="0.2.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: tools.vitruv.applications.umljava.testutil,
  tools.vitruv.applications.umljava.util,

@@ -24,8 +24,7 @@ public class RenameParameterRoutine extends AbstractRepairRoutineRealization {
     }
     
     public void update0Element(final Parameter pcmParameter, final org.eclipse.uml2.uml.Parameter umlParameter) {
-      String _parameterName = pcmParameter.getParameterName();
-      umlParameter.setName(_parameterName);
+      umlParameter.setName(pcmParameter.getParameterName());
     }
     
     public EObject getCorrepondenceSourceUmlParameter(final Parameter pcmParameter) {
@@ -42,22 +41,26 @@ public class RenameParameterRoutine extends AbstractRepairRoutineRealization {
   
   private Parameter pcmParameter;
   
-  protected void executeRoutine() throws IOException {
+  protected boolean executeRoutine() throws IOException {
     getLogger().debug("Called routine RenameParameterRoutine with input:");
-    getLogger().debug("   Parameter: " + this.pcmParameter);
+    getLogger().debug("   pcmParameter: " + this.pcmParameter);
     
     org.eclipse.uml2.uml.Parameter umlParameter = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceUmlParameter(pcmParameter), // correspondence source supplier
     	org.eclipse.uml2.uml.Parameter.class,
     	(org.eclipse.uml2.uml.Parameter _element) -> true, // correspondence precondition checker
-    	null);
+    	null, 
+    	false // asserted
+    	);
     if (umlParameter == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(umlParameter);
     // val updatedElement userExecution.getElement1(pcmParameter, umlParameter);
     userExecution.update0Element(pcmParameter, umlParameter);
     
     postprocessElements();
+    
+    return true;
   }
 }

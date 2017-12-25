@@ -10,49 +10,93 @@ import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealiz
 import tools.vitruv.extensions.dslsruntime.reactions.ReactionExecutionState;
 import tools.vitruv.extensions.dslsruntime.reactions.structure.CallHierarchyHaving;
 import tools.vitruv.framework.change.echange.EChange;
-import tools.vitruv.framework.change.echange.compound.RemoveAndDeleteNonRoot;
+import tools.vitruv.framework.change.echange.eobject.DeleteEObject;
 import tools.vitruv.framework.change.echange.feature.reference.RemoveEReference;
 
 @SuppressWarnings("all")
 class DeletedComponentReaction extends AbstractReactionRealization {
+  private RemoveEReference<Repository, RepositoryComponent> removeChange;
+  
+  private DeleteEObject<RepositoryComponent> deleteChange;
+  
+  private int currentlyMatchedChange;
+  
   public void executeReaction(final EChange change) {
-    RemoveEReference<Repository, RepositoryComponent> typedChange = ((RemoveAndDeleteNonRoot<Repository, RepositoryComponent>)change).getRemoveChange();
-    Repository affectedEObject = typedChange.getAffectedEObject();
-    EReference affectedFeature = typedChange.getAffectedFeature();
-    RepositoryComponent oldValue = typedChange.getOldValue();
+    if (!checkPrecondition(change)) {
+    	return;
+    }
+    org.palladiosimulator.pcm.repository.Repository affectedEObject = removeChange.getAffectedEObject();
+    EReference affectedFeature = removeChange.getAffectedFeature();
+    org.palladiosimulator.pcm.repository.RepositoryComponent oldValue = removeChange.getOldValue();
+    int index = removeChange.getIndex();
+    				
+    getLogger().trace("Passed complete precondition check of Reaction " + this.getClass().getName());
+    				
     mir.routines.pcm2EjbJava.RoutinesFacade routinesFacade = new mir.routines.pcm2EjbJava.RoutinesFacade(this.executionState, this);
     mir.reactions.reactionsPcmToJava.pcm2EjbJava.DeletedComponentReaction.ActionUserExecution userExecution = new mir.reactions.reactionsPcmToJava.pcm2EjbJava.DeletedComponentReaction.ActionUserExecution(this.executionState, this);
-    userExecution.callRoutine1(affectedEObject, affectedFeature, oldValue, routinesFacade);
+    userExecution.callRoutine1(removeChange, affectedEObject, affectedFeature, oldValue, index, routinesFacade);
+    
+    resetChanges();
   }
   
-  public static Class<? extends EChange> getExpectedChangeType() {
-    return RemoveAndDeleteNonRoot.class;
+  private boolean matchDeleteChange(final EChange change) {
+    if (change instanceof DeleteEObject<?>) {
+    	DeleteEObject<org.palladiosimulator.pcm.repository.RepositoryComponent> _localTypedChange = (DeleteEObject<org.palladiosimulator.pcm.repository.RepositoryComponent>) change;
+    	if (!(_localTypedChange.getAffectedEObject() instanceof org.palladiosimulator.pcm.repository.RepositoryComponent)) {
+    		return false;
+    	}
+    	this.deleteChange = (DeleteEObject<org.palladiosimulator.pcm.repository.RepositoryComponent>) change;
+    	return true;
+    }
+    
+    return false;
   }
   
-  private boolean checkChangeProperties(final EChange change) {
-    RemoveEReference<Repository, RepositoryComponent> relevantChange = ((RemoveAndDeleteNonRoot<Repository, RepositoryComponent>)change).getRemoveChange();
-    if (!(relevantChange.getAffectedEObject() instanceof Repository)) {
-    	return false;
+  private void resetChanges() {
+    removeChange = null;
+    deleteChange = null;
+    currentlyMatchedChange = 0;
+  }
+  
+  private boolean matchRemoveChange(final EChange change) {
+    if (change instanceof RemoveEReference<?, ?>) {
+    	RemoveEReference<org.palladiosimulator.pcm.repository.Repository, org.palladiosimulator.pcm.repository.RepositoryComponent> _localTypedChange = (RemoveEReference<org.palladiosimulator.pcm.repository.Repository, org.palladiosimulator.pcm.repository.RepositoryComponent>) change;
+    	if (!(_localTypedChange.getAffectedEObject() instanceof org.palladiosimulator.pcm.repository.Repository)) {
+    		return false;
+    	}
+    	if (!_localTypedChange.getAffectedFeature().getName().equals("components__Repository")) {
+    		return false;
+    	}
+    	if (!(_localTypedChange.getOldValue() instanceof org.palladiosimulator.pcm.repository.RepositoryComponent)) {
+    		return false;
+    	}
+    	this.removeChange = (RemoveEReference<org.palladiosimulator.pcm.repository.Repository, org.palladiosimulator.pcm.repository.RepositoryComponent>) change;
+    	return true;
     }
-    if (!relevantChange.getAffectedFeature().getName().equals("components__Repository")) {
-    	return false;
-    }
-    if (!(relevantChange.getOldValue() instanceof RepositoryComponent)) {
-    	return false;
-    }
-    return true;
+    
+    return false;
   }
   
   public boolean checkPrecondition(final EChange change) {
-    if (!(change instanceof RemoveAndDeleteNonRoot)) {
-    	return false;
+    if (currentlyMatchedChange == 0) {
+    	if (!matchRemoveChange(change)) {
+    		resetChanges();
+    		return false;
+    	} else {
+    		currentlyMatchedChange++;
+    	}
+    	return false; // Only proceed on the last of the expected changes
     }
-    getLogger().debug("Passed change type check of reaction " + this.getClass().getName());
-    if (!checkChangeProperties(change)) {
-    	return false;
+    if (currentlyMatchedChange == 1) {
+    	if (!matchDeleteChange(change)) {
+    		resetChanges();
+    		checkPrecondition(change); // Reexecute to potentially register this as first change
+    		return false;
+    	} else {
+    		currentlyMatchedChange++;
+    	}
     }
-    getLogger().debug("Passed change properties check of reaction " + this.getClass().getName());
-    getLogger().debug("Passed complete precondition check of reaction " + this.getClass().getName());
+    
     return true;
   }
   
@@ -61,9 +105,8 @@ class DeletedComponentReaction extends AbstractReactionRealization {
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final Repository affectedEObject, final EReference affectedFeature, final RepositoryComponent oldValue, @Extension final RoutinesFacade _routinesFacade) {
-      String _entityName = oldValue.getEntityName();
-      _routinesFacade.deleteJavaPackage(oldValue, _entityName, "");
+    public void callRoutine1(final RemoveEReference removeChange, final Repository affectedEObject, final EReference affectedFeature, final RepositoryComponent oldValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+      _routinesFacade.deleteJavaPackage(oldValue, oldValue.getEntityName(), "");
       _routinesFacade.deleteJavaClassifier(oldValue);
     }
   }

@@ -3,12 +3,12 @@ package mir.routines.umlToJavaClassifier;
 import com.google.common.collect.Iterables;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import mir.routines.umlToJavaClassifier.RoutinesFacade;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Namespace;
-import org.emftext.language.java.containers.impl.ContainersFactoryImpl;
 import tools.vitruv.applications.umljava.util.uml.UmlClassifierAndPackageUtil;
 import tools.vitruv.domains.java.util.JavaPersistenceHelper;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
@@ -26,11 +26,11 @@ public class CreateJavaPackageRoutine extends AbstractRepairRoutineRealization {
       super(reactionExecutionState);
     }
     
-    public EObject getElement1(final org.eclipse.uml2.uml.Package uPackage, final org.eclipse.uml2.uml.Package uSuperPackage, final org.emftext.language.java.containers.Package jSuperPackage, final org.emftext.language.java.containers.Package jPackage) {
+    public EObject getElement1(final org.eclipse.uml2.uml.Package uPackage, final org.eclipse.uml2.uml.Package uSuperPackage, final Optional<org.emftext.language.java.containers.Package> jSuperPackage, final org.emftext.language.java.containers.Package jPackage) {
       return jPackage;
     }
     
-    public EObject getElement2(final org.eclipse.uml2.uml.Package uPackage, final org.eclipse.uml2.uml.Package uSuperPackage, final org.emftext.language.java.containers.Package jSuperPackage, final org.emftext.language.java.containers.Package jPackage) {
+    public EObject getElement2(final org.eclipse.uml2.uml.Package uPackage, final org.eclipse.uml2.uml.Package uSuperPackage, final Optional<org.emftext.language.java.containers.Package> jSuperPackage, final org.emftext.language.java.containers.Package jPackage) {
       return uPackage;
     }
     
@@ -38,7 +38,7 @@ public class CreateJavaPackageRoutine extends AbstractRepairRoutineRealization {
       return uSuperPackage;
     }
     
-    public void updateJPackageElement(final org.eclipse.uml2.uml.Package uPackage, final org.eclipse.uml2.uml.Package uSuperPackage, final org.emftext.language.java.containers.Package jSuperPackage, final org.emftext.language.java.containers.Package jPackage) {
+    public void updateJPackageElement(final org.eclipse.uml2.uml.Package uPackage, final org.eclipse.uml2.uml.Package uSuperPackage, final Optional<org.emftext.language.java.containers.Package> jSuperPackage, final org.emftext.language.java.containers.Package jPackage) {
       if ((uPackage instanceof Model)) {
         jPackage.setName("");
       } else {
@@ -49,11 +49,9 @@ public class CreateJavaPackageRoutine extends AbstractRepairRoutineRealization {
           List<String> _umlParentNamespaceAsStringList = UmlClassifierAndPackageUtil.getUmlParentNamespaceAsStringList(uPackage);
           Iterables.<String>addAll(_namespaces, _umlParentNamespaceAsStringList);
         }
-        String _name = uPackage.getName();
-        jPackage.setName(_name);
+        jPackage.setName(uPackage.getName());
       }
-      String _buildJavaFilePath = JavaPersistenceHelper.buildJavaFilePath(jPackage);
-      this.persistProjectRelative(uPackage, jPackage, _buildJavaFilePath);
+      this.persistProjectRelative(uPackage, jPackage, JavaPersistenceHelper.buildJavaFilePath(jPackage));
     }
   }
   
@@ -68,23 +66,28 @@ public class CreateJavaPackageRoutine extends AbstractRepairRoutineRealization {
   
   private org.eclipse.uml2.uml.Package uSuperPackage;
   
-  protected void executeRoutine() throws IOException {
+  protected boolean executeRoutine() throws IOException {
     getLogger().debug("Called routine CreateJavaPackageRoutine with input:");
-    getLogger().debug("   Package: " + this.uPackage);
-    getLogger().debug("   Package: " + this.uSuperPackage);
+    getLogger().debug("   uPackage: " + this.uPackage);
+    getLogger().debug("   uSuperPackage: " + this.uSuperPackage);
     
-    org.emftext.language.java.containers.Package jSuperPackage = getCorrespondingElement(
-    	userExecution.getCorrepondenceSourceJSuperPackage(uPackage, uSuperPackage), // correspondence source supplier
-    	org.emftext.language.java.containers.Package.class,
-    	(org.emftext.language.java.containers.Package _element) -> true, // correspondence precondition checker
-    	null);
-    registerObjectUnderModification(jSuperPackage);
-    org.emftext.language.java.containers.Package jPackage = ContainersFactoryImpl.eINSTANCE.createPackage();
+    	Optional<org.emftext.language.java.containers.Package> jSuperPackage = Optional.ofNullable(getCorrespondingElement(
+    		userExecution.getCorrepondenceSourceJSuperPackage(uPackage, uSuperPackage), // correspondence source supplier
+    		org.emftext.language.java.containers.Package.class,
+    		(org.emftext.language.java.containers.Package _element) -> true, // correspondence precondition checker
+    		null, 
+    		false // asserted
+    		)
+    );
+    registerObjectUnderModification(jSuperPackage.isPresent() ? jSuperPackage.get() : null);
+    org.emftext.language.java.containers.Package jPackage = org.emftext.language.java.containers.impl.ContainersFactoryImpl.eINSTANCE.createPackage();
     notifyObjectCreated(jPackage);
     userExecution.updateJPackageElement(uPackage, uSuperPackage, jSuperPackage, jPackage);
     
     addCorrespondenceBetween(userExecution.getElement1(uPackage, uSuperPackage, jSuperPackage, jPackage), userExecution.getElement2(uPackage, uSuperPackage, jSuperPackage, jPackage), "");
     
     postprocessElements();
+    
+    return true;
   }
 }

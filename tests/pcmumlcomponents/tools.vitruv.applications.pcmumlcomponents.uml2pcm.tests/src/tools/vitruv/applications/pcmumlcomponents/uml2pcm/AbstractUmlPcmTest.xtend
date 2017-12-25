@@ -13,7 +13,7 @@ import org.eclipse.uml2.uml.resource.UMLResource
 import org.palladiosimulator.pcm.repository.PrimitiveTypeEnum
 import tools.vitruv.domains.pcm.PcmDomainProvider
 import tools.vitruv.domains.uml.UmlDomainProvider
-import tools.vitruv.framework.tests.VitruviusApplicationTest
+import tools.vitruv.testutils.VitruviusApplicationTest
 import org.eclipse.emf.common.util.BasicEList
 
 class AbstractUmlPcmTest extends VitruviusApplicationTest {
@@ -31,7 +31,7 @@ class AbstractUmlPcmTest extends VitruviusApplicationTest {
 	protected static val UML_TYPE_STRING = "String"	
 	
 	private def String getProjectModelPath(String modelName) {
-		"repository/" + modelName + "." + MODEL_FILE_EXTENSION;
+		"model/" + modelName + "." + MODEL_FILE_EXTENSION;
 	}
 	
 	protected def Model getRootElement() {

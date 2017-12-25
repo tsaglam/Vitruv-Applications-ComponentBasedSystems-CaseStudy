@@ -6,8 +6,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Model;
 import org.palladiosimulator.pcm.repository.CollectionDataType;
 import org.palladiosimulator.pcm.repository.DataType;
-import org.palladiosimulator.pcm.repository.OperationInterface;
-import org.palladiosimulator.pcm.repository.OperationSignature;
 import org.palladiosimulator.pcm.repository.Parameter;
 import org.palladiosimulator.pcm.repository.Repository;
 import tools.vitruv.applications.pcmumlcomponents.pcm2uml.PcmToUmlUtil;
@@ -34,9 +32,7 @@ public class ChangeParameterTypeRoutine extends AbstractRepairRoutineRealization
       if (((pcmDataType == null) || ((pcmDataType instanceof CollectionDataType) && (((CollectionDataType) pcmDataType).getInnerType_CollectionDataType() == null)))) {
         umlParameter.setType(null);
       } else {
-        DataType _dataType__Parameter = pcmParameter.getDataType__Parameter();
-        org.eclipse.uml2.uml.DataType _retrieveUmlType = PcmToUmlUtil.retrieveUmlType(this.correspondenceModel, _dataType__Parameter, umlModel);
-        umlParameter.setType(_retrieveUmlType);
+        umlParameter.setType(PcmToUmlUtil.retrieveUmlType(this.correspondenceModel, pcmParameter.getDataType__Parameter(), umlModel));
       }
       PcmToUmlUtil.updateMultiplicity(umlParameter, Boolean.valueOf(((umlParameter.getType() != null) && (pcmDataType instanceof CollectionDataType))));
     }
@@ -46,9 +42,7 @@ public class ChangeParameterTypeRoutine extends AbstractRepairRoutineRealization
     }
     
     public EObject getCorrepondenceSourceUmlModel(final Parameter pcmParameter, final DataType pcmDataType, final org.eclipse.uml2.uml.Parameter umlParameter) {
-      OperationSignature _operationSignature__Parameter = pcmParameter.getOperationSignature__Parameter();
-      OperationInterface _interface__OperationSignature = _operationSignature__Parameter.getInterface__OperationSignature();
-      Repository _repository__Interface = _interface__OperationSignature.getRepository__Interface();
+      Repository _repository__Interface = pcmParameter.getOperationSignature__Parameter().getInterface__OperationSignature().getRepository__Interface();
       return _repository__Interface;
     }
   }
@@ -64,32 +58,38 @@ public class ChangeParameterTypeRoutine extends AbstractRepairRoutineRealization
   
   private DataType pcmDataType;
   
-  protected void executeRoutine() throws IOException {
+  protected boolean executeRoutine() throws IOException {
     getLogger().debug("Called routine ChangeParameterTypeRoutine with input:");
-    getLogger().debug("   Parameter: " + this.pcmParameter);
-    getLogger().debug("   DataType: " + this.pcmDataType);
+    getLogger().debug("   pcmParameter: " + this.pcmParameter);
+    getLogger().debug("   pcmDataType: " + this.pcmDataType);
     
     org.eclipse.uml2.uml.Parameter umlParameter = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceUmlParameter(pcmParameter, pcmDataType), // correspondence source supplier
     	org.eclipse.uml2.uml.Parameter.class,
     	(org.eclipse.uml2.uml.Parameter _element) -> true, // correspondence precondition checker
-    	null);
+    	null, 
+    	false // asserted
+    	);
     if (umlParameter == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(umlParameter);
-    Model umlModel = getCorrespondingElement(
+    org.eclipse.uml2.uml.Model umlModel = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceUmlModel(pcmParameter, pcmDataType, umlParameter), // correspondence source supplier
-    	Model.class,
-    	(Model _element) -> true, // correspondence precondition checker
-    	null);
+    	org.eclipse.uml2.uml.Model.class,
+    	(org.eclipse.uml2.uml.Model _element) -> true, // correspondence precondition checker
+    	null, 
+    	false // asserted
+    	);
     if (umlModel == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(umlModel);
     // val updatedElement userExecution.getElement1(pcmParameter, pcmDataType, umlParameter, umlModel);
     userExecution.update0Element(pcmParameter, pcmDataType, umlParameter, umlModel);
     
     postprocessElements();
+    
+    return true;
   }
 }

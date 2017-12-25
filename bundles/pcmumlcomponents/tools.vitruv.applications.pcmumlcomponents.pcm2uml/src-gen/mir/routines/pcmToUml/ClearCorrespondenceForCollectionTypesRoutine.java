@@ -47,21 +47,25 @@ public class ClearCorrespondenceForCollectionTypesRoutine extends AbstractRepair
   
   private CollectionDataType pcmType;
   
-  protected void executeRoutine() throws IOException {
+  protected boolean executeRoutine() throws IOException {
     getLogger().debug("Called routine ClearCorrespondenceForCollectionTypesRoutine with input:");
-    getLogger().debug("   CollectionDataType: " + this.pcmType);
+    getLogger().debug("   pcmType: " + this.pcmType);
     
-    DataType oldInnerType = getCorrespondingElement(
+    org.eclipse.uml2.uml.DataType oldInnerType = getCorrespondingElement(
     	userExecution.getCorrepondenceSourceOldInnerType(pcmType), // correspondence source supplier
-    	DataType.class,
-    	(DataType _element) -> true, // correspondence precondition checker
-    	userExecution.getRetrieveTag1(pcmType));
+    	org.eclipse.uml2.uml.DataType.class,
+    	(org.eclipse.uml2.uml.DataType _element) -> true, // correspondence precondition checker
+    	userExecution.getRetrieveTag1(pcmType), 
+    	false // asserted
+    	);
     if (oldInnerType == null) {
-    	return;
+    	return false;
     }
     registerObjectUnderModification(oldInnerType);
-    removeCorrespondenceBetween(userExecution.getElement1(pcmType, oldInnerType), userExecution.getElement2(pcmType, oldInnerType));
+    removeCorrespondenceBetween(userExecution.getElement1(pcmType, oldInnerType), userExecution.getElement2(pcmType, oldInnerType), "");
     
     postprocessElements();
+    
+    return true;
   }
 }

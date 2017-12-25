@@ -6,7 +6,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Property;
-import org.eclipse.uml2.uml.internal.impl.UMLFactoryImpl;
 import org.palladiosimulator.pcm.repository.InnerDeclaration;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
 import tools.vitruv.extensions.dslsruntime.reactions.ReactionExecutionState;
@@ -33,8 +32,7 @@ public class CreateUmlPropertyForDatatypeRoutine extends AbstractRepairRoutineRe
     }
     
     public void updatePropertyElement(final DataType type, final InnerDeclaration counterpart, final DataType owner, final Property property) {
-      String _entityName = counterpart.getEntityName();
-      property.setName(_entityName);
+      property.setName(counterpart.getEntityName());
       property.setType(type);
     }
     
@@ -60,13 +58,13 @@ public class CreateUmlPropertyForDatatypeRoutine extends AbstractRepairRoutineRe
   
   private DataType owner;
   
-  protected void executeRoutine() throws IOException {
+  protected boolean executeRoutine() throws IOException {
     getLogger().debug("Called routine CreateUmlPropertyForDatatypeRoutine with input:");
-    getLogger().debug("   DataType: " + this.type);
-    getLogger().debug("   InnerDeclaration: " + this.counterpart);
-    getLogger().debug("   DataType: " + this.owner);
+    getLogger().debug("   type: " + this.type);
+    getLogger().debug("   counterpart: " + this.counterpart);
+    getLogger().debug("   owner: " + this.owner);
     
-    Property property = UMLFactoryImpl.eINSTANCE.createProperty();
+    org.eclipse.uml2.uml.Property property = org.eclipse.uml2.uml.internal.impl.UMLFactoryImpl.eINSTANCE.createProperty();
     notifyObjectCreated(property);
     userExecution.updatePropertyElement(type, counterpart, owner, property);
     
@@ -76,5 +74,7 @@ public class CreateUmlPropertyForDatatypeRoutine extends AbstractRepairRoutineRe
     addCorrespondenceBetween(userExecution.getElement2(type, counterpart, owner, property), userExecution.getElement3(type, counterpart, owner, property), "");
     
     postprocessElements();
+    
+    return true;
   }
 }

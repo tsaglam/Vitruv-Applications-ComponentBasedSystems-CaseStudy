@@ -14,45 +14,63 @@ import tools.vitruv.framework.change.echange.feature.reference.InsertEReference;
 
 @SuppressWarnings("all")
 class AddedUsesRelationshipReaction extends AbstractReactionRealization {
+  private InsertEReference<Component, Usage> insertChange;
+  
+  private int currentlyMatchedChange;
+  
   public void executeReaction(final EChange change) {
-    InsertEReference<Component, Usage> typedChange = (InsertEReference<Component, Usage>)change;
-    Component affectedEObject = typedChange.getAffectedEObject();
-    EReference affectedFeature = typedChange.getAffectedFeature();
-    Usage newValue = typedChange.getNewValue();
+    if (!checkPrecondition(change)) {
+    	return;
+    }
+    org.eclipse.uml2.uml.Component affectedEObject = insertChange.getAffectedEObject();
+    EReference affectedFeature = insertChange.getAffectedFeature();
+    org.eclipse.uml2.uml.Usage newValue = insertChange.getNewValue();
+    int index = insertChange.getIndex();
+    				
+    getLogger().trace("Passed complete precondition check of Reaction " + this.getClass().getName());
+    				
     mir.routines.umlToPcm.RoutinesFacade routinesFacade = new mir.routines.umlToPcm.RoutinesFacade(this.executionState, this);
     mir.reactions.reactionsUmlToPcm.umlToPcm.AddedUsesRelationshipReaction.ActionUserExecution userExecution = new mir.reactions.reactionsUmlToPcm.umlToPcm.AddedUsesRelationshipReaction.ActionUserExecution(this.executionState, this);
-    userExecution.callRoutine1(affectedEObject, affectedFeature, newValue, routinesFacade);
+    userExecution.callRoutine1(insertChange, affectedEObject, affectedFeature, newValue, index, routinesFacade);
+    
+    resetChanges();
   }
   
-  public static Class<? extends EChange> getExpectedChangeType() {
-    return InsertEReference.class;
-  }
-  
-  private boolean checkChangeProperties(final EChange change) {
-    InsertEReference<Component, Usage> relevantChange = (InsertEReference<Component, Usage>)change;
-    if (!(relevantChange.getAffectedEObject() instanceof Component)) {
-    	return false;
-    }
-    if (!relevantChange.getAffectedFeature().getName().equals("packagedElement")) {
-    	return false;
-    }
-    if (!(relevantChange.getNewValue() instanceof Usage)) {
-    	return false;
-    }
-    return true;
+  private void resetChanges() {
+    insertChange = null;
+    currentlyMatchedChange = 0;
   }
   
   public boolean checkPrecondition(final EChange change) {
-    if (!(change instanceof InsertEReference)) {
-    	return false;
+    if (currentlyMatchedChange == 0) {
+    	if (!matchInsertChange(change)) {
+    		resetChanges();
+    		return false;
+    	} else {
+    		currentlyMatchedChange++;
+    	}
     }
-    getLogger().debug("Passed change type check of reaction " + this.getClass().getName());
-    if (!checkChangeProperties(change)) {
-    	return false;
-    }
-    getLogger().debug("Passed change properties check of reaction " + this.getClass().getName());
-    getLogger().debug("Passed complete precondition check of reaction " + this.getClass().getName());
+    
     return true;
+  }
+  
+  private boolean matchInsertChange(final EChange change) {
+    if (change instanceof InsertEReference<?, ?>) {
+    	InsertEReference<org.eclipse.uml2.uml.Component, org.eclipse.uml2.uml.Usage> _localTypedChange = (InsertEReference<org.eclipse.uml2.uml.Component, org.eclipse.uml2.uml.Usage>) change;
+    	if (!(_localTypedChange.getAffectedEObject() instanceof org.eclipse.uml2.uml.Component)) {
+    		return false;
+    	}
+    	if (!_localTypedChange.getAffectedFeature().getName().equals("packagedElement")) {
+    		return false;
+    	}
+    	if (!(_localTypedChange.getNewValue() instanceof org.eclipse.uml2.uml.Usage)) {
+    		return false;
+    	}
+    	this.insertChange = (InsertEReference<org.eclipse.uml2.uml.Component, org.eclipse.uml2.uml.Usage>) change;
+    	return true;
+    }
+    
+    return false;
   }
   
   private static class ActionUserExecution extends AbstractRepairRoutineRealization.UserExecution {
@@ -60,7 +78,7 @@ class AddedUsesRelationshipReaction extends AbstractReactionRealization {
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final Component affectedEObject, final EReference affectedFeature, final Usage newValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final InsertEReference insertChange, final Component affectedEObject, final EReference affectedFeature, final Usage newValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
       _routinesFacade.createRequiredRole(affectedEObject, newValue);
     }
   }
