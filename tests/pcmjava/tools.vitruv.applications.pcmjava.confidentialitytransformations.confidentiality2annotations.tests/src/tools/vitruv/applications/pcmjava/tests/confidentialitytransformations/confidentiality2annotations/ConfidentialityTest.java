@@ -64,7 +64,7 @@ import tools.vitruv.testutils.util.TestUtil;
  * @author Nils Wilka
  * @version 1.1, 16.12.2017
  */
-public class ConfidentialityApplicationTest extends VitruviusApplicationTest {
+public class ConfidentialityTest extends VitruviusApplicationTest {
 
     // Choose an arbitrary name for the confidentiality model
     public final static String MODEL_NAME = "model";

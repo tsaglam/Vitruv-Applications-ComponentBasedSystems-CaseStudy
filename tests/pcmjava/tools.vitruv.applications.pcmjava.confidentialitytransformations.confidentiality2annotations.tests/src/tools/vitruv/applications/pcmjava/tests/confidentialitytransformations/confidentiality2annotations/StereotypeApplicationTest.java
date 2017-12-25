@@ -24,7 +24,7 @@ import tools.vitruv.domains.pcm.PcmNamespace;
 import tools.vitruv.framework.change.processing.ChangePropagationSpecification;
 import tools.vitruv.framework.domains.VitruvDomain;
 
-public class StereotypeApplicationTest extends ConfidentialityApplicationTest {
+public class StereotypeApplicationTest extends ConfidentialityTest {
 
     private static final String CONFIDENTIALITY_MM = "http://edu.kit.kastel.scbs.confidentiality";
 

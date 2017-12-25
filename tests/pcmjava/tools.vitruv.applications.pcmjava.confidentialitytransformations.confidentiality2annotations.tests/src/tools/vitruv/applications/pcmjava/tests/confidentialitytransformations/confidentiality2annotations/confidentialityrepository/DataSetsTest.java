@@ -7,11 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.kit.kastel.scbs.confidentiality.data.DataSet;
-import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.ConfidentialityApplicationTest;
+import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.ConfidentialityTest;
 import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.ConfAssertions;
 import tools.vitruv.applications.pcmjava.tests.confidentialitytransformations.confidentiality2annotations.util.ConfElementsCreator;
 
-public class DataSetsTest extends ConfidentialityApplicationTest {
+public class DataSetsTest extends ConfidentialityTest {
 
     @Before
     public void before() {

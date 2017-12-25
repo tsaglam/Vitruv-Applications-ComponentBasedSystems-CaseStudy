@@ -17,9 +17,17 @@ execute actions in Java
 
 reaction CreatedInformationFlowStereotypeApplication {
 	after element emfprofileApp::StereotypeApplication created and inserted in emfprofileApp::ProfileApplication[stereotypeApplications]
-	call {
-		createAnnotationInstance(newValue)
-	}
+	call createAnnotationInstance(newValue)
+}
+
+reaction DeletedInformationFlowStereotypeApplication {
+	after element emfprofileApp::StereotypeApplication removed from emfprofileApp::ProfileApplication[stereotypeApplications]
+	call deleteAnnotationInstance(oldValue)
+}
+
+reaction ReplacedInformationFlowStereotypeApplication {
+	after element emfprofileApp::StereotypeApplication replaced at emfprofileApp::ProfileApplication[stereotypeApplications]
+	call replaceAnnotationInstance(oldValue, newValue)
 }
 
 routine createAnnotationInstance(emfprofileApp::StereotypeApplication stereotypeApplication) {
@@ -67,13 +75,6 @@ routine setParametersAndDataPairsOfAnnotationInstance(pcm::OperationSignature pc
 	}
 }
 
-reaction ReplacedInformationFlowStereotypeApplication {
-	after element emfprofileApp::StereotypeApplication replaced at emfprofileApp::ProfileApplication[stereotypeApplications]
-	call {
-		replaceAnnotationInstance(oldValue, newValue)
-	}
-}
-
 routine replaceAnnotationInstance(emfprofileApp::StereotypeApplication oldStereotypeApplication, emfprofileApp::StereotypeApplication newStereotypeApplication) {
 	match {
 		check Confidentiality2AnnotationsUtil.isInformationFlow(oldStereotypeApplication)
@@ -94,13 +95,6 @@ routine replaceAnnotationInstance(emfprofileApp::StereotypeApplication oldStereo
 	}
 }
 
-reaction DeletedInformationFlowStereotypeApplication {
-	after element emfprofileApp::StereotypeApplication removed from emfprofileApp::ProfileApplication[stereotypeApplications]
-	call {
-		deleteAnnotationInstance(oldValue)
-	}
-}
-
 routine deleteAnnotationInstance(emfprofileApp::StereotypeApplication oldStereotypeApplication) {
 	match {
 		check Confidentiality2AnnotationsUtil.isInformationFlow(oldStereotypeApplication)
@@ -117,7 +111,7 @@ routine deleteAnnotationInstance(emfprofileApp::StereotypeApplication oldStereot
 reaction StereotypeApplicationParametersAndDataPairChanged {
 	// workaround for updating parameters and data pairs
 	after any change
-	with (change.involvedEObjects.findFirst[it instanceof StereotypeApplication] as StereotypeApplication) !== null
+	with change.involvedEObjects.findFirst[it instanceof StereotypeApplication] !== null
 	call {
 		val stereotypeApplication = change.involvedEObjects.findFirst[it instanceof StereotypeApplication] as StereotypeApplication
 		updateParametersAndDataPairsMemberValues(stereotypeApplication)
@@ -143,9 +137,17 @@ routine updateParametersAndDataPairsMemberValues(emfprofileApp::StereotypeApplic
 
 reaction AppliedInformationFlowStereotypeToSignature {
 	after element inserted in emfprofileApp::StereotypeApplication[appliedTo]
-	call { 
-		annotateInformationFlowToSignature(affectedEObject)
-	}
+	call annotateInformationFlowToSignature(affectedEObject)
+}
+
+reaction DeletedInformationFlowStereotypeApplicationAppliedTo {
+	after element removed from emfprofileApp::StereotypeApplication[appliedTo]
+	call deleteInformationFlowAnnotationInstance(affectedEObject, oldValue)
+}
+
+reaction ReplacedInformationFlowStereotypeApplicationAppliedTo {
+	after element replaced at emfprofileApp::StereotypeApplication[appliedTo]
+	call replaceInformationFlowAnnotationInstance(affectedEObject, newValue, oldValue)
 }
 
 routine annotateInformationFlowToSignature(emfprofileApp::StereotypeApplication stereotypeApplication) {
@@ -161,10 +163,17 @@ routine annotateInformationFlowToSignature(emfprofileApp::StereotypeApplication 
 	}
 }
 
-reaction ReplacedInformationFlowStereotypeApplicationAppliedTo {
-	after element replaced at emfprofileApp::StereotypeApplication[appliedTo]
-	call { 
-		replaceInformationFlowAnnotationInstance(affectedEObject, newValue, oldValue)
+routine deleteInformationFlowAnnotationInstance(emfprofileApp::StereotypeApplication stereotypeApplication, EObject pcmSignature) {
+	match {
+		check Confidentiality2AnnotationsUtil.isInformationFlow(stereotypeApplication)
+		check Confidentiality2AnnotationsUtil.isOperationSignature(pcmSignature)
+		val javaAnnotationInstance = retrieve java::AnnotationInstance corresponding to stereotypeApplication
+		val javaMethod = retrieve java::Method corresponding to (pcmSignature as OperationSignature)
+	}
+	action {
+		update javaMethod {
+			javaMethod.annotationInstances.remove(javaAnnotationInstance)
+		}
 	}
 }
 
@@ -183,27 +192,6 @@ routine replaceInformationFlowAnnotationInstance(emfprofileApp::StereotypeApplic
 		}
 		update newMethod {
 			newMethod.annotationInstances.add(javaAnnotationInstance)
-		}
-	}
-}
-
-reaction DeletedInformationFlowStereotypeApplicationAppliedTo {
-	after element removed from emfprofileApp::StereotypeApplication[appliedTo]
-	call { 
-		deleteInformationFlowAnnotationInstance(affectedEObject, oldValue)
-	}
-}
-
-routine deleteInformationFlowAnnotationInstance(emfprofileApp::StereotypeApplication stereotypeApplication, EObject pcmSignature) {
-	match {
-		check Confidentiality2AnnotationsUtil.isInformationFlow(stereotypeApplication)
-		check Confidentiality2AnnotationsUtil.isOperationSignature(pcmSignature)
-		val javaAnnotationInstance = retrieve java::AnnotationInstance corresponding to stereotypeApplication
-		val javaMethod = retrieve java::Method corresponding to (pcmSignature as OperationSignature)
-	}
-	action {
-		update javaMethod {
-			javaMethod.annotationInstances.remove(javaAnnotationInstance)
 		}
 	}
 }
