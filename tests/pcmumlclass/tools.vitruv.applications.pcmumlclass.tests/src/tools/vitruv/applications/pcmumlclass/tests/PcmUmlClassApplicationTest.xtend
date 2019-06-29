@@ -38,7 +38,7 @@ import java.util.ArrayList
 
 abstract class PcmUmlClassApplicationTest extends VitruviusApplicationTest {
 	override protected createChangePropagationSpecifications() {
-		return #[ // TODO (TS) here
+		return #[
 			new CombinedPcmToUmlClassReactionsChangePropagationSpecification, 
 			new CombinedUmlClassToPcmReactionsChangePropagationSpecification
 		];  
