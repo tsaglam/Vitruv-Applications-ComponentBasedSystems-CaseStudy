@@ -1,25 +1,13 @@
 package tools.vitruv.applications.umljava.uml2java
 
 import org.apache.log4j.Logger
-import org.eclipse.uml2.uml.Classifier
 import org.eclipse.uml2.uml.Model
-import org.eclipse.uml2.uml.Operation
-import org.eclipse.uml2.uml.Parameter
 import org.eclipse.uml2.uml.Property
 import org.eclipse.uml2.uml.UMLFactory
-import org.emftext.language.java.classifiers.Class
-import org.emftext.language.java.classifiers.Enumeration
-import org.emftext.language.java.classifiers.Interface
-import org.emftext.language.java.containers.CompilationUnit
-import org.emftext.language.java.containers.Package
-import org.emftext.language.java.members.ClassMethod
-import org.emftext.language.java.members.Constructor
-import org.emftext.language.java.members.Field
-import org.emftext.language.java.members.InterfaceMethod
-import org.emftext.language.java.parameters.OrdinaryParameter
-import tools.vitruv.applications.umljava.testutil.AbstractUmlJavaTest
 
 import static tools.vitruv.domains.java.util.JavaPersistenceHelper.*
+import org.eclipse.uml2.uml.Operation
+import tools.vitruv.applications.umljava.testutil.AbstractUmlJavaTest
 
 /**
  * Abstract super class for uml to java test cases.
@@ -66,70 +54,70 @@ abstract class Uml2JavaTransformationTest extends AbstractUmlJavaTest {
      * Retrieves the first corresponding java field for a given uml property
      */
     def protected getCorrespondingAttribute(Property uAttribute) {
-    	return getFirstCorrespondingObjectWithClass(uAttribute, Field)
+    	return getFirstCorrespondingObjectWithClass(uAttribute, org.emftext.language.java.members.Field)
     }
     
     /**
      * Retrieves the first corresponding java class method for a given uml operation
      */
     def protected getCorrespondingClassMethod(Operation uOperation) {
-    	return getFirstCorrespondingObjectWithClass(uOperation, ClassMethod)
+    	return getFirstCorrespondingObjectWithClass(uOperation, org.emftext.language.java.members.ClassMethod)
     }
     
     /**
      * Retrieves the first corresponding java interface method for a given uml operation
      */
     def protected getCorrespondingInterfaceMethod(Operation uOperation) {
-    	return getFirstCorrespondingObjectWithClass(uOperation, InterfaceMethod)
+    	return getFirstCorrespondingObjectWithClass(uOperation, org.emftext.language.java.members.InterfaceMethod)
     }
     
     /**
      * Retrieves the first corresponding java class for a given uml class
      */
-    def protected getCorrespondingClass(Classifier uClass) {
-    	return getFirstCorrespondingObjectWithClass(uClass, Class)
+    def protected getCorrespondingClass(org.eclipse.uml2.uml.Classifier uClass) {
+    	return getFirstCorrespondingObjectWithClass(uClass, org.emftext.language.java.classifiers.Class)
     }
     
     /**
      * Retrieves the first corresponding java compilationunit for a given uml class
      */
     def protected getCorrespondingCompilationUnit(org.eclipse.uml2.uml.Class uClass) {
-        return getFirstCorrespondingObjectWithClass(uClass, CompilationUnit)
+        return getFirstCorrespondingObjectWithClass(uClass, org.emftext.language.java.containers.CompilationUnit)
     }
     
     /**
      * Retrieves the first corresponding java interface for a given uml interface
      */
     def protected getCorrespondingInterface(org.eclipse.uml2.uml.Interface uInterface) {
-    	return getFirstCorrespondingObjectWithClass(uInterface, Interface)
+    	return getFirstCorrespondingObjectWithClass(uInterface, org.emftext.language.java.classifiers.Interface)
     }
     
     /**
      * Retrieves the first corresponding java enumeration for a given uml enumeration
      */
     def protected getCorrespondingEnum(org.eclipse.uml2.uml.Enumeration uEnumeration) {
-    	return getFirstCorrespondingObjectWithClass(uEnumeration, Enumeration)
+    	return getFirstCorrespondingObjectWithClass(uEnumeration, org.emftext.language.java.classifiers.Enumeration)
     }
     
     /**
      * Retrieves the first corresponding java ordinary parameter for a given uml parameter
      */
-    def protected getCorrespondingParameter(Parameter uParam) {
-    	return getFirstCorrespondingObjectWithClass(uParam, OrdinaryParameter)
+    def protected getCorrespondingParameter(org.eclipse.uml2.uml.Parameter uParam) {
+    	return getFirstCorrespondingObjectWithClass(uParam, org.emftext.language.java.parameters.OrdinaryParameter)
     }
     
     /**
      * Retrieves the first corresponding java package for a given uml package
      */
     def protected getCorrespondingPackage(org.eclipse.uml2.uml.Package uPackage) {
-        return getFirstCorrespondingObjectWithClass(uPackage, Package)
+        return getFirstCorrespondingObjectWithClass(uPackage, org.emftext.language.java.containers.Package)
     }
     
     /**
      * Retrieves the first corresponding java constructor for a given uml operation
      */
-    def protected getCorrespondingConstructor(Operation uOperation) {
-        return getFirstCorrespondingObjectWithClass(uOperation, Constructor)
+    def protected getCorrespondingConstructor(org.eclipse.uml2.uml.Operation uOperation) {
+        return getFirstCorrespondingObjectWithClass(uOperation, org.emftext.language.java.members.Constructor)
     }
     
     
