@@ -60,7 +60,6 @@ public class DeleteCorrespondingRepositoryPackagesRoutine extends AbstractRepair
       }
       final Boolean deleteCorrespondingUmlRepository = this.userInteractor.getConfirmationDialogBuilder().message(DefaultLiterals.INPUT_REQUEST_DELETE_CORRESPONDING_UML_MODEL).startInteraction();
       if ((deleteCorrespondingUmlRepository).booleanValue()) {
-        umlRepositoryPkg.destroy();
         boolean _isPresent_2 = umlContractsPkg.isPresent();
         if (_isPresent_2) {
           umlContractsPkg.get().destroy();
@@ -69,6 +68,7 @@ public class DeleteCorrespondingRepositoryPackagesRoutine extends AbstractRepair
         if (_isPresent_3) {
           umlDatatypesPkg.get().destroy();
         }
+        umlRepositoryPkg.destroy();
       }
     }
   }
