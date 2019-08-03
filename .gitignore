@@ -17,3 +17,6 @@ target/
 
 # Custom
 EvaluationData
+
+# macOS
+*.DS_Store
