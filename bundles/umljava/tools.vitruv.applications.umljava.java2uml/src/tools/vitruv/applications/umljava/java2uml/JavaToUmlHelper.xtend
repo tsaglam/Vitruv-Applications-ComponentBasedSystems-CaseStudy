@@ -2,11 +2,10 @@ package tools.vitruv.applications.umljava.java2uml
 
 import java.util.Set
 import org.apache.log4j.Logger
-import org.eclipse.uml2.uml.Package
-import tools.vitruv.framework.userinteraction.UserInteractor
-
-import tools.vitruv.framework.userinteraction.UserInteractionOptions.WindowModality
 import org.eclipse.uml2.uml.Model
+import org.eclipse.uml2.uml.Package
+import tools.vitruv.framework.userinteraction.UserInteractionOptions.WindowModality
+import tools.vitruv.framework.userinteraction.UserInteractor
 
 /**
  * Helper class for the Java2Uml reactions. Contains functions who depends on
@@ -28,8 +27,7 @@ class JavaToUmlHelper {
      */
     def static Package findUmlPackage(Model umlModel, String packageName) {
         val Set<Package> allPackages = umlModel.eAllContents.filter(Package).toSet
-        
-        val packages = allPackages.filter[name.equals(packageName)]
+        val packages = allPackages.filter[name === packageName]
         if (packages.nullOrEmpty) {
             logger.warn("The UML-Package with the name " + packageName + " does not exist in the correspondence model")
             return null
