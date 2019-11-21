@@ -27,7 +27,7 @@ class JavaToUmlHelper {
      */
     def static Package findUmlPackage(Model umlModel, String packageName) {
         val Set<Package> allPackages = umlModel.eAllContents.filter(Package).toSet
-        val packages = allPackages.filter[name === packageName]
+        val packages = allPackages.filter[name == packageName]
         if (packages.nullOrEmpty) {
             logger.warn("The UML-Package with the name " + packageName + " does not exist in the correspondence model")
             return null
