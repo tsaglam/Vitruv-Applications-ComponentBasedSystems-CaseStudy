@@ -2,6 +2,7 @@ package tools.vitruv.applications.umljava.java2uml
 
 import java.util.Set
 import org.apache.log4j.Logger
+import org.eclipse.uml2.uml.Interface
 import org.eclipse.uml2.uml.Model
 import org.eclipse.uml2.uml.Package
 import tools.vitruv.framework.userinteraction.UserInteractionOptions.WindowModality
@@ -37,7 +38,32 @@ class JavaToUmlHelper {
         }
         return packages.head
     }
-    
+
+    /**
+     * Searches and retrieves the UML interface located in a specific package of a UML model that has an equal name as the given package name.
+     * If there is more than one package with the given name or the package can not be located, an {@link IllegalStateException} is thrown.
+     * 
+     * @param umlModel the UML model Model in which the UML packages should be searched
+     * @param interfaceName the interface name for which a fitting UML interface should be retrieved
+     * @param packageName the package name in which the UML interface should be located.
+     * @return the UML interface or null if none could be found
+     */
+    def static Interface findUmlInterface(Model umlModel, String interfaceName, String packageName) {
+		val uPackage = findUmlPackage(umlModel, packageName)
+		if (uPackage === null) {
+			throw new IllegalStateException("Could not locate the package " + packageName + " in the UMl model " + umlModel)
+		}
+		val interfaces = uPackage.ownedTypes.filter[it instanceof Interface].filter[name == interfaceName].toSet
+		if (interfaces.nullOrEmpty) {
+			logger.warn("The UML interface with the name " + interfaceName + " does not exist in the package " + uPackage)
+			return null
+		}
+		if (interfaces.size > 1) {
+			throw new IllegalStateException("There is more than one interface with name " + interfaceName + " in the package " + uPackage)
+		}
+		return interfaces.head as Interface
+	}
+
     /**
      * Displays a text message for the user.
      * 
