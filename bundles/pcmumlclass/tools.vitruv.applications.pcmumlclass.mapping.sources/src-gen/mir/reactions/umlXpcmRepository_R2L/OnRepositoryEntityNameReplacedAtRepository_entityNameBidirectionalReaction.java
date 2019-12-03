@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmRepository_R2L;
 
-import mir.routines.umlXpcmRepository_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.Repository;
@@ -17,7 +16,7 @@ public class OnRepositoryEntityNameReplacedAtRepository_entityNameBidirectionalR
   
   private int currentlyMatchedChange;
   
-  public OnRepositoryEntityNameReplacedAtRepository_entityNameBidirectionalReaction(final RoutinesFacade routinesFacade) {
+  public OnRepositoryEntityNameReplacedAtRepository_entityNameBidirectionalReaction(final mir.routines.umlXpcmRepository_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -83,7 +82,7 @@ public class OnRepositoryEntityNameReplacedAtRepository_entityNameBidirectionalR
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final Repository affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final Repository affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final mir.routines.umlXpcmRepository_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.onRepositoryEntityNameReplacedAtRepository_entityNameBidirectionalRepair(affectedEObject);
     }
   }

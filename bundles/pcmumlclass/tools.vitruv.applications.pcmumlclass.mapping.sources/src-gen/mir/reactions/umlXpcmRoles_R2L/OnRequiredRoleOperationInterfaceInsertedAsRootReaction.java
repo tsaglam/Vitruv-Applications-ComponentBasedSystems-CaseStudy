@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmRoles_R2L;
 
-import mir.routines.umlXpcmRoles_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.OperationInterface;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnRequiredRoleOperationInterfaceInsertedAsRootReaction extends Abst
   
   private int currentlyMatchedChange;
   
-  public OnRequiredRoleOperationInterfaceInsertedAsRootReaction(final RoutinesFacade routinesFacade) {
+  public OnRequiredRoleOperationInterfaceInsertedAsRootReaction(final mir.routines.umlXpcmRoles_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -70,7 +69,7 @@ public class OnRequiredRoleOperationInterfaceInsertedAsRootReaction extends Abst
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final CreateEObject createChange, final OperationInterface affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final CreateEObject createChange, final OperationInterface affectedEObject, @Extension final mir.routines.umlXpcmRoles_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.requiredRole_ElementCreatedCheck(affectedEObject);
     }
   }

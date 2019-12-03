@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmDatatypes_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.CompositeDataType;
 import org.palladiosimulator.pcm.repository.Repository;
@@ -18,12 +17,12 @@ public class CompositeDataype_BidirectionalUpdateRoutine extends AbstractRepairR
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final CompositeDataType type_, final Repository repository_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final CompositeDataType type_, final Repository repository_, @Extension final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.updateClassName(type_, repository_);
     }
   }
   
-  public CompositeDataype_BidirectionalUpdateRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final CompositeDataType type_, final Repository repository_) {
+  public CompositeDataype_BidirectionalUpdateRoutine(final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final CompositeDataType type_, final Repository repository_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmDatatypes_R2L.CompositeDataype_BidirectionalUpdateRoutine.ActionUserExecution(getExecutionState(), this);
     this.type_ = type_;this.repository_ = repository_;

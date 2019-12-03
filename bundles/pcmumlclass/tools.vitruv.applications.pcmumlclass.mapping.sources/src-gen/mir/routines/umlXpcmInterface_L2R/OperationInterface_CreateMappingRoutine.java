@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmInterface_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmInterface_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -68,7 +67,7 @@ public class OperationInterface_CreateMappingRoutine extends AbstractRepairRouti
       return repository_;
     }
     
-    public void callRoutine1(final Interface interface_, final org.eclipse.uml2.uml.Package contractsPackage_, final Repository repository_, final OperationInterface operationInterface_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final Interface interface_, final org.eclipse.uml2.uml.Package contractsPackage_, final Repository repository_, final OperationInterface operationInterface_, @Extension final mir.routines.umlXpcmInterface_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.operationInterface_BidirectionalUpdate(interface_, contractsPackage_);
     }
     
@@ -76,7 +75,7 @@ public class OperationInterface_CreateMappingRoutine extends AbstractRepairRouti
       return operationInterface_;
     }
     
-    public void executeAction1(final Interface interface_, final org.eclipse.uml2.uml.Package contractsPackage_, final Repository repository_, final OperationInterface operationInterface_, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final Interface interface_, final org.eclipse.uml2.uml.Package contractsPackage_, final Repository repository_, final OperationInterface operationInterface_, @Extension final mir.routines.umlXpcmInterface_L2R.RoutinesFacade _routinesFacade) {
       repository_.getInterfaces__Repository().add(operationInterface_);
     }
     
@@ -101,7 +100,7 @@ public class OperationInterface_CreateMappingRoutine extends AbstractRepairRouti
     }
   }
   
-  public OperationInterface_CreateMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Interface interface_, final org.eclipse.uml2.uml.Package contractsPackage_) {
+  public OperationInterface_CreateMappingRoutine(final mir.routines.umlXpcmInterface_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Interface interface_, final org.eclipse.uml2.uml.Package contractsPackage_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmInterface_L2R.OperationInterface_CreateMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.interface_ = interface_;this.contractsPackage_ = contractsPackage_;

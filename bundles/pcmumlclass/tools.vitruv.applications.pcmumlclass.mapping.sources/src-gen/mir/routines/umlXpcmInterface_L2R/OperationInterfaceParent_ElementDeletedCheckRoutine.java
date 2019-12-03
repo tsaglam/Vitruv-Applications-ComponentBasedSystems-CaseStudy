@@ -2,7 +2,6 @@ package mir.routines.umlXpcmInterface_L2R;
 
 import java.io.IOException;
 import java.util.Optional;
-import mir.routines.umlXpcmInterface_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.OperationInterface;
@@ -51,7 +50,7 @@ public class OperationInterfaceParent_ElementDeletedCheckRoutine extends Abstrac
       return affectedEObject;
     }
     
-    public void callRoutine1(final EObject affectedEObject, final Optional<OperationInterface> operationInterface_correspondingTo_interface, final Optional<OperationInterface> parentInterface_correspondingTo_interface, final Optional<OperationInterface> operationInterface_correspondingTo_generalization, final Optional<OperationInterface> parentInterface_correspondingTo_generalization, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, final Optional<OperationInterface> operationInterface_correspondingTo_interface, final Optional<OperationInterface> parentInterface_correspondingTo_interface, final Optional<OperationInterface> operationInterface_correspondingTo_generalization, final Optional<OperationInterface> parentInterface_correspondingTo_generalization, @Extension final mir.routines.umlXpcmInterface_L2R.RoutinesFacade _routinesFacade) {
       OperationInterface operationInterface_ = null;
       OperationInterface parentInterface_ = null;
       boolean _isPresent = operationInterface_correspondingTo_interface.isPresent();
@@ -76,7 +75,7 @@ public class OperationInterfaceParent_ElementDeletedCheckRoutine extends Abstrac
     }
   }
   
-  public OperationInterfaceParent_ElementDeletedCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
+  public OperationInterfaceParent_ElementDeletedCheckRoutine(final mir.routines.umlXpcmInterface_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmInterface_L2R.OperationInterfaceParent_ElementDeletedCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

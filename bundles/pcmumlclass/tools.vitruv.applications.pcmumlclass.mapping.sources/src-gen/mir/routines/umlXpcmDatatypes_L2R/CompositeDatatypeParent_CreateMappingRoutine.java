@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmDatatypes_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Generalization;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -63,7 +62,7 @@ public class CompositeDatatypeParent_CreateMappingRoutine extends AbstractRepair
       return parentType_;
     }
     
-    public void callRoutine1(final org.eclipse.uml2.uml.Class class_, final Generalization generalization_, final CompositeDataType type_, final CompositeDataType parentType_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final org.eclipse.uml2.uml.Class class_, final Generalization generalization_, final CompositeDataType type_, final CompositeDataType parentType_, @Extension final mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.compositeDatatypeParent_BidirectionalUpdate(class_, generalization_);
     }
     
@@ -75,7 +74,7 @@ public class CompositeDatatypeParent_CreateMappingRoutine extends AbstractRepair
       return class_;
     }
     
-    public void executeAction1(final org.eclipse.uml2.uml.Class class_, final Generalization generalization_, final CompositeDataType type_, final CompositeDataType parentType_, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final org.eclipse.uml2.uml.Class class_, final Generalization generalization_, final CompositeDataType type_, final CompositeDataType parentType_, @Extension final mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade _routinesFacade) {
       type_.getParentType_CompositeDataType().add(parentType_);
     }
     
@@ -100,7 +99,7 @@ public class CompositeDatatypeParent_CreateMappingRoutine extends AbstractRepair
     }
   }
   
-  public CompositeDatatypeParent_CreateMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final org.eclipse.uml2.uml.Class class_, final Generalization generalization_) {
+  public CompositeDatatypeParent_CreateMappingRoutine(final mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final org.eclipse.uml2.uml.Class class_, final Generalization generalization_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmDatatypes_L2R.CompositeDatatypeParent_CreateMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.class_ = class_;this.generalization_ = generalization_;

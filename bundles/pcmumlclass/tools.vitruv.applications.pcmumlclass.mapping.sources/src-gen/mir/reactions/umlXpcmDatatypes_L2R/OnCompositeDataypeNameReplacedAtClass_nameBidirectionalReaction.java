@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmDatatypes_L2R;
 
-import mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.xtext.xbase.lib.Extension;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnCompositeDataypeNameReplacedAtClass_nameBidirectionalReaction ext
   
   private int currentlyMatchedChange;
   
-  public OnCompositeDataypeNameReplacedAtClass_nameBidirectionalReaction(final RoutinesFacade routinesFacade) {
+  public OnCompositeDataypeNameReplacedAtClass_nameBidirectionalReaction(final mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -82,7 +81,7 @@ public class OnCompositeDataypeNameReplacedAtClass_nameBidirectionalReaction ext
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final org.eclipse.uml2.uml.Class affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final org.eclipse.uml2.uml.Class affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.onCompositeDataypeNameReplacedAtClass_nameBidirectionalRepair(affectedEObject);
     }
   }

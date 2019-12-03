@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmComponent_R2L;
 
-import mir.routines.umlXpcmComponent_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.Repository;
@@ -18,7 +17,7 @@ public class OnRepositoryComponentRepositoryComponentRemovedFromRepositoryReacti
   
   private int currentlyMatchedChange;
   
-  public OnRepositoryComponentRepositoryComponentRemovedFromRepositoryReaction(final RoutinesFacade routinesFacade) {
+  public OnRepositoryComponentRepositoryComponentRemovedFromRepositoryReaction(final mir.routines.umlXpcmComponent_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -81,7 +80,7 @@ public class OnRepositoryComponentRepositoryComponentRemovedFromRepositoryReacti
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final RemoveEReference removeChange, final Repository affectedEObject, final EReference affectedFeature, final RepositoryComponent oldValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final RemoveEReference removeChange, final Repository affectedEObject, final EReference affectedFeature, final RepositoryComponent oldValue, final int index, @Extension final mir.routines.umlXpcmComponent_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.repositoryComponent_ElementDeletedCheck(affectedEObject);
     }
   }

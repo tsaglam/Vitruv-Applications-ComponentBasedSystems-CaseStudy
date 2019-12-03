@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmDatatypes_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.palladiosimulator.pcm.repository.CompositeDataType;
 import org.palladiosimulator.pcm.repository.Repository;
@@ -23,7 +22,7 @@ public class CompositeDataype_DeleteMappingRoutine extends AbstractRepairRoutine
     }
   }
   
-  public CompositeDataype_DeleteMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final CompositeDataType type_, final Repository repository_) {
+  public CompositeDataype_DeleteMappingRoutine(final mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final CompositeDataType type_, final Repository repository_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmDatatypes_L2R.CompositeDataype_DeleteMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.type_ = type_;this.repository_ = repository_;

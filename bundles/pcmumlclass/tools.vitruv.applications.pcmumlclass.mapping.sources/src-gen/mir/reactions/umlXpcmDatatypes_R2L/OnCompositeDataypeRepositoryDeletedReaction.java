@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmDatatypes_R2L;
 
-import mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.Repository;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnCompositeDataypeRepositoryDeletedReaction extends AbstractReactio
   
   private int currentlyMatchedChange;
   
-  public OnCompositeDataypeRepositoryDeletedReaction(final RoutinesFacade routinesFacade) {
+  public OnCompositeDataypeRepositoryDeletedReaction(final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -70,7 +69,7 @@ public class OnCompositeDataypeRepositoryDeletedReaction extends AbstractReactio
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final DeleteEObject deleteChange, final Repository affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final DeleteEObject deleteChange, final Repository affectedEObject, @Extension final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.compositeDataype_ElementDeletedCheck(affectedEObject);
     }
   }

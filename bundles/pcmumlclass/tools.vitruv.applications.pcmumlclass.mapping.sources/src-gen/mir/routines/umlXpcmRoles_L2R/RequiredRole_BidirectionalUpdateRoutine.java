@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRoles_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRoles_L2R.RoutinesFacade;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Parameter;
@@ -20,16 +19,16 @@ public class RequiredRole_BidirectionalUpdateRoutine extends AbstractRepairRouti
       super(reactionExecutionState);
     }
     
-    public void callRoutine2(final Property property_, final Parameter parameter_, final org.eclipse.uml2.uml.Class implementation_, final Interface interface_, final Operation operation_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine2(final Property property_, final Parameter parameter_, final org.eclipse.uml2.uml.Class implementation_, final Interface interface_, final Operation operation_, @Extension final mir.routines.umlXpcmRoles_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.changeTypeOfCorrespondingRequiredRole(property_, parameter_, implementation_, interface_, operation_);
     }
     
-    public void callRoutine1(final Property property_, final Parameter parameter_, final org.eclipse.uml2.uml.Class implementation_, final Interface interface_, final Operation operation_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final Property property_, final Parameter parameter_, final org.eclipse.uml2.uml.Class implementation_, final Interface interface_, final Operation operation_, @Extension final mir.routines.umlXpcmRoles_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.updateRequiredRoleName(property_, parameter_, implementation_, interface_, operation_);
     }
   }
   
-  public RequiredRole_BidirectionalUpdateRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Property property_, final Parameter parameter_, final org.eclipse.uml2.uml.Class implementation_, final Interface interface_, final Operation operation_) {
+  public RequiredRole_BidirectionalUpdateRoutine(final mir.routines.umlXpcmRoles_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Property property_, final Parameter parameter_, final org.eclipse.uml2.uml.Class implementation_, final Interface interface_, final Operation operation_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRoles_L2R.RequiredRole_BidirectionalUpdateRoutine.ActionUserExecution(getExecutionState(), this);
     this.property_ = property_;this.parameter_ = parameter_;this.implementation_ = implementation_;this.interface_ = interface_;this.operation_ = operation_;

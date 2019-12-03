@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmRepository_L2R;
 
-import mir.routines.umlXpcmRepository_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.xbase.lib.Extension;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnRepositoryPackageInsertedInPackageReaction extends AbstractReacti
   
   private int currentlyMatchedChange;
   
-  public OnRepositoryPackageInsertedInPackageReaction(final RoutinesFacade routinesFacade) {
+  public OnRepositoryPackageInsertedInPackageReaction(final mir.routines.umlXpcmRepository_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -79,7 +78,7 @@ public class OnRepositoryPackageInsertedInPackageReaction extends AbstractReacti
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final InsertEReference insertChange, final org.eclipse.uml2.uml.Package affectedEObject, final EReference affectedFeature, final org.eclipse.uml2.uml.Package newValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final InsertEReference insertChange, final org.eclipse.uml2.uml.Package affectedEObject, final EReference affectedFeature, final org.eclipse.uml2.uml.Package newValue, final int index, @Extension final mir.routines.umlXpcmRepository_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.repository_ElementCreatedCheck(affectedEObject);
     }
   }

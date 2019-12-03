@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmDatatypes_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.CompositeDataType;
@@ -63,7 +62,7 @@ public class CompositeDataype_CreateMappingRoutine extends AbstractRepairRoutine
       return datatypesPackage_;
     }
     
-    public void callRoutine1(final CompositeDataType type_, final Repository repository_, final org.eclipse.uml2.uml.Package datatypesPackage_, final org.eclipse.uml2.uml.Class class_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final CompositeDataType type_, final Repository repository_, final org.eclipse.uml2.uml.Package datatypesPackage_, final org.eclipse.uml2.uml.Class class_, @Extension final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.compositeDataype_BidirectionalUpdate(type_, repository_);
     }
     
@@ -71,7 +70,7 @@ public class CompositeDataype_CreateMappingRoutine extends AbstractRepairRoutine
       return class_;
     }
     
-    public void executeAction1(final CompositeDataType type_, final Repository repository_, final org.eclipse.uml2.uml.Package datatypesPackage_, final org.eclipse.uml2.uml.Class class_, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final CompositeDataType type_, final Repository repository_, final org.eclipse.uml2.uml.Package datatypesPackage_, final org.eclipse.uml2.uml.Class class_, @Extension final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade _routinesFacade) {
       datatypesPackage_.getPackagedElements().add(class_);
     }
     
@@ -100,7 +99,7 @@ public class CompositeDataype_CreateMappingRoutine extends AbstractRepairRoutine
     }
   }
   
-  public CompositeDataype_CreateMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final CompositeDataType type_, final Repository repository_) {
+  public CompositeDataype_CreateMappingRoutine(final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final CompositeDataType type_, final Repository repository_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmDatatypes_R2L.CompositeDataype_CreateMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.type_ = type_;this.repository_ = repository_;

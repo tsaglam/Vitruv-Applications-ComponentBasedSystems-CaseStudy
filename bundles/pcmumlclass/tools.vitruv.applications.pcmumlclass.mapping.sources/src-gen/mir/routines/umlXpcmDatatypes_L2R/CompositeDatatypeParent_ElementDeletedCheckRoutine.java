@@ -2,7 +2,6 @@ package mir.routines.umlXpcmDatatypes_L2R;
 
 import java.io.IOException;
 import java.util.Optional;
-import mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.CompositeDataType;
@@ -51,7 +50,7 @@ public class CompositeDatatypeParent_ElementDeletedCheckRoutine extends Abstract
       return affectedEObject;
     }
     
-    public void callRoutine1(final EObject affectedEObject, final Optional<CompositeDataType> type_correspondingTo_class, final Optional<CompositeDataType> parentType_correspondingTo_class, final Optional<CompositeDataType> type_correspondingTo_generalization, final Optional<CompositeDataType> parentType_correspondingTo_generalization, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, final Optional<CompositeDataType> type_correspondingTo_class, final Optional<CompositeDataType> parentType_correspondingTo_class, final Optional<CompositeDataType> type_correspondingTo_generalization, final Optional<CompositeDataType> parentType_correspondingTo_generalization, @Extension final mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade _routinesFacade) {
       CompositeDataType type_ = null;
       CompositeDataType parentType_ = null;
       boolean _isPresent = type_correspondingTo_class.isPresent();
@@ -76,7 +75,7 @@ public class CompositeDatatypeParent_ElementDeletedCheckRoutine extends Abstract
     }
   }
   
-  public CompositeDatatypeParent_ElementDeletedCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
+  public CompositeDatatypeParent_ElementDeletedCheckRoutine(final mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmDatatypes_L2R.CompositeDatatypeParent_ElementDeletedCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

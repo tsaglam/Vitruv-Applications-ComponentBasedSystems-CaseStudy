@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmSignature_R2L;
 
-import mir.routines.umlXpcmSignature_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.OperationInterface;
@@ -18,7 +17,7 @@ public class OnSignatureOperationSignatureInsertedInOperationInterfaceReaction e
   
   private int currentlyMatchedChange;
   
-  public OnSignatureOperationSignatureInsertedInOperationInterfaceReaction(final RoutinesFacade routinesFacade) {
+  public OnSignatureOperationSignatureInsertedInOperationInterfaceReaction(final mir.routines.umlXpcmSignature_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -81,7 +80,7 @@ public class OnSignatureOperationSignatureInsertedInOperationInterfaceReaction e
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final InsertEReference insertChange, final OperationInterface affectedEObject, final EReference affectedFeature, final OperationSignature newValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final InsertEReference insertChange, final OperationInterface affectedEObject, final EReference affectedFeature, final OperationSignature newValue, final int index, @Extension final mir.routines.umlXpcmSignature_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.signature_ElementCreatedCheck(affectedEObject);
     }
   }

@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmSignature_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmSignature_R2L.RoutinesFacade;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -21,7 +20,7 @@ public class Signature_BidirectionalCheckRoutine extends AbstractRepairRoutineRe
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final EObject affectedEObject, final String routineName, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, final String routineName, @Extension final mir.routines.umlXpcmSignature_R2L.RoutinesFacade _routinesFacade) {
       if ((affectedEObject instanceof OperationSignature)) {
         OperationSignature operationSignature_ = ((OperationSignature)affectedEObject);
         {
@@ -105,7 +104,7 @@ public class Signature_BidirectionalCheckRoutine extends AbstractRepairRoutineRe
     }
   }
   
-  public Signature_BidirectionalCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject, final String routineName) {
+  public Signature_BidirectionalCheckRoutine(final mir.routines.umlXpcmSignature_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject, final String routineName) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmSignature_R2L.Signature_BidirectionalCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;this.routineName = routineName;

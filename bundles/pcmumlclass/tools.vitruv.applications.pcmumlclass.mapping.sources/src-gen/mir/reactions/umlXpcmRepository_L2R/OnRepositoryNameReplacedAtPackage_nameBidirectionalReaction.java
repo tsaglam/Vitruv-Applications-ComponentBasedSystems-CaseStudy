@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmRepository_L2R;
 
-import mir.routines.umlXpcmRepository_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.xtext.xbase.lib.Extension;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnRepositoryNameReplacedAtPackage_nameBidirectionalReaction extends
   
   private int currentlyMatchedChange;
   
-  public OnRepositoryNameReplacedAtPackage_nameBidirectionalReaction(final RoutinesFacade routinesFacade) {
+  public OnRepositoryNameReplacedAtPackage_nameBidirectionalReaction(final mir.routines.umlXpcmRepository_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -82,7 +81,7 @@ public class OnRepositoryNameReplacedAtPackage_nameBidirectionalReaction extends
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final org.eclipse.uml2.uml.Package affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final org.eclipse.uml2.uml.Package affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final mir.routines.umlXpcmRepository_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.onRepositoryNameReplacedAtPackage_nameBidirectionalRepair(affectedEObject);
     }
   }

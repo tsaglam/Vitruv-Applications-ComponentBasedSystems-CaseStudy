@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmRoles_L2R;
 
-import mir.routines.umlXpcmRoles_L2R.RoutinesFacade;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.xtext.xbase.lib.Extension;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnRequiredRoleOperationInsertedAsRootReaction extends AbstractReact
   
   private int currentlyMatchedChange;
   
-  public OnRequiredRoleOperationInsertedAsRootReaction(final RoutinesFacade routinesFacade) {
+  public OnRequiredRoleOperationInsertedAsRootReaction(final mir.routines.umlXpcmRoles_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -70,7 +69,7 @@ public class OnRequiredRoleOperationInsertedAsRootReaction extends AbstractReact
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final CreateEObject createChange, final Operation affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final CreateEObject createChange, final Operation affectedEObject, @Extension final mir.routines.umlXpcmRoles_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.requiredRole_ElementCreatedCheck(affectedEObject);
     }
   }

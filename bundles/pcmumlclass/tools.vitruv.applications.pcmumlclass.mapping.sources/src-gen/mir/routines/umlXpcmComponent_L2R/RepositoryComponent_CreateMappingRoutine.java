@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmComponent_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmComponent_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -32,7 +31,7 @@ public class RepositoryComponent_CreateMappingRoutine extends AbstractRepairRout
       return "umlXpcmComponent_map_UML_and_PCM_correspondence_Package:componentPackage_with_Repository:repository";
     }
     
-    public void callRoutine1(final org.eclipse.uml2.uml.Package componentPackage_, final org.eclipse.uml2.uml.Package repositoryPackage_, final org.eclipse.uml2.uml.Class implementation_, final Operation constructor_, final Repository repository_, final BasicComponent component_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final org.eclipse.uml2.uml.Package componentPackage_, final org.eclipse.uml2.uml.Package repositoryPackage_, final org.eclipse.uml2.uml.Class implementation_, final Operation constructor_, final Repository repository_, final BasicComponent component_, @Extension final mir.routines.umlXpcmComponent_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.repositoryComponent_BidirectionalUpdate(componentPackage_, repositoryPackage_, implementation_, constructor_);
     }
     
@@ -40,7 +39,7 @@ public class RepositoryComponent_CreateMappingRoutine extends AbstractRepairRout
       return "umlXpcmComponent_map_UML_and_PCM_correspondence_Operation:constructor_with_Repository:repository";
     }
     
-    public void executeAction1(final org.eclipse.uml2.uml.Package componentPackage_, final org.eclipse.uml2.uml.Package repositoryPackage_, final org.eclipse.uml2.uml.Class implementation_, final Operation constructor_, final Repository repository_, final BasicComponent component_, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final org.eclipse.uml2.uml.Package componentPackage_, final org.eclipse.uml2.uml.Package repositoryPackage_, final org.eclipse.uml2.uml.Class implementation_, final Operation constructor_, final Repository repository_, final BasicComponent component_, @Extension final mir.routines.umlXpcmComponent_L2R.RoutinesFacade _routinesFacade) {
       repository_.getComponents__Repository().add(component_);
     }
     
@@ -149,7 +148,7 @@ public class RepositoryComponent_CreateMappingRoutine extends AbstractRepairRout
     }
   }
   
-  public RepositoryComponent_CreateMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final org.eclipse.uml2.uml.Package componentPackage_, final org.eclipse.uml2.uml.Package repositoryPackage_, final org.eclipse.uml2.uml.Class implementation_, final Operation constructor_) {
+  public RepositoryComponent_CreateMappingRoutine(final mir.routines.umlXpcmComponent_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final org.eclipse.uml2.uml.Package componentPackage_, final org.eclipse.uml2.uml.Package repositoryPackage_, final org.eclipse.uml2.uml.Class implementation_, final Operation constructor_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmComponent_L2R.RepositoryComponent_CreateMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.componentPackage_ = componentPackage_;this.repositoryPackage_ = repositoryPackage_;this.implementation_ = implementation_;this.constructor_ = constructor_;

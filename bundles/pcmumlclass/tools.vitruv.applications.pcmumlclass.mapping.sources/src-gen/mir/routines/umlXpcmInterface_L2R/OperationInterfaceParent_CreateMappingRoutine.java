@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmInterface_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmInterface_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Generalization;
 import org.eclipse.uml2.uml.Interface;
@@ -68,7 +67,7 @@ public class OperationInterfaceParent_CreateMappingRoutine extends AbstractRepai
       return interface_;
     }
     
-    public void callRoutine1(final Interface interface_, final Generalization generalization_, final OperationInterface operationInterface_, final OperationInterface parentInterface_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final Interface interface_, final Generalization generalization_, final OperationInterface operationInterface_, final OperationInterface parentInterface_, @Extension final mir.routines.umlXpcmInterface_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.operationInterfaceParent_BidirectionalUpdate(interface_, generalization_);
     }
     
@@ -76,7 +75,7 @@ public class OperationInterfaceParent_CreateMappingRoutine extends AbstractRepai
       return operationInterface_;
     }
     
-    public void executeAction1(final Interface interface_, final Generalization generalization_, final OperationInterface operationInterface_, final OperationInterface parentInterface_, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final Interface interface_, final Generalization generalization_, final OperationInterface operationInterface_, final OperationInterface parentInterface_, @Extension final mir.routines.umlXpcmInterface_L2R.RoutinesFacade _routinesFacade) {
       operationInterface_.getParentInterfaces__Interface().add(parentInterface_);
     }
     
@@ -101,7 +100,7 @@ public class OperationInterfaceParent_CreateMappingRoutine extends AbstractRepai
     }
   }
   
-  public OperationInterfaceParent_CreateMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Interface interface_, final Generalization generalization_) {
+  public OperationInterfaceParent_CreateMappingRoutine(final mir.routines.umlXpcmInterface_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Interface interface_, final Generalization generalization_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmInterface_L2R.OperationInterfaceParent_CreateMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.interface_ = interface_;this.generalization_ = generalization_;

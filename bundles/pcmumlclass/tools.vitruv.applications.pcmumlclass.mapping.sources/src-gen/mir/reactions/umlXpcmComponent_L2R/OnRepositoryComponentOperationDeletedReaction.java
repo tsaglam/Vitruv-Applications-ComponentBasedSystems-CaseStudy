@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmComponent_L2R;
 
-import mir.routines.umlXpcmComponent_L2R.RoutinesFacade;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.xtext.xbase.lib.Extension;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnRepositoryComponentOperationDeletedReaction extends AbstractReact
   
   private int currentlyMatchedChange;
   
-  public OnRepositoryComponentOperationDeletedReaction(final RoutinesFacade routinesFacade) {
+  public OnRepositoryComponentOperationDeletedReaction(final mir.routines.umlXpcmComponent_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -70,7 +69,7 @@ public class OnRepositoryComponentOperationDeletedReaction extends AbstractReact
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final DeleteEObject deleteChange, final Operation affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final DeleteEObject deleteChange, final Operation affectedEObject, @Extension final mir.routines.umlXpcmComponent_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.repositoryComponent_ElementDeletedCheck(affectedEObject);
     }
   }

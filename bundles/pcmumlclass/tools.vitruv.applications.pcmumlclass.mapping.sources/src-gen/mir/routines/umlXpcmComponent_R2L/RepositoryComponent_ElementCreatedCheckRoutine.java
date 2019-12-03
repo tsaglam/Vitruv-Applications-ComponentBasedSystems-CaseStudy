@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmComponent_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmComponent_R2L.RoutinesFacade;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -20,7 +19,7 @@ public class RepositoryComponent_ElementCreatedCheckRoutine extends AbstractRepa
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final EObject affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, @Extension final mir.routines.umlXpcmComponent_R2L.RoutinesFacade _routinesFacade) {
       if ((affectedEObject instanceof RepositoryComponent)) {
         RepositoryComponent component_ = ((RepositoryComponent)affectedEObject);
         {
@@ -50,7 +49,7 @@ public class RepositoryComponent_ElementCreatedCheckRoutine extends AbstractRepa
     }
   }
   
-  public RepositoryComponent_ElementCreatedCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
+  public RepositoryComponent_ElementCreatedCheckRoutine(final mir.routines.umlXpcmComponent_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmComponent_R2L.RepositoryComponent_ElementCreatedCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

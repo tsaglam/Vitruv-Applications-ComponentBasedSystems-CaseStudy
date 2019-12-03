@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmDatatypes_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Generalization;
@@ -19,7 +18,7 @@ public class CompositeDatatypeParent_BidirectionalCheckRoutine extends AbstractR
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final EObject affectedEObject, final String routineName, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, final String routineName, @Extension final mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade _routinesFacade) {
       if ((affectedEObject instanceof org.eclipse.uml2.uml.Class)) {
         org.eclipse.uml2.uml.Class class_ = ((org.eclipse.uml2.uml.Class)affectedEObject);
         EList<Generalization> _generalizations = class_.getGeneralizations();
@@ -47,7 +46,7 @@ public class CompositeDatatypeParent_BidirectionalCheckRoutine extends AbstractR
     }
   }
   
-  public CompositeDatatypeParent_BidirectionalCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject, final String routineName) {
+  public CompositeDatatypeParent_BidirectionalCheckRoutine(final mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject, final String routineName) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmDatatypes_L2R.CompositeDatatypeParent_BidirectionalCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;this.routineName = routineName;

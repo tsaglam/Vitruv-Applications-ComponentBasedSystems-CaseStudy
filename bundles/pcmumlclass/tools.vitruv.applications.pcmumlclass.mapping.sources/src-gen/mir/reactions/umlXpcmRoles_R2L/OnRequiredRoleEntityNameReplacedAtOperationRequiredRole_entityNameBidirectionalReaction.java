@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmRoles_R2L;
 
-import mir.routines.umlXpcmRoles_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.OperationRequiredRole;
@@ -17,7 +16,7 @@ public class OnRequiredRoleEntityNameReplacedAtOperationRequiredRole_entityNameB
   
   private int currentlyMatchedChange;
   
-  public OnRequiredRoleEntityNameReplacedAtOperationRequiredRole_entityNameBidirectionalReaction(final RoutinesFacade routinesFacade) {
+  public OnRequiredRoleEntityNameReplacedAtOperationRequiredRole_entityNameBidirectionalReaction(final mir.routines.umlXpcmRoles_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -83,7 +82,7 @@ public class OnRequiredRoleEntityNameReplacedAtOperationRequiredRole_entityNameB
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final OperationRequiredRole affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final OperationRequiredRole affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final mir.routines.umlXpcmRoles_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.onRequiredRoleEntityNameReplacedAtOperationRequiredRole_entityNameBidirectionalRepair(affectedEObject);
     }
   }

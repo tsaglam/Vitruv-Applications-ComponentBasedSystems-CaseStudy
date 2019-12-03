@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmComponent_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmComponent_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.repository.RepositoryComponent;
@@ -18,11 +17,11 @@ public class UpdateComponentCorrespondingUmlNamesRoutine extends AbstractRepairR
       super(reactionExecutionState);
     }
     
-    public void executeAction1(final RepositoryComponent component, final Repository repository, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final RepositoryComponent component, final Repository repository, @Extension final mir.routines.umlXpcmComponent_R2L.RoutinesFacade _routinesFacade) {
     }
   }
   
-  public UpdateComponentCorrespondingUmlNamesRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final RepositoryComponent component, final Repository repository) {
+  public UpdateComponentCorrespondingUmlNamesRoutine(final mir.routines.umlXpcmComponent_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final RepositoryComponent component, final Repository repository) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmComponent_R2L.UpdateComponentCorrespondingUmlNamesRoutine.ActionUserExecution(getExecutionState(), this);
     this.component = component;this.repository = repository;

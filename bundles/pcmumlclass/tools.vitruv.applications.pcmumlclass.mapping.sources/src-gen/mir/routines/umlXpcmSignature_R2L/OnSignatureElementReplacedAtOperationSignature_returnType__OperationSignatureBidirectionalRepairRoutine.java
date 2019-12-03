@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmSignature_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmSignature_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.OperationSignature;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
@@ -17,12 +16,12 @@ public class OnSignatureElementReplacedAtOperationSignature_returnType__Operatio
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final OperationSignature affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final OperationSignature affectedEObject, @Extension final mir.routines.umlXpcmSignature_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.signature_BidirectionalCheck(affectedEObject, "updateSignatureUmlReturnType");
     }
   }
   
-  public OnSignatureElementReplacedAtOperationSignature_returnType__OperationSignatureBidirectionalRepairRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationSignature affectedEObject) {
+  public OnSignatureElementReplacedAtOperationSignature_returnType__OperationSignatureBidirectionalRepairRoutine(final mir.routines.umlXpcmSignature_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationSignature affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmSignature_R2L.OnSignatureElementReplacedAtOperationSignature_returnType__OperationSignatureBidirectionalRepairRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

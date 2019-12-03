@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRepository_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRepository_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.Repository;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
@@ -17,12 +16,12 @@ public class OnRepositoryEntityNameReplacedAtRepository_entityNameBidirectionalR
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final Repository affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final Repository affectedEObject, @Extension final mir.routines.umlXpcmRepository_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.repository_BidirectionalCheck(affectedEObject, "updateRepoPackageName");
     }
   }
   
-  public OnRepositoryEntityNameReplacedAtRepository_entityNameBidirectionalRepairRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Repository affectedEObject) {
+  public OnRepositoryEntityNameReplacedAtRepository_entityNameBidirectionalRepairRoutine(final mir.routines.umlXpcmRepository_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Repository affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRepository_R2L.OnRepositoryEntityNameReplacedAtRepository_entityNameBidirectionalRepairRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

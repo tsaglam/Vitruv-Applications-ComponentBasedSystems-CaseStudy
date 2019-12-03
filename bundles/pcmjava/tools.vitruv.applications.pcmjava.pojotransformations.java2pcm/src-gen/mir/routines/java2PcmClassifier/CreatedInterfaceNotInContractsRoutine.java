@@ -14,8 +14,7 @@ import tools.vitruv.extensions.dslsruntime.reactions.structure.CallHierarchyHavi
 import tools.vitruv.framework.userinteraction.UserInteractionOptions;
 
 /**
- * *
- * nUser selects if interface should be created if interface was not created into contract package.
+ * *nUser selects if interface should be created if interface was not created into contract package.
  *  
  */
 @SuppressWarnings("all")

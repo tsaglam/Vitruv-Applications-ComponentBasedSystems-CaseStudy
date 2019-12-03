@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmSignature_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmSignature_L2R.RoutinesFacade;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Parameter;
@@ -19,16 +18,16 @@ public class Signature_BidirectionalUpdateRoutine extends AbstractRepairRoutineR
       super(reactionExecutionState);
     }
     
-    public void callRoutine2(final Operation operation_, final Parameter returnParameter_, final Interface interface_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine2(final Operation operation_, final Parameter returnParameter_, final Interface interface_, @Extension final mir.routines.umlXpcmSignature_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.updateSignaturePcmReturnType(operation_, returnParameter_, interface_);
     }
     
-    public void callRoutine1(final Operation operation_, final Parameter returnParameter_, final Interface interface_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final Operation operation_, final Parameter returnParameter_, final Interface interface_, @Extension final mir.routines.umlXpcmSignature_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.updateSignaturePcmName(operation_, returnParameter_, interface_);
     }
   }
   
-  public Signature_BidirectionalUpdateRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Operation operation_, final Parameter returnParameter_, final Interface interface_) {
+  public Signature_BidirectionalUpdateRoutine(final mir.routines.umlXpcmSignature_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Operation operation_, final Parameter returnParameter_, final Interface interface_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmSignature_L2R.Signature_BidirectionalUpdateRoutine.ActionUserExecution(getExecutionState(), this);
     this.operation_ = operation_;this.returnParameter_ = returnParameter_;this.interface_ = interface_;

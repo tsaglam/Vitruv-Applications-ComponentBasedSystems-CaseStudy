@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmDatatypes_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.palladiosimulator.pcm.repository.CompositeDataType;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
@@ -22,7 +21,7 @@ public class CompositeDatatypeParent_DeleteMappingRoutine extends AbstractRepair
     }
   }
   
-  public CompositeDatatypeParent_DeleteMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final CompositeDataType type_, final CompositeDataType parentType_) {
+  public CompositeDatatypeParent_DeleteMappingRoutine(final mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final CompositeDataType type_, final CompositeDataType parentType_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmDatatypes_L2R.CompositeDatatypeParent_DeleteMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.type_ = type_;this.parentType_ = parentType_;

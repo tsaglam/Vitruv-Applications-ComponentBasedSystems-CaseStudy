@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRepository_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRepository_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.Repository;
@@ -18,7 +17,7 @@ public class Repository_ElementCreatedCheckRoutine extends AbstractRepairRoutine
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final EObject affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, @Extension final mir.routines.umlXpcmRepository_R2L.RoutinesFacade _routinesFacade) {
       if ((affectedEObject instanceof Repository)) {
         Repository repository_ = ((Repository)affectedEObject);
         _routinesFacade.repository_CreateMapping(repository_);
@@ -26,7 +25,7 @@ public class Repository_ElementCreatedCheckRoutine extends AbstractRepairRoutine
     }
   }
   
-  public Repository_ElementCreatedCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
+  public Repository_ElementCreatedCheckRoutine(final mir.routines.umlXpcmRepository_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRepository_R2L.Repository_ElementCreatedCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

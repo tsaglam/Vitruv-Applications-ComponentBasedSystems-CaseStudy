@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmRoles_L2R;
 
-import mir.routines.umlXpcmRoles_L2R.RoutinesFacade;
 import org.eclipse.uml2.uml.InterfaceRealization;
 import org.eclipse.xtext.xbase.lib.Extension;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnProvidedRoleInterfaceRealizationDeletedReaction extends AbstractR
   
   private int currentlyMatchedChange;
   
-  public OnProvidedRoleInterfaceRealizationDeletedReaction(final RoutinesFacade routinesFacade) {
+  public OnProvidedRoleInterfaceRealizationDeletedReaction(final mir.routines.umlXpcmRoles_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -70,7 +69,7 @@ public class OnProvidedRoleInterfaceRealizationDeletedReaction extends AbstractR
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final DeleteEObject deleteChange, final InterfaceRealization affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final DeleteEObject deleteChange, final InterfaceRealization affectedEObject, @Extension final mir.routines.umlXpcmRoles_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.providedRole_ElementDeletedCheck(affectedEObject);
     }
   }

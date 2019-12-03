@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmInterface_R2L;
 
-import mir.routines.umlXpcmInterface_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.Interface;
@@ -18,7 +17,7 @@ public class OnOperationInterfaceParentOperationInterfaceInsertedInOperationInte
   
   private int currentlyMatchedChange;
   
-  public OnOperationInterfaceParentOperationInterfaceInsertedInOperationInterfaceReaction(final RoutinesFacade routinesFacade) {
+  public OnOperationInterfaceParentOperationInterfaceInsertedInOperationInterfaceReaction(final mir.routines.umlXpcmInterface_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -81,7 +80,7 @@ public class OnOperationInterfaceParentOperationInterfaceInsertedInOperationInte
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final InsertEReference insertChange, final Interface affectedEObject, final EReference affectedFeature, final OperationInterface newValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final InsertEReference insertChange, final Interface affectedEObject, final EReference affectedFeature, final OperationInterface newValue, final int index, @Extension final mir.routines.umlXpcmInterface_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.operationInterfaceParent_ElementCreatedCheck(affectedEObject);
     }
   }

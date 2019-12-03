@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRoles_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRoles_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Operation;
@@ -64,7 +63,7 @@ public class RequiredRole_CreateMappingRoutine extends AbstractRepairRoutineReal
       return operationInterface_;
     }
     
-    public void callRoutine1(final Property property_, final Parameter parameter_, final org.eclipse.uml2.uml.Class implementation_, final Interface interface_, final Operation operation_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity requiringEntity_, final OperationRequiredRole role_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final Property property_, final Parameter parameter_, final org.eclipse.uml2.uml.Class implementation_, final Interface interface_, final Operation operation_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity requiringEntity_, final OperationRequiredRole role_, @Extension final mir.routines.umlXpcmRoles_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.requiredRole_BidirectionalUpdate(property_, parameter_, implementation_, interface_, operation_);
     }
     
@@ -132,7 +131,7 @@ public class RequiredRole_CreateMappingRoutine extends AbstractRepairRoutineReal
       return "umlXpcmRoles_map_UML_and_PCM_correspondence_Class:implementation_with_OperationInterface:operationInterface";
     }
     
-    public void executeAction1(final Property property_, final Parameter parameter_, final org.eclipse.uml2.uml.Class implementation_, final Interface interface_, final Operation operation_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity requiringEntity_, final OperationRequiredRole role_, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final Property property_, final Parameter parameter_, final org.eclipse.uml2.uml.Class implementation_, final Interface interface_, final Operation operation_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity requiringEntity_, final OperationRequiredRole role_, @Extension final mir.routines.umlXpcmRoles_L2R.RoutinesFacade _routinesFacade) {
       requiringEntity_.getRequiredRoles_InterfaceRequiringEntity().add(role_);
       role_.setRequiredInterface__OperationRequiredRole(operationInterface_);
     }
@@ -254,7 +253,7 @@ public class RequiredRole_CreateMappingRoutine extends AbstractRepairRoutineReal
     }
   }
   
-  public RequiredRole_CreateMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Property property_, final Parameter parameter_, final org.eclipse.uml2.uml.Class implementation_, final Interface interface_, final Operation operation_) {
+  public RequiredRole_CreateMappingRoutine(final mir.routines.umlXpcmRoles_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Property property_, final Parameter parameter_, final org.eclipse.uml2.uml.Class implementation_, final Interface interface_, final Operation operation_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRoles_L2R.RequiredRole_CreateMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.property_ = property_;this.parameter_ = parameter_;this.implementation_ = implementation_;this.interface_ = interface_;this.operation_ = operation_;

@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmDatatypes_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -21,7 +20,7 @@ public class CompositeDataype_BidirectionalCheckRoutine extends AbstractRepairRo
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final EObject affectedEObject, final String routineName, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, final String routineName, @Extension final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade _routinesFacade) {
       if ((affectedEObject instanceof CompositeDataType)) {
         CompositeDataType type_ = ((CompositeDataType)affectedEObject);
         {
@@ -55,7 +54,7 @@ public class CompositeDataype_BidirectionalCheckRoutine extends AbstractRepairRo
     }
   }
   
-  public CompositeDataype_BidirectionalCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject, final String routineName) {
+  public CompositeDataype_BidirectionalCheckRoutine(final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject, final String routineName) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmDatatypes_R2L.CompositeDataype_BidirectionalCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;this.routineName = routineName;

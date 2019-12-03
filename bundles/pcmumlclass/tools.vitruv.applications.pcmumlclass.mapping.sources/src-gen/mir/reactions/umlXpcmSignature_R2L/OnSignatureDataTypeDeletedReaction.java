@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmSignature_R2L;
 
-import mir.routines.umlXpcmSignature_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.DataType;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnSignatureDataTypeDeletedReaction extends AbstractReactionRealizat
   
   private int currentlyMatchedChange;
   
-  public OnSignatureDataTypeDeletedReaction(final RoutinesFacade routinesFacade) {
+  public OnSignatureDataTypeDeletedReaction(final mir.routines.umlXpcmSignature_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -70,7 +69,7 @@ public class OnSignatureDataTypeDeletedReaction extends AbstractReactionRealizat
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final DeleteEObject deleteChange, final DataType affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final DeleteEObject deleteChange, final DataType affectedEObject, @Extension final mir.routines.umlXpcmSignature_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.signature_ElementDeletedCheck(affectedEObject);
     }
   }

@@ -2,7 +2,6 @@ package mir.routines.umlXpcmDatatypes_R2L;
 
 import java.io.IOException;
 import java.util.Optional;
-import mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
@@ -50,7 +49,7 @@ public class CompositeDataype_ElementDeletedCheckRoutine extends AbstractRepairR
       return affectedEObject;
     }
     
-    public void callRoutine1(final EObject affectedEObject, final Optional<org.eclipse.uml2.uml.Class> class_correspondingTo_type, final Optional<org.eclipse.uml2.uml.Package> datatypesPackage_correspondingTo_type, final Optional<org.eclipse.uml2.uml.Class> class_correspondingTo_repository, final Optional<org.eclipse.uml2.uml.Package> datatypesPackage_correspondingTo_repository, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, final Optional<org.eclipse.uml2.uml.Class> class_correspondingTo_type, final Optional<org.eclipse.uml2.uml.Package> datatypesPackage_correspondingTo_type, final Optional<org.eclipse.uml2.uml.Class> class_correspondingTo_repository, final Optional<org.eclipse.uml2.uml.Package> datatypesPackage_correspondingTo_repository, @Extension final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade _routinesFacade) {
       org.eclipse.uml2.uml.Class class_ = null;
       org.eclipse.uml2.uml.Package datatypesPackage_ = null;
       boolean _isPresent = class_correspondingTo_type.isPresent();
@@ -75,7 +74,7 @@ public class CompositeDataype_ElementDeletedCheckRoutine extends AbstractRepairR
     }
   }
   
-  public CompositeDataype_ElementDeletedCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
+  public CompositeDataype_ElementDeletedCheckRoutine(final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmDatatypes_R2L.CompositeDataype_ElementDeletedCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmDatatypes_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -19,7 +18,7 @@ public class CompositeDatatypeParent_ElementUpdatedCheckRoutine extends Abstract
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final EObject affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, @Extension final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade _routinesFacade) {
       if ((affectedEObject instanceof CompositeDataType)) {
         CompositeDataType type_ = ((CompositeDataType)affectedEObject);
         EList<CompositeDataType> _parentType_CompositeDataType = type_.getParentType_CompositeDataType();
@@ -51,7 +50,7 @@ public class CompositeDatatypeParent_ElementUpdatedCheckRoutine extends Abstract
     }
   }
   
-  public CompositeDatatypeParent_ElementUpdatedCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
+  public CompositeDatatypeParent_ElementUpdatedCheckRoutine(final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmDatatypes_R2L.CompositeDatatypeParent_ElementUpdatedCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

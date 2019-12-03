@@ -2,7 +2,6 @@ package mir.routines.umlXpcmComponent_L2R;
 
 import java.io.IOException;
 import java.util.Optional;
-import mir.routines.umlXpcmComponent_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.Repository;
@@ -64,7 +63,7 @@ public class RepositoryComponent_ElementDeletedCheckRoutine extends AbstractRepa
       return affectedEObject;
     }
     
-    public void callRoutine1(final EObject affectedEObject, final Optional<RepositoryComponent> component_correspondingTo_componentPackage, final Optional<Repository> repository_correspondingTo_componentPackage, final Optional<RepositoryComponent> component_correspondingTo_repositoryPackage, final Optional<Repository> repository_correspondingTo_repositoryPackage, final Optional<RepositoryComponent> component_correspondingTo_implementation, final Optional<Repository> repository_correspondingTo_implementation, final Optional<RepositoryComponent> component_correspondingTo_constructor, final Optional<Repository> repository_correspondingTo_constructor, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, final Optional<RepositoryComponent> component_correspondingTo_componentPackage, final Optional<Repository> repository_correspondingTo_componentPackage, final Optional<RepositoryComponent> component_correspondingTo_repositoryPackage, final Optional<Repository> repository_correspondingTo_repositoryPackage, final Optional<RepositoryComponent> component_correspondingTo_implementation, final Optional<Repository> repository_correspondingTo_implementation, final Optional<RepositoryComponent> component_correspondingTo_constructor, final Optional<Repository> repository_correspondingTo_constructor, @Extension final mir.routines.umlXpcmComponent_L2R.RoutinesFacade _routinesFacade) {
       RepositoryComponent component_ = null;
       Repository repository_ = null;
       boolean _isPresent = component_correspondingTo_componentPackage.isPresent();
@@ -125,7 +124,7 @@ public class RepositoryComponent_ElementDeletedCheckRoutine extends AbstractRepa
     }
   }
   
-  public RepositoryComponent_ElementDeletedCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
+  public RepositoryComponent_ElementDeletedCheckRoutine(final mir.routines.umlXpcmComponent_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmComponent_L2R.RepositoryComponent_ElementDeletedCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

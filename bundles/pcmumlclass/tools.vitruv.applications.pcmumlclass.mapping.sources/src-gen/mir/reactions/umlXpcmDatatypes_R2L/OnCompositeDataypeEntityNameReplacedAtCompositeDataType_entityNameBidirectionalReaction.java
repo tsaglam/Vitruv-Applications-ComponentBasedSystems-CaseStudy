@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmDatatypes_R2L;
 
-import mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.CompositeDataType;
@@ -17,7 +16,7 @@ public class OnCompositeDataypeEntityNameReplacedAtCompositeDataType_entityNameB
   
   private int currentlyMatchedChange;
   
-  public OnCompositeDataypeEntityNameReplacedAtCompositeDataType_entityNameBidirectionalReaction(final RoutinesFacade routinesFacade) {
+  public OnCompositeDataypeEntityNameReplacedAtCompositeDataType_entityNameBidirectionalReaction(final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -83,7 +82,7 @@ public class OnCompositeDataypeEntityNameReplacedAtCompositeDataType_entityNameB
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final CompositeDataType affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final CompositeDataType affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.onCompositeDataypeEntityNameReplacedAtCompositeDataType_entityNameBidirectionalRepair(affectedEObject);
     }
   }

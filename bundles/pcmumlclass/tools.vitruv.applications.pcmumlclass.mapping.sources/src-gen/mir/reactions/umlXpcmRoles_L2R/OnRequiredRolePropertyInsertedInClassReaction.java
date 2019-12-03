@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmRoles_L2R;
 
-import mir.routines.umlXpcmRoles_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.StructuredClassifier;
@@ -18,7 +17,7 @@ public class OnRequiredRolePropertyInsertedInClassReaction extends AbstractReact
   
   private int currentlyMatchedChange;
   
-  public OnRequiredRolePropertyInsertedInClassReaction(final RoutinesFacade routinesFacade) {
+  public OnRequiredRolePropertyInsertedInClassReaction(final mir.routines.umlXpcmRoles_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -81,7 +80,7 @@ public class OnRequiredRolePropertyInsertedInClassReaction extends AbstractReact
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final InsertEReference insertChange, final StructuredClassifier affectedEObject, final EReference affectedFeature, final Property newValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final InsertEReference insertChange, final StructuredClassifier affectedEObject, final EReference affectedFeature, final Property newValue, final int index, @Extension final mir.routines.umlXpcmRoles_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.requiredRole_ElementCreatedCheck(affectedEObject);
     }
   }

@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRoles_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRoles_L2R.RoutinesFacade;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Interface;
@@ -20,7 +19,7 @@ public class ProvidedRole_BidirectionalCheckRoutine extends AbstractRepairRoutin
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final EObject affectedEObject, final String routineName, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, final String routineName, @Extension final mir.routines.umlXpcmRoles_L2R.RoutinesFacade _routinesFacade) {
       if ((affectedEObject instanceof InterfaceRealization)) {
         InterfaceRealization interfaceRealization_ = ((InterfaceRealization)affectedEObject);
         {
@@ -89,7 +88,7 @@ public class ProvidedRole_BidirectionalCheckRoutine extends AbstractRepairRoutin
     }
   }
   
-  public ProvidedRole_BidirectionalCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject, final String routineName) {
+  public ProvidedRole_BidirectionalCheckRoutine(final mir.routines.umlXpcmRoles_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject, final String routineName) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRoles_L2R.ProvidedRole_BidirectionalCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;this.routineName = routineName;

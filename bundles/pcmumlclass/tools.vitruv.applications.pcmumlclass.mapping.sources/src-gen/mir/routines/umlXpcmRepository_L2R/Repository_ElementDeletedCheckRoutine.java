@@ -2,7 +2,6 @@ package mir.routines.umlXpcmRepository_L2R;
 
 import java.io.IOException;
 import java.util.Optional;
-import mir.routines.umlXpcmRepository_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.Repository;
@@ -43,7 +42,7 @@ public class Repository_ElementDeletedCheckRoutine extends AbstractRepairRoutine
       return affectedEObject;
     }
     
-    public void callRoutine1(final EObject affectedEObject, final Optional<Repository> repository_correspondingTo_repositoryPkg, final Optional<Repository> repository_correspondingTo_contractsPkg, final Optional<Repository> repository_correspondingTo_datatypesPkg, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, final Optional<Repository> repository_correspondingTo_repositoryPkg, final Optional<Repository> repository_correspondingTo_contractsPkg, final Optional<Repository> repository_correspondingTo_datatypesPkg, @Extension final mir.routines.umlXpcmRepository_L2R.RoutinesFacade _routinesFacade) {
       Repository repository_ = null;
       boolean _isPresent = repository_correspondingTo_repositoryPkg.isPresent();
       if (_isPresent) {
@@ -63,7 +62,7 @@ public class Repository_ElementDeletedCheckRoutine extends AbstractRepairRoutine
     }
   }
   
-  public Repository_ElementDeletedCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
+  public Repository_ElementDeletedCheckRoutine(final mir.routines.umlXpcmRepository_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRepository_L2R.Repository_ElementDeletedCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

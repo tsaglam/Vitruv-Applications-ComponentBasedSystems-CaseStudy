@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmSignature_R2L;
 
-import mir.routines.umlXpcmSignature_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.DataType;
@@ -18,7 +17,7 @@ public class OnSignatureDataTypeReplacedAtOperationSignature_returnType__Operati
   
   private int currentlyMatchedChange;
   
-  public OnSignatureDataTypeReplacedAtOperationSignature_returnType__OperationSignatureReaction(final RoutinesFacade routinesFacade) {
+  public OnSignatureDataTypeReplacedAtOperationSignature_returnType__OperationSignatureReaction(final mir.routines.umlXpcmSignature_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -84,7 +83,7 @@ public class OnSignatureDataTypeReplacedAtOperationSignature_returnType__Operati
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final ReplaceSingleValuedEReference replaceChange, final OperationSignature affectedEObject, final EReference affectedFeature, final DataType oldValue, final DataType newValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final ReplaceSingleValuedEReference replaceChange, final OperationSignature affectedEObject, final EReference affectedFeature, final DataType oldValue, final DataType newValue, @Extension final mir.routines.umlXpcmSignature_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.signature_ElementUpdatedCheck(affectedEObject);
     }
   }

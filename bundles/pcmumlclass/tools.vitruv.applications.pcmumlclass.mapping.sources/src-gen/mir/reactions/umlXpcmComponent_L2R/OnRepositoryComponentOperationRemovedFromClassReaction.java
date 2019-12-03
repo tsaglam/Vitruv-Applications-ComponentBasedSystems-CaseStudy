@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmComponent_L2R;
 
-import mir.routines.umlXpcmComponent_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -17,7 +16,7 @@ public class OnRepositoryComponentOperationRemovedFromClassReaction extends Abst
   
   private int currentlyMatchedChange;
   
-  public OnRepositoryComponentOperationRemovedFromClassReaction(final RoutinesFacade routinesFacade) {
+  public OnRepositoryComponentOperationRemovedFromClassReaction(final mir.routines.umlXpcmComponent_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -80,7 +79,7 @@ public class OnRepositoryComponentOperationRemovedFromClassReaction extends Abst
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final RemoveEReference removeChange, final org.eclipse.uml2.uml.Class affectedEObject, final EReference affectedFeature, final Operation oldValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final RemoveEReference removeChange, final org.eclipse.uml2.uml.Class affectedEObject, final EReference affectedFeature, final Operation oldValue, final int index, @Extension final mir.routines.umlXpcmComponent_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.repositoryComponent_ElementDeletedCheck(affectedEObject);
     }
   }

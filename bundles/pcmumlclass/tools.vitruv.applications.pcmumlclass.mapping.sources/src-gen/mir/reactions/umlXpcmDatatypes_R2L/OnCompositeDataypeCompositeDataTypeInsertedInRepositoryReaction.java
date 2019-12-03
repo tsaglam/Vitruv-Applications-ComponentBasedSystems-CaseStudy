@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmDatatypes_R2L;
 
-import mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.CompositeDataType;
@@ -18,7 +17,7 @@ public class OnCompositeDataypeCompositeDataTypeInsertedInRepositoryReaction ext
   
   private int currentlyMatchedChange;
   
-  public OnCompositeDataypeCompositeDataTypeInsertedInRepositoryReaction(final RoutinesFacade routinesFacade) {
+  public OnCompositeDataypeCompositeDataTypeInsertedInRepositoryReaction(final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -81,7 +80,7 @@ public class OnCompositeDataypeCompositeDataTypeInsertedInRepositoryReaction ext
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final InsertEReference insertChange, final Repository affectedEObject, final EReference affectedFeature, final CompositeDataType newValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final InsertEReference insertChange, final Repository affectedEObject, final EReference affectedFeature, final CompositeDataType newValue, final int index, @Extension final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.compositeDataype_ElementCreatedCheck(affectedEObject);
     }
   }

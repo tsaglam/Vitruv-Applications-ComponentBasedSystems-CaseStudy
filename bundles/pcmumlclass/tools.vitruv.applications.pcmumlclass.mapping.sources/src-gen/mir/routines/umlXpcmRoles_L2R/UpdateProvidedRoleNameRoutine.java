@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRoles_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRoles_L2R.RoutinesFacade;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.InterfaceRealization;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -18,11 +17,11 @@ public class UpdateProvidedRoleNameRoutine extends AbstractRepairRoutineRealizat
       super(reactionExecutionState);
     }
     
-    public void executeAction1(final InterfaceRealization interfaceRealization, final org.eclipse.uml2.uml.Class implementation, final Interface interface_, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final InterfaceRealization interfaceRealization, final org.eclipse.uml2.uml.Class implementation, final Interface interface_, @Extension final mir.routines.umlXpcmRoles_L2R.RoutinesFacade _routinesFacade) {
     }
   }
   
-  public UpdateProvidedRoleNameRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final InterfaceRealization interfaceRealization, final org.eclipse.uml2.uml.Class implementation, final Interface interface_) {
+  public UpdateProvidedRoleNameRoutine(final mir.routines.umlXpcmRoles_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final InterfaceRealization interfaceRealization, final org.eclipse.uml2.uml.Class implementation, final Interface interface_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRoles_L2R.UpdateProvidedRoleNameRoutine.ActionUserExecution(getExecutionState(), this);
     this.interfaceRealization = interfaceRealization;this.implementation = implementation;this.interface_ = interface_;

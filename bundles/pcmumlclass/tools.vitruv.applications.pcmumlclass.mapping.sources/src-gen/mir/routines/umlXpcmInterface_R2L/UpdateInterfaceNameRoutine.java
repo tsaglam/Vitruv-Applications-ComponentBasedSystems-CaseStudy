@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmInterface_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmInterface_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.OperationInterface;
 import org.palladiosimulator.pcm.repository.Repository;
@@ -18,11 +17,11 @@ public class UpdateInterfaceNameRoutine extends AbstractRepairRoutineRealization
       super(reactionExecutionState);
     }
     
-    public void executeAction1(final OperationInterface operationInterface, final Repository repository, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final OperationInterface operationInterface, final Repository repository, @Extension final mir.routines.umlXpcmInterface_R2L.RoutinesFacade _routinesFacade) {
     }
   }
   
-  public UpdateInterfaceNameRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationInterface operationInterface, final Repository repository) {
+  public UpdateInterfaceNameRoutine(final mir.routines.umlXpcmInterface_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationInterface operationInterface, final Repository repository) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmInterface_R2L.UpdateInterfaceNameRoutine.ActionUserExecution(getExecutionState(), this);
     this.operationInterface = operationInterface;this.repository = repository;

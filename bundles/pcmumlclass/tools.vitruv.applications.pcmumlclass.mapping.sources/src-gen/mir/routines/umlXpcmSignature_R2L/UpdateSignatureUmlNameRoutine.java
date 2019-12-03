@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmSignature_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmSignature_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.DataType;
 import org.palladiosimulator.pcm.repository.OperationInterface;
@@ -19,11 +18,11 @@ public class UpdateSignatureUmlNameRoutine extends AbstractRepairRoutineRealizat
       super(reactionExecutionState);
     }
     
-    public void executeAction1(final OperationSignature operationSignature, final DataType returnType, final OperationInterface operationInterface, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final OperationSignature operationSignature, final DataType returnType, final OperationInterface operationInterface, @Extension final mir.routines.umlXpcmSignature_R2L.RoutinesFacade _routinesFacade) {
     }
   }
   
-  public UpdateSignatureUmlNameRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationSignature operationSignature, final DataType returnType, final OperationInterface operationInterface) {
+  public UpdateSignatureUmlNameRoutine(final mir.routines.umlXpcmSignature_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationSignature operationSignature, final DataType returnType, final OperationInterface operationInterface) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmSignature_R2L.UpdateSignatureUmlNameRoutine.ActionUserExecution(getExecutionState(), this);
     this.operationSignature = operationSignature;this.returnType = returnType;this.operationInterface = operationInterface;

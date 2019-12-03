@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmSignature_L2R;
 
-import mir.routines.umlXpcmSignature_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -17,7 +16,7 @@ public class OnSignatureNameReplacedAtOperation_nameBidirectionalReaction extend
   
   private int currentlyMatchedChange;
   
-  public OnSignatureNameReplacedAtOperation_nameBidirectionalReaction(final RoutinesFacade routinesFacade) {
+  public OnSignatureNameReplacedAtOperation_nameBidirectionalReaction(final mir.routines.umlXpcmSignature_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -83,7 +82,7 @@ public class OnSignatureNameReplacedAtOperation_nameBidirectionalReaction extend
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final Operation affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final Operation affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final mir.routines.umlXpcmSignature_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.onSignatureNameReplacedAtOperation_nameBidirectionalRepair(affectedEObject);
     }
   }

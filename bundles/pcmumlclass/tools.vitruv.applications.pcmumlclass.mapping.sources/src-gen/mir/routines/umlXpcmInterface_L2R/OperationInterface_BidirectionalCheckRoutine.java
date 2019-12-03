@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmInterface_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmInterface_L2R.RoutinesFacade;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Interface;
@@ -20,7 +19,7 @@ public class OperationInterface_BidirectionalCheckRoutine extends AbstractRepair
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final EObject affectedEObject, final String routineName, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, final String routineName, @Extension final mir.routines.umlXpcmInterface_L2R.RoutinesFacade _routinesFacade) {
       if ((affectedEObject instanceof Interface)) {
         Interface interface_ = ((Interface)affectedEObject);
         {
@@ -54,7 +53,7 @@ public class OperationInterface_BidirectionalCheckRoutine extends AbstractRepair
     }
   }
   
-  public OperationInterface_BidirectionalCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject, final String routineName) {
+  public OperationInterface_BidirectionalCheckRoutine(final mir.routines.umlXpcmInterface_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject, final String routineName) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmInterface_L2R.OperationInterface_BidirectionalCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;this.routineName = routineName;

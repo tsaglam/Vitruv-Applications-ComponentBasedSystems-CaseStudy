@@ -13,8 +13,7 @@ import tools.vitruv.extensions.dslsruntime.reactions.structure.CallHierarchyHavi
 import tools.vitruv.framework.userinteraction.UserInteractionOptions;
 
 /**
- * *
- * nUser can choose if a composite or collection data type should be created.
+ * *nUser can choose if a composite or collection data type should be created.
  *  
  */
 @SuppressWarnings("all")

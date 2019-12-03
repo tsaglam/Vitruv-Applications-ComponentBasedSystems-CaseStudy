@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmInterface_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmInterface_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -68,7 +67,7 @@ public class OperationInterface_CreateMappingRoutine extends AbstractRepairRouti
       return contractsPackage_;
     }
     
-    public void callRoutine1(final OperationInterface operationInterface_, final Repository repository_, final org.eclipse.uml2.uml.Package contractsPackage_, final Interface interface_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final OperationInterface operationInterface_, final Repository repository_, final org.eclipse.uml2.uml.Package contractsPackage_, final Interface interface_, @Extension final mir.routines.umlXpcmInterface_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.operationInterface_BidirectionalUpdate(operationInterface_, repository_);
     }
     
@@ -76,7 +75,7 @@ public class OperationInterface_CreateMappingRoutine extends AbstractRepairRouti
       return interface_;
     }
     
-    public void executeAction1(final OperationInterface operationInterface_, final Repository repository_, final org.eclipse.uml2.uml.Package contractsPackage_, final Interface interface_, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final OperationInterface operationInterface_, final Repository repository_, final org.eclipse.uml2.uml.Package contractsPackage_, final Interface interface_, @Extension final mir.routines.umlXpcmInterface_R2L.RoutinesFacade _routinesFacade) {
       contractsPackage_.getPackagedElements().add(interface_);
     }
     
@@ -101,7 +100,7 @@ public class OperationInterface_CreateMappingRoutine extends AbstractRepairRouti
     }
   }
   
-  public OperationInterface_CreateMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationInterface operationInterface_, final Repository repository_) {
+  public OperationInterface_CreateMappingRoutine(final mir.routines.umlXpcmInterface_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationInterface operationInterface_, final Repository repository_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmInterface_R2L.OperationInterface_CreateMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.operationInterface_ = operationInterface_;this.repository_ = repository_;

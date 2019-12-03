@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmSignature_R2L;
 
-import mir.routines.umlXpcmSignature_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.OperationSignature;
@@ -17,7 +16,7 @@ public class OnSignatureEntityNameReplacedAtOperationSignature_entityNameBidirec
   
   private int currentlyMatchedChange;
   
-  public OnSignatureEntityNameReplacedAtOperationSignature_entityNameBidirectionalReaction(final RoutinesFacade routinesFacade) {
+  public OnSignatureEntityNameReplacedAtOperationSignature_entityNameBidirectionalReaction(final mir.routines.umlXpcmSignature_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -83,7 +82,7 @@ public class OnSignatureEntityNameReplacedAtOperationSignature_entityNameBidirec
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final OperationSignature affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final OperationSignature affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final mir.routines.umlXpcmSignature_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.onSignatureEntityNameReplacedAtOperationSignature_entityNameBidirectionalRepair(affectedEObject);
     }
   }

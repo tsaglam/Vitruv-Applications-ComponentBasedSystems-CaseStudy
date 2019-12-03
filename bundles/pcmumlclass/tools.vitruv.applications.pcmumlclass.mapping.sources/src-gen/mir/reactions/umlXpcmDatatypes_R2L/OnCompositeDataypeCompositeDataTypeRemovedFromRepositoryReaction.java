@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmDatatypes_R2L;
 
-import mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.CompositeDataType;
@@ -18,7 +17,7 @@ public class OnCompositeDataypeCompositeDataTypeRemovedFromRepositoryReaction ex
   
   private int currentlyMatchedChange;
   
-  public OnCompositeDataypeCompositeDataTypeRemovedFromRepositoryReaction(final RoutinesFacade routinesFacade) {
+  public OnCompositeDataypeCompositeDataTypeRemovedFromRepositoryReaction(final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -81,7 +80,7 @@ public class OnCompositeDataypeCompositeDataTypeRemovedFromRepositoryReaction ex
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final RemoveEReference removeChange, final Repository affectedEObject, final EReference affectedFeature, final CompositeDataType oldValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final RemoveEReference removeChange, final Repository affectedEObject, final EReference affectedFeature, final CompositeDataType oldValue, final int index, @Extension final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.compositeDataype_ElementDeletedCheck(affectedEObject);
     }
   }

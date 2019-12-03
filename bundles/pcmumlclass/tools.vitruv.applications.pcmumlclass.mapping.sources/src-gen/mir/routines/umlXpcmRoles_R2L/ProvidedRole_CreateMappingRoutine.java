@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRoles_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRoles_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.InterfaceRealization;
@@ -34,7 +33,7 @@ public class ProvidedRole_CreateMappingRoutine extends AbstractRepairRoutineReal
       return "umlXpcmRoles_map_UML_and_PCM_correspondence_Class:implementation_with_OperationProvidedRole:role";
     }
     
-    public void callRoutine1(final OperationProvidedRole role_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity providingEntity_, final org.eclipse.uml2.uml.Class implementation_, final Interface interface_, final InterfaceRealization interfaceRealization_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final OperationProvidedRole role_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity providingEntity_, final org.eclipse.uml2.uml.Class implementation_, final Interface interface_, final InterfaceRealization interfaceRealization_, @Extension final mir.routines.umlXpcmRoles_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.providedRole_BidirectionalUpdate(role_, operationInterface_, providingEntity_);
     }
     
@@ -46,7 +45,7 @@ public class ProvidedRole_CreateMappingRoutine extends AbstractRepairRoutineReal
       return "umlXpcmRoles_map_UML_and_PCM_correspondence_Class:implementation_with_InterfaceProvidingRequiringEntity:providingEntity";
     }
     
-    public void executeAction1(final OperationProvidedRole role_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity providingEntity_, final org.eclipse.uml2.uml.Class implementation_, final Interface interface_, final InterfaceRealization interfaceRealization_, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final OperationProvidedRole role_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity providingEntity_, final org.eclipse.uml2.uml.Class implementation_, final Interface interface_, final InterfaceRealization interfaceRealization_, @Extension final mir.routines.umlXpcmRoles_R2L.RoutinesFacade _routinesFacade) {
       implementation_.getInterfaceRealizations().add(interfaceRealization_);
       interfaceRealization_.setContract(interface_);
     }
@@ -180,7 +179,7 @@ public class ProvidedRole_CreateMappingRoutine extends AbstractRepairRoutineReal
     }
   }
   
-  public ProvidedRole_CreateMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationProvidedRole role_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity providingEntity_) {
+  public ProvidedRole_CreateMappingRoutine(final mir.routines.umlXpcmRoles_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationProvidedRole role_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity providingEntity_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRoles_R2L.ProvidedRole_CreateMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.role_ = role_;this.operationInterface_ = operationInterface_;this.providingEntity_ = providingEntity_;

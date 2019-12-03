@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmDatatypes_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.CompositeDataType;
@@ -67,7 +66,7 @@ public class CompositeDataype_CreateMappingRoutine extends AbstractRepairRoutine
       return repository_;
     }
     
-    public void callRoutine1(final org.eclipse.uml2.uml.Class class_, final org.eclipse.uml2.uml.Package datatypesPackage_, final Repository repository_, final CompositeDataType type_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final org.eclipse.uml2.uml.Class class_, final org.eclipse.uml2.uml.Package datatypesPackage_, final Repository repository_, final CompositeDataType type_, @Extension final mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.compositeDataype_BidirectionalUpdate(class_, datatypesPackage_);
     }
     
@@ -75,7 +74,7 @@ public class CompositeDataype_CreateMappingRoutine extends AbstractRepairRoutine
       return type_;
     }
     
-    public void executeAction1(final org.eclipse.uml2.uml.Class class_, final org.eclipse.uml2.uml.Package datatypesPackage_, final Repository repository_, final CompositeDataType type_, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final org.eclipse.uml2.uml.Class class_, final org.eclipse.uml2.uml.Package datatypesPackage_, final Repository repository_, final CompositeDataType type_, @Extension final mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade _routinesFacade) {
       repository_.getDataTypes__Repository().add(type_);
     }
     
@@ -100,7 +99,7 @@ public class CompositeDataype_CreateMappingRoutine extends AbstractRepairRoutine
     }
   }
   
-  public CompositeDataype_CreateMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final org.eclipse.uml2.uml.Class class_, final org.eclipse.uml2.uml.Package datatypesPackage_) {
+  public CompositeDataype_CreateMappingRoutine(final mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final org.eclipse.uml2.uml.Class class_, final org.eclipse.uml2.uml.Package datatypesPackage_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmDatatypes_L2R.CompositeDataype_CreateMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.class_ = class_;this.datatypesPackage_ = datatypesPackage_;

@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRoles_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRoles_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.core.entity.InterfaceProvidingRequiringEntity;
 import org.palladiosimulator.pcm.repository.OperationInterface;
@@ -19,11 +18,11 @@ public class UpdateRequiredRoleCorrespondingUmlNamesRoutine extends AbstractRepa
       super(reactionExecutionState);
     }
     
-    public void executeAction1(final OperationRequiredRole role, final OperationInterface operationInterface, final InterfaceProvidingRequiringEntity requiringEntity, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final OperationRequiredRole role, final OperationInterface operationInterface, final InterfaceProvidingRequiringEntity requiringEntity, @Extension final mir.routines.umlXpcmRoles_R2L.RoutinesFacade _routinesFacade) {
     }
   }
   
-  public UpdateRequiredRoleCorrespondingUmlNamesRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationRequiredRole role, final OperationInterface operationInterface, final InterfaceProvidingRequiringEntity requiringEntity) {
+  public UpdateRequiredRoleCorrespondingUmlNamesRoutine(final mir.routines.umlXpcmRoles_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationRequiredRole role, final OperationInterface operationInterface, final InterfaceProvidingRequiringEntity requiringEntity) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRoles_R2L.UpdateRequiredRoleCorrespondingUmlNamesRoutine.ActionUserExecution(getExecutionState(), this);
     this.role = role;this.operationInterface = operationInterface;this.requiringEntity = requiringEntity;

@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRepository_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRepository_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.Repository;
@@ -62,12 +61,12 @@ public class Repository_CreateMappingRoutine extends AbstractRepairRoutineRealiz
       return "umlXpcmRepository_map_UML_and_PCM_correspondence_Package:contractsPkg_with_Repository:repository";
     }
     
-    public void callRoutine1(final org.eclipse.uml2.uml.Package repositoryPkg_, final org.eclipse.uml2.uml.Package contractsPkg_, final org.eclipse.uml2.uml.Package datatypesPkg_, final Repository repository_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final org.eclipse.uml2.uml.Package repositoryPkg_, final org.eclipse.uml2.uml.Package contractsPkg_, final org.eclipse.uml2.uml.Package datatypesPkg_, final Repository repository_, @Extension final mir.routines.umlXpcmRepository_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.repository_BidirectionalUpdate(repositoryPkg_, contractsPkg_, datatypesPkg_);
     }
   }
   
-  public Repository_CreateMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final org.eclipse.uml2.uml.Package repositoryPkg_, final org.eclipse.uml2.uml.Package contractsPkg_, final org.eclipse.uml2.uml.Package datatypesPkg_) {
+  public Repository_CreateMappingRoutine(final mir.routines.umlXpcmRepository_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final org.eclipse.uml2.uml.Package repositoryPkg_, final org.eclipse.uml2.uml.Package contractsPkg_, final org.eclipse.uml2.uml.Package datatypesPkg_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRepository_L2R.Repository_CreateMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.repositoryPkg_ = repositoryPkg_;this.contractsPkg_ = contractsPkg_;this.datatypesPkg_ = datatypesPkg_;

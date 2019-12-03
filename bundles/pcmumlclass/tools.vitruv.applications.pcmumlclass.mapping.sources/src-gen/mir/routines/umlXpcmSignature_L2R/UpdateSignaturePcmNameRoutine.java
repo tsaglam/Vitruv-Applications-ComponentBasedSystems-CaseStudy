@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmSignature_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmSignature_L2R.RoutinesFacade;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Parameter;
@@ -19,11 +18,11 @@ public class UpdateSignaturePcmNameRoutine extends AbstractRepairRoutineRealizat
       super(reactionExecutionState);
     }
     
-    public void executeAction1(final Operation operation, final Parameter returnParameter, final Interface interface_, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final Operation operation, final Parameter returnParameter, final Interface interface_, @Extension final mir.routines.umlXpcmSignature_L2R.RoutinesFacade _routinesFacade) {
     }
   }
   
-  public UpdateSignaturePcmNameRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Operation operation, final Parameter returnParameter, final Interface interface_) {
+  public UpdateSignaturePcmNameRoutine(final mir.routines.umlXpcmSignature_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Operation operation, final Parameter returnParameter, final Interface interface_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmSignature_L2R.UpdateSignaturePcmNameRoutine.ActionUserExecution(getExecutionState(), this);
     this.operation = operation;this.returnParameter = returnParameter;this.interface_ = interface_;

@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmRoles_L2R;
 
-import mir.routines.umlXpcmRoles_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.TypedElement;
@@ -18,7 +17,7 @@ public class OnRequiredRoleInterfaceReplacedAtProperty_typeReaction extends Abst
   
   private int currentlyMatchedChange;
   
-  public OnRequiredRoleInterfaceReplacedAtProperty_typeReaction(final RoutinesFacade routinesFacade) {
+  public OnRequiredRoleInterfaceReplacedAtProperty_typeReaction(final mir.routines.umlXpcmRoles_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -84,7 +83,7 @@ public class OnRequiredRoleInterfaceReplacedAtProperty_typeReaction extends Abst
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final ReplaceSingleValuedEReference replaceChange, final TypedElement affectedEObject, final EReference affectedFeature, final Interface oldValue, final Interface newValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final ReplaceSingleValuedEReference replaceChange, final TypedElement affectedEObject, final EReference affectedFeature, final Interface oldValue, final Interface newValue, @Extension final mir.routines.umlXpcmRoles_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.requiredRole_ElementUpdatedCheck(affectedEObject);
     }
   }

@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRepository_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRepository_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.Repository;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
@@ -17,12 +16,12 @@ public class Repository_BidirectionalUpdateRoutine extends AbstractRepairRoutine
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final Repository repository_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final Repository repository_, @Extension final mir.routines.umlXpcmRepository_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.updateRepoPackageName(repository_);
     }
   }
   
-  public Repository_BidirectionalUpdateRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Repository repository_) {
+  public Repository_BidirectionalUpdateRoutine(final mir.routines.umlXpcmRepository_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Repository repository_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRepository_R2L.Repository_BidirectionalUpdateRoutine.ActionUserExecution(getExecutionState(), this);
     this.repository_ = repository_;

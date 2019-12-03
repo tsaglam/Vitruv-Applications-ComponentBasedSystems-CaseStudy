@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRoles_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRoles_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.core.entity.InterfaceProvidingRequiringEntity;
 import org.palladiosimulator.pcm.repository.OperationInterface;
@@ -19,12 +18,12 @@ public class ProvidedRole_BidirectionalUpdateRoutine extends AbstractRepairRouti
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final OperationProvidedRole role_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity providingEntity_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final OperationProvidedRole role_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity providingEntity_, @Extension final mir.routines.umlXpcmRoles_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.updateInterfaceRealizationName(role_, operationInterface_, providingEntity_);
     }
   }
   
-  public ProvidedRole_BidirectionalUpdateRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationProvidedRole role_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity providingEntity_) {
+  public ProvidedRole_BidirectionalUpdateRoutine(final mir.routines.umlXpcmRoles_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationProvidedRole role_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity providingEntity_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRoles_R2L.ProvidedRole_BidirectionalUpdateRoutine.ActionUserExecution(getExecutionState(), this);
     this.role_ = role_;this.operationInterface_ = operationInterface_;this.providingEntity_ = providingEntity_;

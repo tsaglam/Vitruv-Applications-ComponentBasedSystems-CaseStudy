@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmSignature_L2R;
 
-import mir.routines.umlXpcmSignature_L2R.RoutinesFacade;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.xtext.xbase.lib.Extension;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnSignatureInterfaceInsertedAsRootReaction extends AbstractReaction
   
   private int currentlyMatchedChange;
   
-  public OnSignatureInterfaceInsertedAsRootReaction(final RoutinesFacade routinesFacade) {
+  public OnSignatureInterfaceInsertedAsRootReaction(final mir.routines.umlXpcmSignature_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -70,7 +69,7 @@ public class OnSignatureInterfaceInsertedAsRootReaction extends AbstractReaction
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final CreateEObject createChange, final Interface affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final CreateEObject createChange, final Interface affectedEObject, @Extension final mir.routines.umlXpcmSignature_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.signature_ElementCreatedCheck(affectedEObject);
     }
   }

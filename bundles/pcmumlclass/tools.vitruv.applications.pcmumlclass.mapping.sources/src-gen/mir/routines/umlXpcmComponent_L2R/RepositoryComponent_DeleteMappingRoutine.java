@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmComponent_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmComponent_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.repository.RepositoryComponent;
@@ -23,7 +22,7 @@ public class RepositoryComponent_DeleteMappingRoutine extends AbstractRepairRout
     }
   }
   
-  public RepositoryComponent_DeleteMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final RepositoryComponent component_, final Repository repository_) {
+  public RepositoryComponent_DeleteMappingRoutine(final mir.routines.umlXpcmComponent_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final RepositoryComponent component_, final Repository repository_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmComponent_L2R.RepositoryComponent_DeleteMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.component_ = component_;this.repository_ = repository_;

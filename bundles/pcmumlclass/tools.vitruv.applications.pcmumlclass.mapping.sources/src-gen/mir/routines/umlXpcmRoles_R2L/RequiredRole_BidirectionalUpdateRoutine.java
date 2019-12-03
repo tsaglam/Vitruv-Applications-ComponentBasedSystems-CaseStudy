@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRoles_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRoles_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.core.entity.InterfaceProvidingRequiringEntity;
 import org.palladiosimulator.pcm.repository.OperationInterface;
@@ -19,12 +18,12 @@ public class RequiredRole_BidirectionalUpdateRoutine extends AbstractRepairRouti
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final OperationRequiredRole role_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity requiringEntity_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final OperationRequiredRole role_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity requiringEntity_, @Extension final mir.routines.umlXpcmRoles_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.updateRequiredRoleCorrespondingUmlNames(role_, operationInterface_, requiringEntity_);
     }
   }
   
-  public RequiredRole_BidirectionalUpdateRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationRequiredRole role_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity requiringEntity_) {
+  public RequiredRole_BidirectionalUpdateRoutine(final mir.routines.umlXpcmRoles_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationRequiredRole role_, final OperationInterface operationInterface_, final InterfaceProvidingRequiringEntity requiringEntity_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRoles_R2L.RequiredRole_BidirectionalUpdateRoutine.ActionUserExecution(getExecutionState(), this);
     this.role_ = role_;this.operationInterface_ = operationInterface_;this.requiringEntity_ = requiringEntity_;

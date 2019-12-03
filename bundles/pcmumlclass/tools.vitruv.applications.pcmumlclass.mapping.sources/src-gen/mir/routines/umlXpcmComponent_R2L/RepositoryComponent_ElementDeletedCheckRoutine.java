@@ -2,7 +2,6 @@ package mir.routines.umlXpcmComponent_R2L;
 
 import java.io.IOException;
 import java.util.Optional;
-import mir.routines.umlXpcmComponent_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -55,7 +54,7 @@ public class RepositoryComponent_ElementDeletedCheckRoutine extends AbstractRepa
       return affectedEObject;
     }
     
-    public void callRoutine1(final EObject affectedEObject, final Optional<org.eclipse.uml2.uml.Package> componentPackage_correspondingTo_component, final Optional<org.eclipse.uml2.uml.Package> repositoryPackage_correspondingTo_component, final Optional<org.eclipse.uml2.uml.Class> implementation_correspondingTo_component, final Optional<Operation> constructor_correspondingTo_component, final Optional<org.eclipse.uml2.uml.Package> componentPackage_correspondingTo_repository, final Optional<org.eclipse.uml2.uml.Package> repositoryPackage_correspondingTo_repository, final Optional<org.eclipse.uml2.uml.Class> implementation_correspondingTo_repository, final Optional<Operation> constructor_correspondingTo_repository, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, final Optional<org.eclipse.uml2.uml.Package> componentPackage_correspondingTo_component, final Optional<org.eclipse.uml2.uml.Package> repositoryPackage_correspondingTo_component, final Optional<org.eclipse.uml2.uml.Class> implementation_correspondingTo_component, final Optional<Operation> constructor_correspondingTo_component, final Optional<org.eclipse.uml2.uml.Package> componentPackage_correspondingTo_repository, final Optional<org.eclipse.uml2.uml.Package> repositoryPackage_correspondingTo_repository, final Optional<org.eclipse.uml2.uml.Class> implementation_correspondingTo_repository, final Optional<Operation> constructor_correspondingTo_repository, @Extension final mir.routines.umlXpcmComponent_R2L.RoutinesFacade _routinesFacade) {
       org.eclipse.uml2.uml.Package componentPackage_ = null;
       org.eclipse.uml2.uml.Package repositoryPackage_ = null;
       org.eclipse.uml2.uml.Class implementation_ = null;
@@ -126,7 +125,7 @@ public class RepositoryComponent_ElementDeletedCheckRoutine extends AbstractRepa
     }
   }
   
-  public RepositoryComponent_ElementDeletedCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
+  public RepositoryComponent_ElementDeletedCheckRoutine(final mir.routines.umlXpcmComponent_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmComponent_R2L.RepositoryComponent_ElementDeletedCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

@@ -2,7 +2,6 @@ package mir.routines.umlXpcmRoles_R2L;
 
 import java.io.IOException;
 import java.util.Optional;
-import mir.routines.umlXpcmRoles_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.InterfaceRealization;
@@ -64,7 +63,7 @@ public class ProvidedRole_ElementDeletedCheckRoutine extends AbstractRepairRouti
       return affectedEObject;
     }
     
-    public void callRoutine1(final EObject affectedEObject, final Optional<InterfaceRealization> interfaceRealization_correspondingTo_role, final Optional<org.eclipse.uml2.uml.Class> implementation_correspondingTo_role, final Optional<Interface> interface_correspondingTo_role, final Optional<InterfaceRealization> interfaceRealization_correspondingTo_operationInterface, final Optional<org.eclipse.uml2.uml.Class> implementation_correspondingTo_operationInterface, final Optional<Interface> interface_correspondingTo_operationInterface, final Optional<InterfaceRealization> interfaceRealization_correspondingTo_providingEntity, final Optional<org.eclipse.uml2.uml.Class> implementation_correspondingTo_providingEntity, final Optional<Interface> interface_correspondingTo_providingEntity, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, final Optional<InterfaceRealization> interfaceRealization_correspondingTo_role, final Optional<org.eclipse.uml2.uml.Class> implementation_correspondingTo_role, final Optional<Interface> interface_correspondingTo_role, final Optional<InterfaceRealization> interfaceRealization_correspondingTo_operationInterface, final Optional<org.eclipse.uml2.uml.Class> implementation_correspondingTo_operationInterface, final Optional<Interface> interface_correspondingTo_operationInterface, final Optional<InterfaceRealization> interfaceRealization_correspondingTo_providingEntity, final Optional<org.eclipse.uml2.uml.Class> implementation_correspondingTo_providingEntity, final Optional<Interface> interface_correspondingTo_providingEntity, @Extension final mir.routines.umlXpcmRoles_R2L.RoutinesFacade _routinesFacade) {
       InterfaceRealization interfaceRealization_ = null;
       org.eclipse.uml2.uml.Class implementation_ = null;
       Interface interface_ = null;
@@ -138,7 +137,7 @@ public class ProvidedRole_ElementDeletedCheckRoutine extends AbstractRepairRouti
     }
   }
   
-  public ProvidedRole_ElementDeletedCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
+  public ProvidedRole_ElementDeletedCheckRoutine(final mir.routines.umlXpcmRoles_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRoles_R2L.ProvidedRole_ElementDeletedCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

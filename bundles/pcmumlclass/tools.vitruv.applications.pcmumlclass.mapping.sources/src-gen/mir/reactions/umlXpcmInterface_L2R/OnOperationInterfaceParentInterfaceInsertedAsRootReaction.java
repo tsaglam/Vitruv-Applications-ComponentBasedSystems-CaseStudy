@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmInterface_L2R;
 
-import mir.routines.umlXpcmInterface_L2R.RoutinesFacade;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.xtext.xbase.lib.Extension;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnOperationInterfaceParentInterfaceInsertedAsRootReaction extends A
   
   private int currentlyMatchedChange;
   
-  public OnOperationInterfaceParentInterfaceInsertedAsRootReaction(final RoutinesFacade routinesFacade) {
+  public OnOperationInterfaceParentInterfaceInsertedAsRootReaction(final mir.routines.umlXpcmInterface_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -70,7 +69,7 @@ public class OnOperationInterfaceParentInterfaceInsertedAsRootReaction extends A
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final CreateEObject createChange, final Interface affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final CreateEObject createChange, final Interface affectedEObject, @Extension final mir.routines.umlXpcmInterface_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.operationInterfaceParent_ElementCreatedCheck(affectedEObject);
     }
   }

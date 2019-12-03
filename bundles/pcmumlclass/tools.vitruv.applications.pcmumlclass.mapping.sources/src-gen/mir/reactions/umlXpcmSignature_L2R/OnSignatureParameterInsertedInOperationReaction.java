@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmSignature_L2R;
 
-import mir.routines.umlXpcmSignature_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.uml2.uml.BehavioralFeature;
 import org.eclipse.uml2.uml.Parameter;
@@ -18,7 +17,7 @@ public class OnSignatureParameterInsertedInOperationReaction extends AbstractRea
   
   private int currentlyMatchedChange;
   
-  public OnSignatureParameterInsertedInOperationReaction(final RoutinesFacade routinesFacade) {
+  public OnSignatureParameterInsertedInOperationReaction(final mir.routines.umlXpcmSignature_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -81,7 +80,7 @@ public class OnSignatureParameterInsertedInOperationReaction extends AbstractRea
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final InsertEReference insertChange, final BehavioralFeature affectedEObject, final EReference affectedFeature, final Parameter newValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final InsertEReference insertChange, final BehavioralFeature affectedEObject, final EReference affectedFeature, final Parameter newValue, final int index, @Extension final mir.routines.umlXpcmSignature_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.signature_ElementCreatedCheck(affectedEObject);
     }
   }

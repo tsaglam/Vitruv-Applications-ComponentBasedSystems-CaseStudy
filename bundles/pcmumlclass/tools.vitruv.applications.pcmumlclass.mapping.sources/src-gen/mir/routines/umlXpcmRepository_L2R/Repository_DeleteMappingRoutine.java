@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRepository_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRepository_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.palladiosimulator.pcm.repository.Repository;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
@@ -22,7 +21,7 @@ public class Repository_DeleteMappingRoutine extends AbstractRepairRoutineRealiz
     }
   }
   
-  public Repository_DeleteMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Repository repository_) {
+  public Repository_DeleteMappingRoutine(final mir.routines.umlXpcmRepository_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Repository repository_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRepository_L2R.Repository_DeleteMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.repository_ = repository_;

@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmSignature_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmSignature_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Operation;
@@ -39,7 +38,7 @@ public class Signature_CreateMappingRoutine extends AbstractRepairRoutineRealiza
       return interface_;
     }
     
-    public void callRoutine1(final Operation operation_, final Parameter returnParameter_, final Interface interface_, final OperationInterface operationInterface_, final OperationSignature operationSignature_, final PrimitiveDataType returnType_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final Operation operation_, final Parameter returnParameter_, final Interface interface_, final OperationInterface operationInterface_, final OperationSignature operationSignature_, final PrimitiveDataType returnType_, @Extension final mir.routines.umlXpcmSignature_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.signature_BidirectionalUpdate(operation_, returnParameter_, interface_);
     }
     
@@ -51,7 +50,7 @@ public class Signature_CreateMappingRoutine extends AbstractRepairRoutineRealiza
       return "umlXpcmSignature_map_UML_and_PCM_correspondence_Interface:interface_with_DataType:returnType";
     }
     
-    public void executeAction1(final Operation operation_, final Parameter returnParameter_, final Interface interface_, final OperationInterface operationInterface_, final OperationSignature operationSignature_, final PrimitiveDataType returnType_, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final Operation operation_, final Parameter returnParameter_, final Interface interface_, final OperationInterface operationInterface_, final OperationSignature operationSignature_, final PrimitiveDataType returnType_, @Extension final mir.routines.umlXpcmSignature_L2R.RoutinesFacade _routinesFacade) {
       operationInterface_.getSignatures__OperationInterface().add(operationSignature_);
       operationSignature_.setReturnType__OperationSignature(returnType_);
     }
@@ -173,7 +172,7 @@ public class Signature_CreateMappingRoutine extends AbstractRepairRoutineRealiza
     }
   }
   
-  public Signature_CreateMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Operation operation_, final Parameter returnParameter_, final Interface interface_) {
+  public Signature_CreateMappingRoutine(final mir.routines.umlXpcmSignature_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Operation operation_, final Parameter returnParameter_, final Interface interface_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmSignature_L2R.Signature_CreateMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.operation_ = operation_;this.returnParameter_ = returnParameter_;this.interface_ = interface_;

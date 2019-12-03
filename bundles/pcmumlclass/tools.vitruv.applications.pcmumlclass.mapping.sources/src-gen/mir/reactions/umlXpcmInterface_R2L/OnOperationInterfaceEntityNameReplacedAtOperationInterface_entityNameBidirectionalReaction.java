@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmInterface_R2L;
 
-import mir.routines.umlXpcmInterface_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.OperationInterface;
@@ -17,7 +16,7 @@ public class OnOperationInterfaceEntityNameReplacedAtOperationInterface_entityNa
   
   private int currentlyMatchedChange;
   
-  public OnOperationInterfaceEntityNameReplacedAtOperationInterface_entityNameBidirectionalReaction(final RoutinesFacade routinesFacade) {
+  public OnOperationInterfaceEntityNameReplacedAtOperationInterface_entityNameBidirectionalReaction(final mir.routines.umlXpcmInterface_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -83,7 +82,7 @@ public class OnOperationInterfaceEntityNameReplacedAtOperationInterface_entityNa
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final OperationInterface affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final OperationInterface affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final mir.routines.umlXpcmInterface_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.onOperationInterfaceEntityNameReplacedAtOperationInterface_entityNameBidirectionalRepair(affectedEObject);
     }
   }

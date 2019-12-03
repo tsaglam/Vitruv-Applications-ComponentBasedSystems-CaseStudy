@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmSignature_L2R;
 
-import mir.routines.umlXpcmSignature_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Operation;
@@ -18,7 +17,7 @@ public class OnSignatureOperationInsertedInInterfaceReaction extends AbstractRea
   
   private int currentlyMatchedChange;
   
-  public OnSignatureOperationInsertedInInterfaceReaction(final RoutinesFacade routinesFacade) {
+  public OnSignatureOperationInsertedInInterfaceReaction(final mir.routines.umlXpcmSignature_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -81,7 +80,7 @@ public class OnSignatureOperationInsertedInInterfaceReaction extends AbstractRea
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final InsertEReference insertChange, final Interface affectedEObject, final EReference affectedFeature, final Operation newValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final InsertEReference insertChange, final Interface affectedEObject, final EReference affectedFeature, final Operation newValue, final int index, @Extension final mir.routines.umlXpcmSignature_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.signature_ElementCreatedCheck(affectedEObject);
     }
   }

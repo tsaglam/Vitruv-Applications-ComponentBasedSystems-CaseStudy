@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmRoles_L2R;
 
-import mir.routines.umlXpcmRoles_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.uml2.uml.BehavioredClassifier;
 import org.eclipse.uml2.uml.InterfaceRealization;
@@ -18,7 +17,7 @@ public class OnProvidedRoleInterfaceRealizationInsertedInClassReaction extends A
   
   private int currentlyMatchedChange;
   
-  public OnProvidedRoleInterfaceRealizationInsertedInClassReaction(final RoutinesFacade routinesFacade) {
+  public OnProvidedRoleInterfaceRealizationInsertedInClassReaction(final mir.routines.umlXpcmRoles_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -81,7 +80,7 @@ public class OnProvidedRoleInterfaceRealizationInsertedInClassReaction extends A
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final InsertEReference insertChange, final BehavioredClassifier affectedEObject, final EReference affectedFeature, final InterfaceRealization newValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final InsertEReference insertChange, final BehavioredClassifier affectedEObject, final EReference affectedFeature, final InterfaceRealization newValue, final int index, @Extension final mir.routines.umlXpcmRoles_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.providedRole_ElementCreatedCheck(affectedEObject);
     }
   }

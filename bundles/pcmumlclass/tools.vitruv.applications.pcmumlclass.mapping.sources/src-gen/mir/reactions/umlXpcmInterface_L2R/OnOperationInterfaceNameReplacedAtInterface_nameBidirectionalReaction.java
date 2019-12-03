@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmInterface_L2R;
 
-import mir.routines.umlXpcmInterface_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -17,7 +16,7 @@ public class OnOperationInterfaceNameReplacedAtInterface_nameBidirectionalReacti
   
   private int currentlyMatchedChange;
   
-  public OnOperationInterfaceNameReplacedAtInterface_nameBidirectionalReaction(final RoutinesFacade routinesFacade) {
+  public OnOperationInterfaceNameReplacedAtInterface_nameBidirectionalReaction(final mir.routines.umlXpcmInterface_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -83,7 +82,7 @@ public class OnOperationInterfaceNameReplacedAtInterface_nameBidirectionalReacti
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final Interface affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final ReplaceSingleValuedEAttribute replaceChange, final Interface affectedEObject, final EAttribute affectedFeature, final String oldValue, final String newValue, @Extension final mir.routines.umlXpcmInterface_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.onOperationInterfaceNameReplacedAtInterface_nameBidirectionalRepair(affectedEObject);
     }
   }

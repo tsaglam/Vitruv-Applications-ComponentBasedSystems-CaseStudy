@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRoles_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRoles_R2L.RoutinesFacade;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -22,7 +21,7 @@ public class RequiredRole_ElementUpdatedCheckRoutine extends AbstractRepairRouti
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final EObject affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, @Extension final mir.routines.umlXpcmRoles_R2L.RoutinesFacade _routinesFacade) {
       if ((affectedEObject instanceof OperationRequiredRole)) {
         OperationRequiredRole role_ = ((OperationRequiredRole)affectedEObject);
         {
@@ -86,7 +85,7 @@ public class RequiredRole_ElementUpdatedCheckRoutine extends AbstractRepairRouti
     }
   }
   
-  public RequiredRole_ElementUpdatedCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
+  public RequiredRole_ElementUpdatedCheckRoutine(final mir.routines.umlXpcmRoles_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRoles_R2L.RequiredRole_ElementUpdatedCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

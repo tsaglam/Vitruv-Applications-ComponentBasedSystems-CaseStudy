@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmRoles_R2L;
 
-import mir.routines.umlXpcmRoles_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.OperationRequiredRole;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnRequiredRoleOperationRequiredRoleDeletedReaction extends Abstract
   
   private int currentlyMatchedChange;
   
-  public OnRequiredRoleOperationRequiredRoleDeletedReaction(final RoutinesFacade routinesFacade) {
+  public OnRequiredRoleOperationRequiredRoleDeletedReaction(final mir.routines.umlXpcmRoles_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -70,7 +69,7 @@ public class OnRequiredRoleOperationRequiredRoleDeletedReaction extends Abstract
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final DeleteEObject deleteChange, final OperationRequiredRole affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final DeleteEObject deleteChange, final OperationRequiredRole affectedEObject, @Extension final mir.routines.umlXpcmRoles_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.requiredRole_ElementDeletedCheck(affectedEObject);
     }
   }

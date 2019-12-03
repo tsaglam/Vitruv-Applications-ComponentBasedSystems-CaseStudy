@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmDatatypes_L2R;
 
-import mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.xbase.lib.Extension;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnCompositeDataypeClassInsertedInPackageReaction extends AbstractRe
   
   private int currentlyMatchedChange;
   
-  public OnCompositeDataypeClassInsertedInPackageReaction(final RoutinesFacade routinesFacade) {
+  public OnCompositeDataypeClassInsertedInPackageReaction(final mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -79,7 +78,7 @@ public class OnCompositeDataypeClassInsertedInPackageReaction extends AbstractRe
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final InsertEReference insertChange, final org.eclipse.uml2.uml.Package affectedEObject, final EReference affectedFeature, final org.eclipse.uml2.uml.Class newValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final InsertEReference insertChange, final org.eclipse.uml2.uml.Package affectedEObject, final EReference affectedFeature, final org.eclipse.uml2.uml.Class newValue, final int index, @Extension final mir.routines.umlXpcmDatatypes_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.compositeDataype_ElementCreatedCheck(affectedEObject);
     }
   }

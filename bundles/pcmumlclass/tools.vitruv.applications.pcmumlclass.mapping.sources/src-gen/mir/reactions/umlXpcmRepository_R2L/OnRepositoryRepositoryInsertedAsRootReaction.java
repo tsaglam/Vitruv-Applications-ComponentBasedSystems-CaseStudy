@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmRepository_R2L;
 
-import mir.routines.umlXpcmRepository_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.Repository;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnRepositoryRepositoryInsertedAsRootReaction extends AbstractReacti
   
   private int currentlyMatchedChange;
   
-  public OnRepositoryRepositoryInsertedAsRootReaction(final RoutinesFacade routinesFacade) {
+  public OnRepositoryRepositoryInsertedAsRootReaction(final mir.routines.umlXpcmRepository_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -70,7 +69,7 @@ public class OnRepositoryRepositoryInsertedAsRootReaction extends AbstractReacti
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final CreateEObject createChange, final Repository affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final CreateEObject createChange, final Repository affectedEObject, @Extension final mir.routines.umlXpcmRepository_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.repository_ElementCreatedCheck(affectedEObject);
     }
   }

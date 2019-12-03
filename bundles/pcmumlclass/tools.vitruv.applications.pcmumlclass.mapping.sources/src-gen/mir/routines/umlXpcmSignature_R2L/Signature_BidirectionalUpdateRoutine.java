@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmSignature_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmSignature_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.DataType;
 import org.palladiosimulator.pcm.repository.OperationInterface;
@@ -19,16 +18,16 @@ public class Signature_BidirectionalUpdateRoutine extends AbstractRepairRoutineR
       super(reactionExecutionState);
     }
     
-    public void callRoutine2(final OperationSignature operationSignature_, final DataType returnType_, final OperationInterface operationInterface_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine2(final OperationSignature operationSignature_, final DataType returnType_, final OperationInterface operationInterface_, @Extension final mir.routines.umlXpcmSignature_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.updateSignatureUmlReturnType(operationSignature_, returnType_, operationInterface_);
     }
     
-    public void callRoutine1(final OperationSignature operationSignature_, final DataType returnType_, final OperationInterface operationInterface_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final OperationSignature operationSignature_, final DataType returnType_, final OperationInterface operationInterface_, @Extension final mir.routines.umlXpcmSignature_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.updateSignatureUmlName(operationSignature_, returnType_, operationInterface_);
     }
   }
   
-  public Signature_BidirectionalUpdateRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationSignature operationSignature_, final DataType returnType_, final OperationInterface operationInterface_) {
+  public Signature_BidirectionalUpdateRoutine(final mir.routines.umlXpcmSignature_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationSignature operationSignature_, final DataType returnType_, final OperationInterface operationInterface_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmSignature_R2L.Signature_BidirectionalUpdateRoutine.ActionUserExecution(getExecutionState(), this);
     this.operationSignature_ = operationSignature_;this.returnType_ = returnType_;this.operationInterface_ = operationInterface_;

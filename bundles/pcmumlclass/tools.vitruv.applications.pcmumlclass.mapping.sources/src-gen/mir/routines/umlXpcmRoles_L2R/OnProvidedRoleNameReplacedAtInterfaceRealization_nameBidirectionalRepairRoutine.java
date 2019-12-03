@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRoles_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRoles_L2R.RoutinesFacade;
 import org.eclipse.uml2.uml.InterfaceRealization;
 import org.eclipse.xtext.xbase.lib.Extension;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
@@ -17,12 +16,12 @@ public class OnProvidedRoleNameReplacedAtInterfaceRealization_nameBidirectionalR
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final InterfaceRealization affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final InterfaceRealization affectedEObject, @Extension final mir.routines.umlXpcmRoles_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.providedRole_BidirectionalCheck(affectedEObject, "updateProvidedRoleName");
     }
   }
   
-  public OnProvidedRoleNameReplacedAtInterfaceRealization_nameBidirectionalRepairRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final InterfaceRealization affectedEObject) {
+  public OnProvidedRoleNameReplacedAtInterfaceRealization_nameBidirectionalRepairRoutine(final mir.routines.umlXpcmRoles_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final InterfaceRealization affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRoles_L2R.OnProvidedRoleNameReplacedAtInterfaceRealization_nameBidirectionalRepairRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

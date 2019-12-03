@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmInterface_L2R;
 
-import mir.routines.umlXpcmInterface_L2R.RoutinesFacade;
 import org.eclipse.uml2.uml.Generalization;
 import org.eclipse.xtext.xbase.lib.Extension;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnOperationInterfaceParentGeneralizationDeletedReaction extends Abs
   
   private int currentlyMatchedChange;
   
-  public OnOperationInterfaceParentGeneralizationDeletedReaction(final RoutinesFacade routinesFacade) {
+  public OnOperationInterfaceParentGeneralizationDeletedReaction(final mir.routines.umlXpcmInterface_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -70,7 +69,7 @@ public class OnOperationInterfaceParentGeneralizationDeletedReaction extends Abs
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final DeleteEObject deleteChange, final Generalization affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final DeleteEObject deleteChange, final Generalization affectedEObject, @Extension final mir.routines.umlXpcmInterface_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.operationInterfaceParent_ElementDeletedCheck(affectedEObject);
     }
   }

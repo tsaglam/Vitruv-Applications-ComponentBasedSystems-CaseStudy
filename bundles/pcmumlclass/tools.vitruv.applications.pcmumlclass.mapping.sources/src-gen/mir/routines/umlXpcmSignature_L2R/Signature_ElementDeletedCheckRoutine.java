@@ -2,7 +2,6 @@ package mir.routines.umlXpcmSignature_L2R;
 
 import java.io.IOException;
 import java.util.Optional;
-import mir.routines.umlXpcmSignature_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.DataType;
@@ -73,7 +72,7 @@ public class Signature_ElementDeletedCheckRoutine extends AbstractRepairRoutineR
       return affectedEObject;
     }
     
-    public void callRoutine1(final EObject affectedEObject, final Optional<OperationSignature> operationSignature_correspondingTo_operation, final Optional<DataType> returnType_correspondingTo_operation, final Optional<OperationInterface> operationInterface_correspondingTo_operation, final Optional<OperationSignature> operationSignature_correspondingTo_returnParameter, final Optional<DataType> returnType_correspondingTo_returnParameter, final Optional<OperationInterface> operationInterface_correspondingTo_returnParameter, final Optional<OperationSignature> operationSignature_correspondingTo_interface, final Optional<DataType> returnType_correspondingTo_interface, final Optional<OperationInterface> operationInterface_correspondingTo_interface, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, final Optional<OperationSignature> operationSignature_correspondingTo_operation, final Optional<DataType> returnType_correspondingTo_operation, final Optional<OperationInterface> operationInterface_correspondingTo_operation, final Optional<OperationSignature> operationSignature_correspondingTo_returnParameter, final Optional<DataType> returnType_correspondingTo_returnParameter, final Optional<OperationInterface> operationInterface_correspondingTo_returnParameter, final Optional<OperationSignature> operationSignature_correspondingTo_interface, final Optional<DataType> returnType_correspondingTo_interface, final Optional<OperationInterface> operationInterface_correspondingTo_interface, @Extension final mir.routines.umlXpcmSignature_L2R.RoutinesFacade _routinesFacade) {
       OperationSignature operationSignature_ = null;
       DataType returnType_ = null;
       OperationInterface operationInterface_ = null;
@@ -139,7 +138,7 @@ public class Signature_ElementDeletedCheckRoutine extends AbstractRepairRoutineR
     }
   }
   
-  public Signature_ElementDeletedCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
+  public Signature_ElementDeletedCheckRoutine(final mir.routines.umlXpcmSignature_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmSignature_L2R.Signature_ElementDeletedCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

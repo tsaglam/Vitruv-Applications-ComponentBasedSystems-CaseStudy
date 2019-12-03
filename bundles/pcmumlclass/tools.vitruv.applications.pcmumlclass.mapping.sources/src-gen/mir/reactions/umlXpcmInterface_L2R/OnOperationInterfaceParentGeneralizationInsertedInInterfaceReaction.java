@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmInterface_L2R;
 
-import mir.routines.umlXpcmInterface_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Generalization;
@@ -18,7 +17,7 @@ public class OnOperationInterfaceParentGeneralizationInsertedInInterfaceReaction
   
   private int currentlyMatchedChange;
   
-  public OnOperationInterfaceParentGeneralizationInsertedInInterfaceReaction(final RoutinesFacade routinesFacade) {
+  public OnOperationInterfaceParentGeneralizationInsertedInInterfaceReaction(final mir.routines.umlXpcmInterface_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -81,7 +80,7 @@ public class OnOperationInterfaceParentGeneralizationInsertedInInterfaceReaction
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final InsertEReference insertChange, final Classifier affectedEObject, final EReference affectedFeature, final Generalization newValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final InsertEReference insertChange, final Classifier affectedEObject, final EReference affectedFeature, final Generalization newValue, final int index, @Extension final mir.routines.umlXpcmInterface_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.operationInterfaceParent_ElementCreatedCheck(affectedEObject);
     }
   }

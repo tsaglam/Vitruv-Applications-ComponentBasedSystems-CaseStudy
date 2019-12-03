@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmRoles_L2R;
 
-import mir.routines.umlXpcmRoles_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.TypedElement;
@@ -18,7 +17,7 @@ public class OnRequiredRoleElementReplacedAtParameter_typeBidirectionalReaction 
   
   private int currentlyMatchedChange;
   
-  public OnRequiredRoleElementReplacedAtParameter_typeBidirectionalReaction(final RoutinesFacade routinesFacade) {
+  public OnRequiredRoleElementReplacedAtParameter_typeBidirectionalReaction(final mir.routines.umlXpcmRoles_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -84,7 +83,7 @@ public class OnRequiredRoleElementReplacedAtParameter_typeBidirectionalReaction 
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final ReplaceSingleValuedEReference replaceChange, final TypedElement affectedEObject, final EReference affectedFeature, final Type oldValue, final Type newValue, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final ReplaceSingleValuedEReference replaceChange, final TypedElement affectedEObject, final EReference affectedFeature, final Type oldValue, final Type newValue, @Extension final mir.routines.umlXpcmRoles_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.onRequiredRoleElementReplacedAtParameter_typeBidirectionalRepair(affectedEObject);
     }
   }

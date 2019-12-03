@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmDatatypes_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.CompositeDataType;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
@@ -17,12 +16,12 @@ public class OnCompositeDataypeEntityNameReplacedAtCompositeDataType_entityNameB
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final CompositeDataType affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final CompositeDataType affectedEObject, @Extension final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.compositeDataype_BidirectionalCheck(affectedEObject, "updateClassName");
     }
   }
   
-  public OnCompositeDataypeEntityNameReplacedAtCompositeDataType_entityNameBidirectionalRepairRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final CompositeDataType affectedEObject) {
+  public OnCompositeDataypeEntityNameReplacedAtCompositeDataType_entityNameBidirectionalRepairRoutine(final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final CompositeDataType affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmDatatypes_R2L.OnCompositeDataypeEntityNameReplacedAtCompositeDataType_entityNameBidirectionalRepairRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmSignature_R2L;
 
-import mir.routines.umlXpcmSignature_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.OperationInterface;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnSignatureOperationInterfaceInsertedAsRootReaction extends Abstrac
   
   private int currentlyMatchedChange;
   
-  public OnSignatureOperationInterfaceInsertedAsRootReaction(final RoutinesFacade routinesFacade) {
+  public OnSignatureOperationInterfaceInsertedAsRootReaction(final mir.routines.umlXpcmSignature_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -70,7 +69,7 @@ public class OnSignatureOperationInterfaceInsertedAsRootReaction extends Abstrac
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final CreateEObject createChange, final OperationInterface affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final CreateEObject createChange, final OperationInterface affectedEObject, @Extension final mir.routines.umlXpcmSignature_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.signature_ElementCreatedCheck(affectedEObject);
     }
   }

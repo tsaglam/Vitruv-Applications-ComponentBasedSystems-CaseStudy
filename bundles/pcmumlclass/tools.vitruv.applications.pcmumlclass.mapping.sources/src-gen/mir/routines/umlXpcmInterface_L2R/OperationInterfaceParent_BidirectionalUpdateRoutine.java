@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmInterface_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmInterface_L2R.RoutinesFacade;
 import org.eclipse.uml2.uml.Generalization;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.xtext.xbase.lib.Extension;
@@ -18,12 +17,12 @@ public class OperationInterfaceParent_BidirectionalUpdateRoutine extends Abstrac
       super(reactionExecutionState);
     }
     
-    public void executeAction1(final Interface interface_, final Generalization generalization_, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final Interface interface_, final Generalization generalization_, @Extension final mir.routines.umlXpcmInterface_L2R.RoutinesFacade _routinesFacade) {
       return;
     }
   }
   
-  public OperationInterfaceParent_BidirectionalUpdateRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Interface interface_, final Generalization generalization_) {
+  public OperationInterfaceParent_BidirectionalUpdateRoutine(final mir.routines.umlXpcmInterface_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Interface interface_, final Generalization generalization_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmInterface_L2R.OperationInterfaceParent_BidirectionalUpdateRoutine.ActionUserExecution(getExecutionState(), this);
     this.interface_ = interface_;this.generalization_ = generalization_;

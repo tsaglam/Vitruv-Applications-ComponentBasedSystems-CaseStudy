@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmComponent_R2L;
 
-import mir.routines.umlXpcmComponent_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.RepositoryComponent;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractReactionRealization;
@@ -16,7 +15,7 @@ public class OnRepositoryComponentRepositoryComponentDeletedReaction extends Abs
   
   private int currentlyMatchedChange;
   
-  public OnRepositoryComponentRepositoryComponentDeletedReaction(final RoutinesFacade routinesFacade) {
+  public OnRepositoryComponentRepositoryComponentDeletedReaction(final mir.routines.umlXpcmComponent_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -70,7 +69,7 @@ public class OnRepositoryComponentRepositoryComponentDeletedReaction extends Abs
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final DeleteEObject deleteChange, final RepositoryComponent affectedEObject, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final DeleteEObject deleteChange, final RepositoryComponent affectedEObject, @Extension final mir.routines.umlXpcmComponent_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.repositoryComponent_ElementDeletedCheck(affectedEObject);
     }
   }

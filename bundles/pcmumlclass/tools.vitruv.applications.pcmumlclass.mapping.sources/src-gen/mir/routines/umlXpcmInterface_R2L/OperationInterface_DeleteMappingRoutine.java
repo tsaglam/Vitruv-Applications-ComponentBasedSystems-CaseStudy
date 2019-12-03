@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmInterface_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmInterface_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Interface;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
@@ -22,7 +21,7 @@ public class OperationInterface_DeleteMappingRoutine extends AbstractRepairRouti
     }
   }
   
-  public OperationInterface_DeleteMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Interface interface_, final org.eclipse.uml2.uml.Package contractsPackage_) {
+  public OperationInterface_DeleteMappingRoutine(final mir.routines.umlXpcmInterface_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Interface interface_, final org.eclipse.uml2.uml.Package contractsPackage_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmInterface_R2L.OperationInterface_DeleteMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.interface_ = interface_;this.contractsPackage_ = contractsPackage_;

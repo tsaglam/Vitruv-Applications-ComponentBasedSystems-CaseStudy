@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmComponent_L2R;
 
 import java.io.IOException;
-import mir.routines.umlXpcmComponent_L2R.RoutinesFacade;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Operation;
@@ -20,7 +19,7 @@ public class RepositoryComponent_BidirectionalCheckRoutine extends AbstractRepai
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final EObject affectedEObject, final String routineName, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, final String routineName, @Extension final mir.routines.umlXpcmComponent_L2R.RoutinesFacade _routinesFacade) {
       if ((affectedEObject instanceof org.eclipse.uml2.uml.Package)) {
         org.eclipse.uml2.uml.Package componentPackage_ = ((org.eclipse.uml2.uml.Package)affectedEObject);
         EList<PackageableElement> _packagedElements = componentPackage_.getPackagedElements();
@@ -132,7 +131,7 @@ public class RepositoryComponent_BidirectionalCheckRoutine extends AbstractRepai
     }
   }
   
-  public RepositoryComponent_BidirectionalCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject, final String routineName) {
+  public RepositoryComponent_BidirectionalCheckRoutine(final mir.routines.umlXpcmComponent_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject, final String routineName) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmComponent_L2R.RepositoryComponent_BidirectionalCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;this.routineName = routineName;

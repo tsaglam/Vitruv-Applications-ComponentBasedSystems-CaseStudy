@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmInterface_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmInterface_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.OperationInterface;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
@@ -17,12 +16,12 @@ public class OperationInterfaceParent_BidirectionalUpdateRoutine extends Abstrac
       super(reactionExecutionState);
     }
     
-    public void executeAction1(final OperationInterface operationInterface_, final OperationInterface parentInterface_, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final OperationInterface operationInterface_, final OperationInterface parentInterface_, @Extension final mir.routines.umlXpcmInterface_R2L.RoutinesFacade _routinesFacade) {
       return;
     }
   }
   
-  public OperationInterfaceParent_BidirectionalUpdateRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationInterface operationInterface_, final OperationInterface parentInterface_) {
+  public OperationInterfaceParent_BidirectionalUpdateRoutine(final mir.routines.umlXpcmInterface_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final OperationInterface operationInterface_, final OperationInterface parentInterface_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmInterface_R2L.OperationInterfaceParent_BidirectionalUpdateRoutine.ActionUserExecution(getExecutionState(), this);
     this.operationInterface_ = operationInterface_;this.parentInterface_ = parentInterface_;

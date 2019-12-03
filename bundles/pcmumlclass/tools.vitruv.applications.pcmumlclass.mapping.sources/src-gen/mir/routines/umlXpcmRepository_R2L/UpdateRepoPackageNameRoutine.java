@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRepository_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRepository_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.Repository;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
@@ -17,11 +16,11 @@ public class UpdateRepoPackageNameRoutine extends AbstractRepairRoutineRealizati
       super(reactionExecutionState);
     }
     
-    public void executeAction1(final Repository repository, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final Repository repository, @Extension final mir.routines.umlXpcmRepository_R2L.RoutinesFacade _routinesFacade) {
     }
   }
   
-  public UpdateRepoPackageNameRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Repository repository) {
+  public UpdateRepoPackageNameRoutine(final mir.routines.umlXpcmRepository_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Repository repository) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRepository_R2L.UpdateRepoPackageNameRoutine.ActionUserExecution(getExecutionState(), this);
     this.repository = repository;

@@ -17,10 +17,7 @@ import tools.vitruv.extensions.dslsruntime.reactions.ReactionExecutionState;
 import tools.vitruv.extensions.dslsruntime.reactions.structure.CallHierarchyHaving;
 
 /**
- * *
- * nChange the type of the corresponding uml::Parameter or uml::Property.
- * n
- * nAssumes that the innerType of the CollectionDataType is not set to another CollectionDataType.
+ * *nChange the type of the corresponding uml::Parameter or uml::Property.nnAssumes that the innerType of the CollectionDataType is not set to another CollectionDataType.
  *  
  */
 @SuppressWarnings("all")

@@ -2,7 +2,6 @@ package mir.routines.umlXpcmRepository_R2L;
 
 import java.io.IOException;
 import java.util.Optional;
-import mir.routines.umlXpcmRepository_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
@@ -42,7 +41,7 @@ public class Repository_ElementDeletedCheckRoutine extends AbstractRepairRoutine
       return affectedEObject;
     }
     
-    public void callRoutine1(final EObject affectedEObject, final Optional<org.eclipse.uml2.uml.Package> repositoryPkg_correspondingTo_repository, final Optional<org.eclipse.uml2.uml.Package> contractsPkg_correspondingTo_repository, final Optional<org.eclipse.uml2.uml.Package> datatypesPkg_correspondingTo_repository, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, final Optional<org.eclipse.uml2.uml.Package> repositoryPkg_correspondingTo_repository, final Optional<org.eclipse.uml2.uml.Package> contractsPkg_correspondingTo_repository, final Optional<org.eclipse.uml2.uml.Package> datatypesPkg_correspondingTo_repository, @Extension final mir.routines.umlXpcmRepository_R2L.RoutinesFacade _routinesFacade) {
       org.eclipse.uml2.uml.Package repositoryPkg_ = null;
       org.eclipse.uml2.uml.Package contractsPkg_ = null;
       org.eclipse.uml2.uml.Package datatypesPkg_ = null;
@@ -64,7 +63,7 @@ public class Repository_ElementDeletedCheckRoutine extends AbstractRepairRoutine
     }
   }
   
-  public Repository_ElementDeletedCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
+  public Repository_ElementDeletedCheckRoutine(final mir.routines.umlXpcmRepository_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRepository_R2L.Repository_ElementDeletedCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

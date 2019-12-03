@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmRoles_R2L;
 
-import mir.routines.umlXpcmRoles_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.core.entity.InterfaceProvidingEntity;
@@ -18,7 +17,7 @@ public class OnProvidedRoleOperationProvidedRoleInsertedInInterfaceProvidingRequ
   
   private int currentlyMatchedChange;
   
-  public OnProvidedRoleOperationProvidedRoleInsertedInInterfaceProvidingRequiringEntityReaction(final RoutinesFacade routinesFacade) {
+  public OnProvidedRoleOperationProvidedRoleInsertedInInterfaceProvidingRequiringEntityReaction(final mir.routines.umlXpcmRoles_R2L.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -81,7 +80,7 @@ public class OnProvidedRoleOperationProvidedRoleInsertedInInterfaceProvidingRequ
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final InsertEReference insertChange, final InterfaceProvidingEntity affectedEObject, final EReference affectedFeature, final OperationProvidedRole newValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final InsertEReference insertChange, final InterfaceProvidingEntity affectedEObject, final EReference affectedFeature, final OperationProvidedRole newValue, final int index, @Extension final mir.routines.umlXpcmRoles_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.providedRole_ElementCreatedCheck(affectedEObject);
     }
   }

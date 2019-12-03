@@ -2,7 +2,6 @@ package mir.routines.umlXpcmRoles_L2R;
 
 import java.io.IOException;
 import java.util.Optional;
-import mir.routines.umlXpcmRoles_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.core.entity.InterfaceProvidingRequiringEntity;
@@ -41,7 +40,7 @@ public class RequiredRole_ElementDeletedCheckRoutine extends AbstractRepairRouti
       return affectedEObject;
     }
     
-    public void callRoutine1(final EObject affectedEObject, final Optional<OperationRequiredRole> role_correspondingTo_property, final Optional<OperationInterface> operationInterface_correspondingTo_property, final Optional<InterfaceProvidingRequiringEntity> requiringEntity_correspondingTo_property, final Optional<OperationRequiredRole> role_correspondingTo_parameter, final Optional<OperationInterface> operationInterface_correspondingTo_parameter, final Optional<InterfaceProvidingRequiringEntity> requiringEntity_correspondingTo_parameter, final Optional<OperationRequiredRole> role_correspondingTo_implementation, final Optional<OperationInterface> operationInterface_correspondingTo_implementation, final Optional<InterfaceProvidingRequiringEntity> requiringEntity_correspondingTo_implementation, final Optional<OperationRequiredRole> role_correspondingTo_interface, final Optional<OperationInterface> operationInterface_correspondingTo_interface, final Optional<InterfaceProvidingRequiringEntity> requiringEntity_correspondingTo_interface, final Optional<OperationRequiredRole> role_correspondingTo_operation, final Optional<OperationInterface> operationInterface_correspondingTo_operation, final Optional<InterfaceProvidingRequiringEntity> requiringEntity_correspondingTo_operation, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final EObject affectedEObject, final Optional<OperationRequiredRole> role_correspondingTo_property, final Optional<OperationInterface> operationInterface_correspondingTo_property, final Optional<InterfaceProvidingRequiringEntity> requiringEntity_correspondingTo_property, final Optional<OperationRequiredRole> role_correspondingTo_parameter, final Optional<OperationInterface> operationInterface_correspondingTo_parameter, final Optional<InterfaceProvidingRequiringEntity> requiringEntity_correspondingTo_parameter, final Optional<OperationRequiredRole> role_correspondingTo_implementation, final Optional<OperationInterface> operationInterface_correspondingTo_implementation, final Optional<InterfaceProvidingRequiringEntity> requiringEntity_correspondingTo_implementation, final Optional<OperationRequiredRole> role_correspondingTo_interface, final Optional<OperationInterface> operationInterface_correspondingTo_interface, final Optional<InterfaceProvidingRequiringEntity> requiringEntity_correspondingTo_interface, final Optional<OperationRequiredRole> role_correspondingTo_operation, final Optional<OperationInterface> operationInterface_correspondingTo_operation, final Optional<InterfaceProvidingRequiringEntity> requiringEntity_correspondingTo_operation, @Extension final mir.routines.umlXpcmRoles_L2R.RoutinesFacade _routinesFacade) {
       OperationRequiredRole role_ = null;
       OperationInterface operationInterface_ = null;
       InterfaceProvidingRequiringEntity requiringEntity_ = null;
@@ -211,7 +210,7 @@ public class RequiredRole_ElementDeletedCheckRoutine extends AbstractRepairRouti
     }
   }
   
-  public RequiredRole_ElementDeletedCheckRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
+  public RequiredRole_ElementDeletedCheckRoutine(final mir.routines.umlXpcmRoles_L2R.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final EObject affectedEObject) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRoles_L2R.RequiredRole_ElementDeletedCheckRoutine.ActionUserExecution(getExecutionState(), this);
     this.affectedEObject = affectedEObject;

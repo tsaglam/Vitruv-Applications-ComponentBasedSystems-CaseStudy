@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmComponent_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmComponent_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.repository.RepositoryComponent;
@@ -18,12 +17,12 @@ public class RepositoryComponent_BidirectionalUpdateRoutine extends AbstractRepa
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final RepositoryComponent component_, final Repository repository_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final RepositoryComponent component_, final Repository repository_, @Extension final mir.routines.umlXpcmComponent_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.updateComponentCorrespondingUmlNames(component_, repository_);
     }
   }
   
-  public RepositoryComponent_BidirectionalUpdateRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final RepositoryComponent component_, final Repository repository_) {
+  public RepositoryComponent_BidirectionalUpdateRoutine(final mir.routines.umlXpcmComponent_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final RepositoryComponent component_, final Repository repository_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmComponent_R2L.RepositoryComponent_BidirectionalUpdateRoutine.ActionUserExecution(getExecutionState(), this);
     this.component_ = component_;this.repository_ = repository_;

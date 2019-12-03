@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmRepository_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmRepository_R2L.RoutinesFacade;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.Repository;
@@ -58,7 +57,7 @@ public class Repository_CreateMappingRoutine extends AbstractRepairRoutineRealiz
       return "umlXpcmRepository_map_UML_and_PCM_correspondence_Package:contractsPkg_with_Repository:repository";
     }
     
-    public void callRoutine1(final Repository repository_, final org.eclipse.uml2.uml.Package repositoryPkg_, final org.eclipse.uml2.uml.Package contractsPkg_, final org.eclipse.uml2.uml.Package datatypesPkg_, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final Repository repository_, final org.eclipse.uml2.uml.Package repositoryPkg_, final org.eclipse.uml2.uml.Package contractsPkg_, final org.eclipse.uml2.uml.Package datatypesPkg_, @Extension final mir.routines.umlXpcmRepository_R2L.RoutinesFacade _routinesFacade) {
       _routinesFacade.repository_BidirectionalUpdate(repository_);
     }
     
@@ -66,7 +65,7 @@ public class Repository_CreateMappingRoutine extends AbstractRepairRoutineRealiz
       return repositoryPkg_;
     }
     
-    public void executeAction1(final Repository repository_, final org.eclipse.uml2.uml.Package repositoryPkg_, final org.eclipse.uml2.uml.Package contractsPkg_, final org.eclipse.uml2.uml.Package datatypesPkg_, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final Repository repository_, final org.eclipse.uml2.uml.Package repositoryPkg_, final org.eclipse.uml2.uml.Package contractsPkg_, final org.eclipse.uml2.uml.Package datatypesPkg_, @Extension final mir.routines.umlXpcmRepository_R2L.RoutinesFacade _routinesFacade) {
       repositoryPkg_.getPackagedElements().add(contractsPkg_);
       repositoryPkg_.getPackagedElements().add(datatypesPkg_);
       contractsPkg_.setName("contracts");
@@ -90,7 +89,7 @@ public class Repository_CreateMappingRoutine extends AbstractRepairRoutineRealiz
     }
   }
   
-  public Repository_CreateMappingRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Repository repository_) {
+  public Repository_CreateMappingRoutine(final mir.routines.umlXpcmRepository_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final Repository repository_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmRepository_R2L.Repository_CreateMappingRoutine.ActionUserExecution(getExecutionState(), this);
     this.repository_ = repository_;

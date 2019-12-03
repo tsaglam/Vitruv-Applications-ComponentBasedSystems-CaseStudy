@@ -1,6 +1,5 @@
 package mir.reactions.umlXpcmRoles_L2R;
 
-import mir.routines.umlXpcmRoles_L2R.RoutinesFacade;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.uml2.uml.BehavioredClassifier;
 import org.eclipse.uml2.uml.InterfaceRealization;
@@ -18,7 +17,7 @@ public class OnProvidedRoleInterfaceRealizationRemovedFromClassReaction extends 
   
   private int currentlyMatchedChange;
   
-  public OnProvidedRoleInterfaceRealizationRemovedFromClassReaction(final RoutinesFacade routinesFacade) {
+  public OnProvidedRoleInterfaceRealizationRemovedFromClassReaction(final mir.routines.umlXpcmRoles_L2R.RoutinesFacade routinesFacade) {
     super(routinesFacade);
   }
   
@@ -81,7 +80,7 @@ public class OnProvidedRoleInterfaceRealizationRemovedFromClassReaction extends 
       super(reactionExecutionState);
     }
     
-    public void callRoutine1(final RemoveEReference removeChange, final BehavioredClassifier affectedEObject, final EReference affectedFeature, final InterfaceRealization oldValue, final int index, @Extension final RoutinesFacade _routinesFacade) {
+    public void callRoutine1(final RemoveEReference removeChange, final BehavioredClassifier affectedEObject, final EReference affectedFeature, final InterfaceRealization oldValue, final int index, @Extension final mir.routines.umlXpcmRoles_L2R.RoutinesFacade _routinesFacade) {
       _routinesFacade.providedRole_ElementDeletedCheck(affectedEObject);
     }
   }

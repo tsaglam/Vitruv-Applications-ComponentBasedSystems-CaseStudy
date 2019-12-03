@@ -1,7 +1,6 @@
 package mir.routines.umlXpcmDatatypes_R2L;
 
 import java.io.IOException;
-import mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.palladiosimulator.pcm.repository.CompositeDataType;
 import tools.vitruv.extensions.dslsruntime.reactions.AbstractRepairRoutineRealization;
@@ -17,12 +16,12 @@ public class CompositeDatatypeParent_BidirectionalUpdateRoutine extends Abstract
       super(reactionExecutionState);
     }
     
-    public void executeAction1(final CompositeDataType type_, final CompositeDataType parentType_, @Extension final RoutinesFacade _routinesFacade) {
+    public void executeAction1(final CompositeDataType type_, final CompositeDataType parentType_, @Extension final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade _routinesFacade) {
       return;
     }
   }
   
-  public CompositeDatatypeParent_BidirectionalUpdateRoutine(final RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final CompositeDataType type_, final CompositeDataType parentType_) {
+  public CompositeDatatypeParent_BidirectionalUpdateRoutine(final mir.routines.umlXpcmDatatypes_R2L.RoutinesFacade routinesFacade, final ReactionExecutionState reactionExecutionState, final CallHierarchyHaving calledBy, final CompositeDataType type_, final CompositeDataType parentType_) {
     super(routinesFacade, reactionExecutionState, calledBy);
     this.userExecution = new mir.routines.umlXpcmDatatypes_R2L.CompositeDatatypeParent_BidirectionalUpdateRoutine.ActionUserExecution(getExecutionState(), this);
     this.type_ = type_;this.parentType_ = parentType_;
