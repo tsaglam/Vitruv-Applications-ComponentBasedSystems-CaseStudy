@@ -53,7 +53,7 @@ class JavaToUmlHelper {
 		if (uPackage === null) {
 			throw new IllegalStateException("Could not locate the package " + packageName + " in the UMl model " + umlModel)
 		}
-		val interfaces = uPackage.ownedTypes.filter[it instanceof Interface].filter[name == interfaceName].toSet
+		val interfaces = uPackage.ownedTypes.filter(Interface).filter[name == interfaceName].toSet
 		if (interfaces.nullOrEmpty) {
 			logger.warn("The UML interface with the name " + interfaceName + " does not exist in the package " + uPackage)
 			return null
