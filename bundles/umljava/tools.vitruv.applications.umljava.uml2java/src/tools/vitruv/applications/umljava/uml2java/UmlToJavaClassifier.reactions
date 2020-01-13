@@ -30,9 +30,7 @@ execute actions in Java
 
 reaction UmlClassCreated {
     after element uml::Class created and inserted in uml::Package[packagedElement]
-    call {
-        createOrFindJavaClass(newValue)
-    }
+    call createOrFindJavaClass(newValue)
 }
 
 routine createOrFindJavaClass(uml::Classifier umlClassifier) {
