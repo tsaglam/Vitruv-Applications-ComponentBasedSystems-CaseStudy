@@ -12,17 +12,6 @@ import static tools.vitruv.applications.umljava.testutil.JavaTestUtil.*
 import static tools.vitruv.applications.umljava.testutil.TestUtil.*
 import static tools.vitruv.applications.util.temporary.java.JavaTypeUtil.getClassifierFromTypeReference
 import static tools.vitruv.applications.util.temporary.uml.UmlClassifierAndPackageUtil.*
-import java.util.List
-import org.eclipse.emf.compare.Diff
-import org.eclipse.emf.compare.merge.IMerger
-import org.eclipse.emf.compare.merge.IBatchMerger
-import org.eclipse.emf.compare.merge.BatchMerger
-import org.eclipse.emf.common.util.BasicMonitor
-import tools.vitruv.framework.change.description.TransactionalChange
-import tools.vitruv.framework.uuid.UuidGeneratorAndResolver
-import tools.vitruv.framework.uuid.UuidGeneratorAndResolverImpl
-import tools.vitruv.framework.util.ResourceSetUtil
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 
 /**
  * This class provides tests for basic class tests in the uml to java direction
